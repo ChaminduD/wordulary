@@ -1,31 +1,13 @@
-import { redirect } from "next/navigation";
-import { createClient } from "@/lib/supabase/server";
-import { SignOutButton } from "@/components/auth/sign-out-button";
-
-export default async function DashboardPage() {
-    const supabase = await createClient();
-
-    const {
-        data: { user },
-    } = await supabase.auth.getUser();
-
-    if (!user) {
-        redirect("/login");
-    }
-
+export default function DashboardPage() {
     return (
-        <main className="p-8">
-            <h1 className="text-3xl font-bold">
-                Welcome, {user.user_metadata.full_name}
-            </h1>
+        <div>
+            <h2 className="text-xl font-semibold">
+                Dashboard Overview
+            </h2>
 
-            <p className="mt-4">
-                Your dashboard is protected.
+            <p className="mt-2 text-muted-foreground">
+                Your vocabulary learning journey starts here.
             </p>
-
-            <div className="mt-6">
-                <SignOutButton />
-            </div>
-        </main>
+        </div>
     );
 }
