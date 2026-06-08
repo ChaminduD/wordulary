@@ -1,0 +1,71 @@
+"use server";
+
+import { revalidatePath } from "next/cache";
+import { createClient } from "@/lib/supabase/server";
+
+export async function createCollection(
+    formData: FormData
+) {
+    const name = formData.get("name");
+
+    if (typeof name !== "string" || !name.trim()) {
+        return;
+    }
+
+    const supabase = await createClient();
+
+    const {
+        data: { user },
+    } = await supabase.auth.getUser();
+
+    if (!user) {
+        return;
+    }
+
+    const { error } = await supabase
+        .from("collections")
+        .insert({
+            user_id: user.id,
+            name: name.trim(),
+        });
+
+    if (error) {
+        console.error(error);
+        return;
+    }
+
+    revalidatePath("/dashboard/collections");
+}
+
+export async function deleteCollection(
+    formData: FormData
+) {
+    const id = formData.get("id");
+
+    if (typeof id !== "string") {
+        return;
+    }
+
+    const supabase = await createClient();
+
+    const {
+        data: { user },
+    } = await supabase.auth.getUser();
+
+    if (!user) {
+        return;
+    }
+
+    const { error } = await supabase
+        .from("collections")
+        .delete()
+        .eq("id", id)
+        .eq("user_id", user.id);
+
+    if (error) {
+        console.error(error);
+        return;
+    }
+
+    revalidatePath("/dashboard/collections");
+}
