@@ -2,6 +2,10 @@ import { GoogleGenAI } from "@google/genai";
 import { generatedTermSchema } from "./schema";
 import type { GeneratedTerm } from "@/types/term";
 
+function sleep(ms: number) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
 export async function generateTerm(term: string): Promise<GeneratedTerm> {
   const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY, });
 
@@ -43,10 +47,30 @@ export async function generateTerm(term: string): Promise<GeneratedTerm> {
     }
   `;
 
-  const response = await ai.models.generateContent({
-    model: "gemini-2.5-flash",
-    contents: prompt,
-  });
+  let response;
+
+  for (let attempt = 1; attempt <= 3; attempt++) {
+    try {
+      response = await ai.models.generateContent({
+        model: "gemini-2.5-flash",
+        contents: prompt,
+      });
+
+      break;
+    } catch (error) {
+      console.error(`Attempt ${attempt} failed`, error);
+
+      if (attempt === 3) {
+        throw error;
+      }
+
+      await sleep(1000);
+    }
+  }
+
+  if (!response) {
+    throw new Error("Failed to generate term after 3 attempts");
+  }
 
   const text = response.text;
 

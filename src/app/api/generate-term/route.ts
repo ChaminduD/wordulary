@@ -11,8 +11,8 @@ export async function POST(
 
         if (typeof term !== "string" || !term.trim()) {
             return NextResponse.json(
-                {error: "Term is required",},
-                {status: 400,}
+                { error: "Term is required", },
+                { status: 400, }
             );
         }
 
@@ -21,11 +21,27 @@ export async function POST(
         return NextResponse.json(generatedTerm);
 
     } catch (error) {
-        console.error(error);
+        console.error("Generate term error:", error);
+
+        const message = error instanceof Error ? error.message : "Failed to generate term";
+
+        if (message.includes("429")) {
+            return NextResponse.json(
+                { error: "AI quota reached. Please wait a minute and try again.", },
+                { status: 429, }
+            );
+        }
+
+        if (message.includes("503")) {
+            return NextResponse.json(
+                { error: "AI service is busy. Please try again shortly.", },
+                { status: 503, }
+            );
+        }
 
         return NextResponse.json(
-            {error: "Failed to generate term",},
-            {status: 500,}
+            { error: message, },
+            { status: 500, }
         );
     }
 }

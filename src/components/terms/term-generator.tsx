@@ -8,6 +8,7 @@ export function TermGenerator() {
     const [generatedTerm, setGeneratedTerm] = useState<GeneratedTerm | null>(null);
     const [term, setTerm] = useState("");
     const [loading, setLoading] = useState(false);
+    const [error, setError] = useState<string | null>(null);
 
     async function handleGenerate() {
         if (!term.trim()) {
@@ -29,7 +30,9 @@ export function TermGenerator() {
             );
 
             if (!response.ok) {
-                throw new Error("Failed to generate term");
+                const errorData = await response.json();
+
+                throw new Error(errorData.error ?? "Failed to generate term");
             }
 
             const generatedTerm = await response.json();
@@ -37,6 +40,7 @@ export function TermGenerator() {
             setGeneratedTerm(generatedTerm);
         } catch (error) {
             console.error(error);
+            setError(error instanceof Error ? error.message : "Something went wrong");
         } finally {
             setLoading(false);
         }
@@ -64,10 +68,37 @@ export function TermGenerator() {
                 </button>
             </div>
 
+            {error && (
+                <p className="text-sm text-red-500">
+                    {error}
+                </p>
+            )}
+
             {generatedTerm && (
-                <TermPreviewCard
-                    generatedTerm={generatedTerm}
-                />
+                <>
+                    <TermPreviewCard
+                        generatedTerm={generatedTerm}
+                    />
+
+                    <div className="flex gap-3">
+                        <button
+                            type="button"
+                            className="rounded border px-4 py-2"
+                        >
+                            Save Term
+                        </button>
+
+                        <button
+                            type="button"
+                            onClick={handleGenerate}
+                            disabled={loading}
+                            className="rounded border px-4 py-2"
+                        >
+                            Generate Again
+                        </button>
+                    </div>
+                </>
+
             )}
         </div>
     );
