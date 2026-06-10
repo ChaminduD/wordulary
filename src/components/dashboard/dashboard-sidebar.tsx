@@ -37,6 +37,13 @@ export function DashboardSidebar() {
                 >
                     Add Term
                 </Link>
+
+                <Link
+                    href="/dashboard/terms/import"
+                    className="block rounded-md px-3 py-2 hover:bg-muted"
+                >
+                    Import Terms
+                </Link>
             </nav>
         </aside>
     );
