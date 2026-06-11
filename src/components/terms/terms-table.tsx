@@ -1,4 +1,5 @@
 import type { TermListItem } from "@/types/term-list-item";
+import Link from "next/link";
 
 type TermsTableProps = {
     terms: TermListItem[];
@@ -43,7 +44,12 @@ export function TermsTable({ terms, }: TermsTableProps) {
                             className="border-b"
                         >
                             <td className="p-4">
-                                {term.term}
+                                <Link
+                                    href={`/dashboard/terms/${term.id}`}
+                                    className="hover:underline"
+                                >
+                                    {term.term}
+                                </Link>
                             </td>
 
                             <td className="p-4">
