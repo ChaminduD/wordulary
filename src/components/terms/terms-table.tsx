@@ -3,13 +3,35 @@ import Link from "next/link";
 
 type TermsTableProps = {
     terms: TermListItem[];
+    hasSearch: boolean;
 };
 
-export function TermsTable({ terms, }: TermsTableProps) {
+export function TermsTable({ terms, hasSearch }: TermsTableProps) {
     if (terms.length === 0) {
+        if (hasSearch) {
+            return (
+                <div className="rounded-lg border p-8 text-center">
+                    <h3 className="font-semibold">
+                        No matching terms found
+                    </h3>
+
+                    <p className="mt-2 text-sm text-muted-foreground">
+                        Try a different search term.
+                    </p>
+                </div>
+            );
+        }
+
         return (
-            <div className="rounded-lg border p-6">
-                No terms yet.
+            <div className="rounded-lg border p-8 text-center">
+                <h3 className="font-semibold">
+                    No terms yet
+                </h3>
+
+                <p className="mt-2 text-sm text-muted-foreground">
+                    Import your existing vocabulary
+                    or add a new term to get started.
+                </p>
             </div>
         );
     }

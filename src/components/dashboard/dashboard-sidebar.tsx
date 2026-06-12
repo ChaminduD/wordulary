@@ -14,7 +14,7 @@ export function DashboardSidebar() {
                     href="/dashboard"
                     className="block rounded-md px-3 py-2 hover:bg-muted"
                 >
-                    Overview
+                    Dashboard
                 </Link>
 
                 <Link
@@ -29,20 +29,6 @@ export function DashboardSidebar() {
                     className="block rounded-md px-3 py-2 hover:bg-muted"
                 >
                     Collections
-                </Link>
-
-                <Link
-                    href="/dashboard/terms/new"
-                    className="block rounded-md px-3 py-2 hover:bg-muted"
-                >
-                    Add Term
-                </Link>
-
-                <Link
-                    href="/dashboard/terms/import"
-                    className="block rounded-md px-3 py-2 hover:bg-muted"
-                >
-                    Import Terms
                 </Link>
             </nav>
         </aside>
