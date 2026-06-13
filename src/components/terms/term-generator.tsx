@@ -3,12 +3,21 @@
 import { useState } from "react";
 import type { GeneratedTerm } from "@/types/term";
 import { TermPreviewCard } from "@/components/terms/term-preview-card";
+import { useRouter } from "next/navigation";
 
 export function TermGenerator() {
     const [generatedTerm, setGeneratedTerm] = useState<GeneratedTerm | null>(null);
     const [term, setTerm] = useState("");
     const [loading, setLoading] = useState(false);
-    const [error, setError] = useState<string | null>(null);
+    const [generateError, setGenerateError] = useState<string | null>(null);
+    const [saveError, setSaveError] = useState<string | null>(null);
+    const [saving, setSaving] = useState(false);
+
+    const router = useRouter();
+
+    const isRegenerate = generatedTerm &&
+        term.trim().toLowerCase() ===
+        generatedTerm.term.trim().toLowerCase();
 
     async function handleGenerate() {
         if (!term.trim()) {
@@ -16,6 +25,9 @@ export function TermGenerator() {
         }
 
         try {
+            setGenerateError(null);
+            setSaveError(null);
+
             setLoading(true);
 
             const response = await fetch(
@@ -38,11 +50,50 @@ export function TermGenerator() {
             const generatedTerm = await response.json();
 
             setGeneratedTerm(generatedTerm);
+
+            setGenerateError(null);
+            setSaveError(null);
         } catch (error) {
             console.error(error);
-            setError(error instanceof Error ? error.message : "Something went wrong");
+            setGenerateError(error instanceof Error ? error.message : "Something went wrong");
         } finally {
             setLoading(false);
+        }
+    }
+
+    async function handleSave() {
+        if (!generatedTerm) {
+            return;
+        }
+
+        try {
+            setSaving(true);
+            setSaveError(null);
+
+            const response =
+                await fetch(
+                    "/api/save-term",
+                    {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify(generatedTerm),
+                    }
+                );
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.error ?? "Save failed");
+            }
+
+            router.push("/dashboard/terms");
+        } catch (error) {
+            console.error(error);
+            setSaveError(error instanceof Error ? error.message : "Failed to save term");
+        } finally {
+            setSaving(false);
         }
     }
 
@@ -52,25 +103,32 @@ export function TermGenerator() {
                 <input
                     type="text"
                     value={term}
-                    onChange={(event) =>
-                        setTerm(event.target.value)
-                    }
+                    onChange={(event) => {
+                        setTerm(event.target.value);
+
+                        setGenerateError(null);
+                        setSaveError(null);
+                    }}
                     placeholder="Enter a word, phrase, or idiom"
                     className="w-full rounded border px-3 py-2"
                 />
 
                 <button
                     onClick={handleGenerate}
-                    disabled={loading}
+                    disabled={loading || saving}
                     className="rounded border px-4 py-2"
                 >
-                    {loading ? "Generating..." : "Generate"}
+                    {loading
+                        ? "Generating..."
+                        : isRegenerate
+                            ? "Regenerate"
+                            : "Generate"}
                 </button>
             </div>
 
-            {error && (
+            {generateError && (
                 <p className="text-sm text-red-500">
-                    {error}
+                    {generateError}
                 </p>
             )}
 
@@ -80,23 +138,19 @@ export function TermGenerator() {
                         generatedTerm={generatedTerm}
                     />
 
-                    <div className="flex gap-3">
-                        <button
-                            type="button"
-                            className="rounded border px-4 py-2"
-                        >
-                            Save Term
-                        </button>
-
-                        <button
-                            type="button"
-                            onClick={handleGenerate}
-                            disabled={loading}
-                            className="rounded border px-4 py-2"
-                        >
-                            Generate Again
-                        </button>
-                    </div>
+                    {saveError && (
+                        <p className="text-sm text-red-500">
+                            {saveError}
+                        </p>
+                    )}
+                    <button
+                        type="button"
+                        className="rounded border px-4 py-2"
+                        onClick={handleSave}
+                        disabled={saving || loading}
+                    >
+                        {saving ? "Saving..." : "Save Term"}
+                    </button>
                 </>
 
             )}
