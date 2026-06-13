@@ -46,10 +46,8 @@ export default async function TermsPage({ searchParams, }: PageProps) {
             id: term.id,
             term: term.term,
             termType: term.term_type,
-            aiGenerated:
-                term.ai_generated,
-            createdAt:
-                term.created_at,
+            aiGenerated: term.ai_generated,
+            createdAt: term.created_at,
         }));
 
     return (

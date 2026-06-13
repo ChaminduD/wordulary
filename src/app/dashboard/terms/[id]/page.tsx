@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { GenerateAiContentButton } from "@/components/terms/generate-ai-content-button";
+import { StatusSelector } from "@/components/terms/status-selector";
 
 type PageProps = {
     params: Promise<{ id: string; }>;
@@ -42,8 +43,11 @@ export default async function TermPage({ params, }: PageProps) {
             </div>
 
             <div className="rounded-lg border p-6">
-                <p className="mb-4 border-b-2 pb-2 capitalize">
-                    Status: {term.status}
+                <p className="mb-4 border-b-2 pb-2">
+                    <StatusSelector
+                        termId={term.id}
+                        status={term.status}
+                    />
                 </p>
 
 
