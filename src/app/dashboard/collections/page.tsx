@@ -1,5 +1,6 @@
 import { createCollection, deleteCollection } from "@/actions/collections";
 import { createClient } from "@/lib/supabase/server";
+import Link from "next/link";
 
 export default async function CollectionsPage() {
     const supabase = await createClient();
@@ -49,7 +50,12 @@ export default async function CollectionsPage() {
                         key={collection.id}
                         className="flex items-center justify-between rounded border p-3"
                     >
-                        <span>{collection.name}</span>
+                        <Link
+                            href={`/dashboard/collections/${collection.id}`}
+                            className="font-medium hover:underline"
+                        >
+                            {collection.name}
+                        </Link>
 
                         <form action={deleteCollection}>
                             <input

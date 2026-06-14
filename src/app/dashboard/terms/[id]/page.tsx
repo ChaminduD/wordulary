@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { GenerateAiContentButton } from "@/components/terms/generate-ai-content-button";
 import { StatusSelector } from "@/components/terms/status-selector";
+import { CollectionSelector } from "@/components/collections/collection-selector";
 
 type PageProps = {
     params: Promise<{ id: string; }>;
@@ -30,6 +31,20 @@ export default async function TermPage({ params, }: PageProps) {
         notFound();
     }
 
+    const { data: collections, } =
+        await supabase
+            .from("collections")
+            .select("id, name")
+            .order("name");
+
+    const { data: assignedCollections, } =
+        await supabase
+            .from("term_collections")
+            .select("collection_id")
+            .eq("term_id", term.id);
+
+    const selectedCollectionIds = assignedCollections?.map((item) => item.collection_id) ?? [];
+
     return (
         <div className="space-y-6">
             <div>
@@ -43,13 +58,20 @@ export default async function TermPage({ params, }: PageProps) {
             </div>
 
             <div className="rounded-lg border p-6">
-                <p className="mb-4 border-b-2 pb-2">
+                <div className="mb-4 border-b-2 pb-2">
                     <StatusSelector
                         termId={term.id}
                         status={term.status}
                     />
-                </p>
+                </div>
 
+                <div className="mb-4 border-b-2 pb-2">
+                    <CollectionSelector
+                        termId={term.id}
+                        collections={collections ?? []}
+                        selectedCollectionIds={selectedCollectionIds}
+                    />
+                </div>
 
                 <h2 className="mb-4 font-semibold">
                     AI Content
