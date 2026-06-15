@@ -30,6 +30,13 @@ export function DashboardSidebar() {
                 >
                     Collections
                 </Link>
+
+                <Link
+                    href="/dashboard/review"
+                    className="block rounded-md px-3 py-2 hover:bg-muted"
+                >
+                    Review
+                </Link>
             </nav>
         </aside>
     );
