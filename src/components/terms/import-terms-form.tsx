@@ -42,7 +42,19 @@ export function ImportTermsForm() {
                 throw new Error(data.error ?? "Import failed");
             }
 
-            setMessage(`${data.imported} terms imported successfully.`);
+            const importedLabel =
+                data.imported === 1
+                    ? "term"
+                    : "terms";
+
+            const skippedLabel =
+                data.skipped === 1
+                    ? "duplicate"
+                    : "duplicates";
+
+            setMessage(
+                `Imported ${data.imported} ${importedLabel}. Skipped ${data.skipped} ${skippedLabel}.`
+            );
             setTermsText("");
         } catch (error) {
             setError(error instanceof Error ? error.message : "Import failed");

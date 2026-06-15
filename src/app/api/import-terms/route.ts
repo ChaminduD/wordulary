@@ -25,19 +25,56 @@ export async function POST(request: Request) {
             );
         }
 
-        const rows = terms.map((term: string) => ({
-            user_id: user.id,
-            term,
-        })
+        const { data: existingTerms } =
+            await supabase
+                .from("terms")
+                .select("term")
+                .eq("user_id", user.id);
+
+        const existing =
+            new Set(
+                existingTerms?.map(
+                    (term) =>
+                        term.term.toLowerCase()
+                ) ?? []
+            );
+
+        const normalizedTerms =
+            [...new Set(
+                terms.map(
+                    (term: string) =>
+                        term.trim().toLowerCase()
+                )
+            )];
+
+        const uniqueTerms =
+            normalizedTerms.filter(
+                (term) =>
+                    !existing.has(term)
+            );
+
+        const rows = uniqueTerms.map(
+            (term: string) => ({
+                user_id: user.id,
+                term,
+            })
         );
 
-        const { error } = await supabase.from("terms").insert(rows);
+        if (rows.length > 0) {
+            const { error } =
+                await supabase
+                    .from("terms")
+                    .insert(rows);
 
-        if (error) {
-            throw error;
+            if (error) {
+                throw error;
+            }
         }
 
-        return NextResponse.json({ imported: rows.length, });
+        return NextResponse.json({
+            imported: rows.length,
+            skipped: terms.length - rows.length,
+        });
     } catch (error) {
         console.error(error);
 
