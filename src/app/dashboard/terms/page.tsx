@@ -4,11 +4,14 @@ import { TermsSearch } from "@/components/terms/terms-search";
 import Link from "next/link";
 
 type PageProps = {
-    searchParams: Promise<{ search?: string; }>;
+    searchParams: Promise<{
+        search?: string;
+        status?: string;
+    }>;
 };
 
 export default async function TermsPage({ searchParams, }: PageProps) {
-    const { search } = await searchParams;
+    const { search, status } = await searchParams;
 
     const hasSearch = Boolean(search?.trim());
 
@@ -26,6 +29,7 @@ export default async function TermsPage({ searchParams, }: PageProps) {
           id,
           term,
           term_type,
+          status,
           ai_generated,
           created_at
         `)
@@ -33,6 +37,10 @@ export default async function TermsPage({ searchParams, }: PageProps) {
 
     if (search?.trim()) {
         query = query.ilike("term", `%${search.trim()}%`);
+    }
+
+    if (status && ["new", "learning", "mastered"].includes(status)) {
+        query = query.eq("status", status);
     }
 
     const { data: terms, error } = await query.order("created_at", { ascending: false, });
@@ -46,9 +54,18 @@ export default async function TermsPage({ searchParams, }: PageProps) {
             id: term.id,
             term: term.term,
             termType: term.term_type,
+            status: term.status,
             aiGenerated: term.ai_generated,
             createdAt: term.created_at,
         }));
+
+    const activeFilter = status ?? "all";
+
+    function getFilterClass(value: string) {
+        return activeFilter === value
+            ? "rounded border px-3 py-1 border-primary"
+            : "rounded border px-3 py-1";
+    }
 
     return (
         <div className="space-y-6">
@@ -80,13 +97,46 @@ export default async function TermsPage({ searchParams, }: PageProps) {
                 </div>
             </div>
 
+            <div className="flex gap-2">
+                <Link
+                    href="/dashboard/terms"
+                    className={getFilterClass("all")}
+                >
+                    All
+                </Link>
+
+                <Link
+                    href="/dashboard/terms?status=new"
+                    className={getFilterClass("new")}
+
+                >
+                    New
+                </Link>
+
+                <Link
+                    href="/dashboard/terms?status=learning"
+                    className={getFilterClass("learning")}
+                >
+                    Learning
+                </Link>
+
+                <Link
+                    href="/dashboard/terms?status=mastered"
+                    className={getFilterClass("mastered")}
+                >
+                    Mastered
+                </Link>
+            </div>
+
             <TermsSearch />
 
-            <p>
-                Showing {termListItems.length} {termListItems.length === 1 ? "term" : "terms"}
-            </p>
+            {termListItems.length > 0 && (
+                <p>
+                    Showing {termListItems.length} {termListItems.length === 1 ? "term" : "terms"}
+                </p>
+            )}
 
-            <TermsTable terms={termListItems} hasSearch={hasSearch} />
+            <TermsTable terms={termListItems} hasSearch={hasSearch} hasActiveFilter={Boolean(status)} />
         </div>
     );
 }

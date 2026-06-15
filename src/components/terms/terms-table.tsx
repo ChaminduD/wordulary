@@ -4,9 +4,10 @@ import Link from "next/link";
 type TermsTableProps = {
     terms: TermListItem[];
     hasSearch: boolean;
+    hasActiveFilter: boolean;
 };
 
-export function TermsTable({ terms, hasSearch }: TermsTableProps) {
+export function TermsTable({ terms, hasSearch, hasActiveFilter }: TermsTableProps) {
     if (terms.length === 0) {
         if (hasSearch) {
             return (
@@ -18,6 +19,16 @@ export function TermsTable({ terms, hasSearch }: TermsTableProps) {
                     <p className="mt-2 text-sm text-muted-foreground">
                         Try a different search term.
                     </p>
+                </div>
+            );
+        }
+
+        if (hasActiveFilter) {
+            return (
+                <div className="rounded-lg border p-8 text-center">
+                    <h3 className="font-semibold">
+                        No matching terms found
+                    </h3>
                 </div>
             );
         }
@@ -50,6 +61,10 @@ export function TermsTable({ terms, hasSearch }: TermsTableProps) {
                         </th>
 
                         <th className="p-4 text-left">
+                            Status
+                        </th>
+
+                        <th className="p-4 text-left">
                             AI Status
                         </th>
 
@@ -76,6 +91,10 @@ export function TermsTable({ terms, hasSearch }: TermsTableProps) {
 
                             <td className="p-4">
                                 {term.termType}
+                            </td>
+
+                            <td className="p-4 capitalize">
+                                {term.status}
                             </td>
 
                             <td className="p-4">
