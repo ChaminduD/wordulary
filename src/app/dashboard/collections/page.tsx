@@ -1,4 +1,5 @@
-import { createCollection, deleteCollection } from "@/actions/collections";
+import { deleteCollection } from "@/actions/collections";
+import { CreateCollectionForm } from "@/components/collections/create-collection-form";
 import { createClient } from "@/lib/supabase/server";
 import Link from "next/link";
 
@@ -25,24 +26,7 @@ export default async function CollectionsPage() {
                 Collections
             </h2>
 
-            <form
-                action={createCollection}
-                className="space-y-4"
-            >
-                <input
-                    type="text"
-                    name="name"
-                    placeholder="Collection name"
-                    className="rounded border px-3 py-2"
-                />
-
-                <button
-                    type="submit"
-                    className="rounded border px-4 py-2"
-                >
-                    Create Collection
-                </button>
-            </form>
+            <CreateCollectionForm />
 
             <div className="space-y-2">
                 {collections?.map((collection) => (

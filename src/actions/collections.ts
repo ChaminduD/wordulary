@@ -9,7 +9,9 @@ export async function createCollection(
     const name = formData.get("name");
 
     if (typeof name !== "string" || !name.trim()) {
-        return;
+        return {
+            error: "Collection name is required.",
+        };
     }
 
     const supabase = await createClient();
@@ -19,7 +21,9 @@ export async function createCollection(
     } = await supabase.auth.getUser();
 
     if (!user) {
-        return;
+        return {
+            error: "User not authenticated.",
+        };
     }
 
     const { error } = await supabase
@@ -31,10 +35,20 @@ export async function createCollection(
 
     if (error) {
         console.error(error);
-        return;
+
+        return {
+            error:
+                error.code === "23505"
+                    ? "Collection already exists."
+                    : "Failed to create collection.",
+        };
     }
 
     revalidatePath("/dashboard/collections");
+
+    return {
+        success: true,
+    };
 }
 
 export async function deleteCollection(
