@@ -67,6 +67,32 @@ export default async function TermsPage({ searchParams, }: PageProps) {
             : "rounded border px-3 py-1";
     }
 
+    const searchQuery = search?.trim() ?? "";
+
+    function getFilterHref(nextStatus?: string) {
+        const params = new URLSearchParams();
+
+        if (searchQuery) {
+            params.set(
+                "search",
+                searchQuery
+            );
+        }
+
+        if (nextStatus) {
+            params.set(
+                "status",
+                nextStatus
+            );
+        }
+
+        const query = params.toString();
+
+        return query
+            ? `/dashboard/terms?${query}`
+            : "/dashboard/terms";
+    }
+
     return (
         <div className="space-y-6">
             <div className="flex items-start justify-between gap-4">
@@ -99,14 +125,14 @@ export default async function TermsPage({ searchParams, }: PageProps) {
 
             <div className="flex gap-2">
                 <Link
-                    href="/dashboard/terms"
+                    href={getFilterHref()}
                     className={getFilterClass("all")}
                 >
                     All
                 </Link>
 
                 <Link
-                    href="/dashboard/terms?status=new"
+                    href={getFilterHref("new")}
                     className={getFilterClass("new")}
 
                 >
@@ -114,14 +140,14 @@ export default async function TermsPage({ searchParams, }: PageProps) {
                 </Link>
 
                 <Link
-                    href="/dashboard/terms?status=learning"
+                    href={getFilterHref("learning")}
                     className={getFilterClass("learning")}
                 >
                     Learning
                 </Link>
 
                 <Link
-                    href="/dashboard/terms?status=mastered"
+                    href={getFilterHref("mastered")}
                     className={getFilterClass("mastered")}
                 >
                     Mastered
