@@ -3,6 +3,8 @@ import { createClient } from "@/lib/supabase/server";
 import { GenerateAiContentButton } from "@/components/terms/generate-ai-content-button";
 import { StatusSelector } from "@/components/terms/status-selector";
 import { CollectionSelector } from "@/components/collections/collection-selector";
+import { deleteTermAction } from "@/actions/terms";
+import { ConfirmDeleteButton } from "@/components/terms/confirm-delete-button";
 
 type PageProps = {
     params: Promise<{ id: string; }>;
@@ -146,7 +148,30 @@ export default async function TermPage({ params, }: PageProps) {
                     </div>
                 )}
             </div>
-        </div>
+            <div className="rounded-lg border p-6">
+                <h2 className="font-semibold">
+                    Danger Zone
+                </h2>
 
+                <p className="mt-2 text-sm text-muted-foreground">
+                    Permanently delete this term.
+                </p>
+
+                <form
+                    action={deleteTermAction}
+                    className="mt-4"
+                >
+                    <input
+                        type="hidden"
+                        name="id"
+                        value={term.id}
+                    />
+
+                    <ConfirmDeleteButton
+                        label="Delete Term"
+                    />
+                </form>
+            </div>
+        </div>
     );
 }

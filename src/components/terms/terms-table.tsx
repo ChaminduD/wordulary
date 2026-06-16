@@ -1,5 +1,7 @@
 import type { TermListItem } from "@/types/term-list-item";
 import Link from "next/link";
+import { deleteTermAction } from "@/actions/terms";
+import { ConfirmDeleteButton } from "./confirm-delete-button";
 
 type TermsTableProps = {
     terms: TermListItem[];
@@ -71,6 +73,10 @@ export function TermsTable({ terms, hasSearch, hasActiveFilter }: TermsTableProp
                         <th className="p-4 text-left">
                             Created
                         </th>
+
+                        <th className="p-4 text-left">
+                            Actions
+                        </th>
                     </tr>
                 </thead>
 
@@ -107,6 +113,18 @@ export function TermsTable({ terms, hasSearch, hasActiveFilter }: TermsTableProp
                                 {new Date(
                                     term.createdAt
                                 ).toLocaleDateString()}
+                            </td>
+
+                            <td className="p-4">
+                                <form action={deleteTermAction}>
+                                    <input
+                                        type="hidden"
+                                        name="id"
+                                        value={term.id}
+                                    />
+
+                                    <ConfirmDeleteButton />
+                                </form>
                             </td>
                         </tr>
                     ))}
