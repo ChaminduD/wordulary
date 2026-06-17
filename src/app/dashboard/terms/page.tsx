@@ -7,11 +7,12 @@ type PageProps = {
     searchParams: Promise<{
         search?: string;
         status?: string;
+        ai?: string;
     }>;
 };
 
 export default async function TermsPage({ searchParams, }: PageProps) {
-    const { search, status } = await searchParams;
+    const { search, status, ai } = await searchParams;
 
     const hasSearch = Boolean(search?.trim());
 
@@ -43,6 +44,14 @@ export default async function TermsPage({ searchParams, }: PageProps) {
         query = query.eq("status", status);
     }
 
+    if (ai === "generated") {
+        query = query.eq("ai_generated", true);
+    }
+
+    if (ai === "missing") {
+        query = query.eq("ai_generated", false);
+    }
+
     const { data: terms, error } = await query.order("created_at", { ascending: false, });
 
     if (error) {
@@ -59,17 +68,20 @@ export default async function TermsPage({ searchParams, }: PageProps) {
             createdAt: term.created_at,
         }));
 
-    const activeFilter = status ?? "all";
+    const activeStatus = status ?? "";
 
     function getFilterClass(value: string) {
-        return activeFilter === value
+        return activeStatus === value
             ? "rounded border px-3 py-1 border-primary"
             : "rounded border px-3 py-1";
     }
 
     const searchQuery = search?.trim() ?? "";
 
-    function getFilterHref(nextStatus?: string) {
+    function getFilterHref(
+        nextStatus?: string,
+        nextAi?: string
+    ) {
         const params = new URLSearchParams();
 
         if (searchQuery) {
@@ -86,6 +98,10 @@ export default async function TermsPage({ searchParams, }: PageProps) {
             );
         }
 
+        if (nextAi) {
+            params.set("ai", nextAi);
+        }
+
         const query = params.toString();
 
         return query
@@ -94,7 +110,7 @@ export default async function TermsPage({ searchParams, }: PageProps) {
     }
 
     return (
-        <div className="space-y-6">
+        <div className="space-y-4">
             <div className="flex items-start justify-between gap-4">
                 <div>
                     <h1 className="text-2xl font-bold">
@@ -125,34 +141,90 @@ export default async function TermsPage({ searchParams, }: PageProps) {
 
             <div className="flex gap-2">
                 <Link
-                    href={getFilterHref()}
-                    className={getFilterClass("all")}
-                >
-                    All
-                </Link>
-
-                <Link
-                    href={getFilterHref("new")}
+                    href={
+                        status === "new"
+                            ? getFilterHref(undefined, ai)
+                            : getFilterHref("new", ai)
+                    }
                     className={getFilterClass("new")}
 
                 >
-                    New
+                    {status === "new"
+                        ? "New ✓"
+                        : "New"}
                 </Link>
 
                 <Link
-                    href={getFilterHref("learning")}
+                    href={
+                        status === "learning"
+                            ? getFilterHref(undefined, ai)
+                            : getFilterHref("learning", ai)
+                    }
                     className={getFilterClass("learning")}
                 >
-                    Learning
+                    {status === "learning"
+                        ? "Learning ✓"
+                        : "Learning"}
                 </Link>
 
                 <Link
-                    href={getFilterHref("mastered")}
+                    href={
+                        status === "mastered"
+                            ? getFilterHref(undefined, ai)
+                            : getFilterHref("mastered", ai)
+                    }
                     className={getFilterClass("mastered")}
                 >
-                    Mastered
+                    {status === "mastered"
+                        ? "Mastered ✓"
+                        : "Mastered"}
                 </Link>
             </div>
+
+            <div className="flex gap-2">
+                <Link
+                    href={
+                        ai === "generated"
+                            ? getFilterHref(status)
+                            : getFilterHref(status, "generated")
+                    }
+                    className={ai === "generated"
+                        ? "rounded border px-3 py-1 border-primary"
+                        : "rounded border px-3 py-1"}
+                >
+                    {ai === "generated"
+                        ? "Generated ✓"
+                        : "Generated"}
+                </Link>
+
+                <Link
+                    href={
+                        ai === "missing"
+                            ? getFilterHref(status)
+                            : getFilterHref(status, "missing")
+                    }
+                    className={ai === "missing"
+                        ? "rounded border px-3 py-1 border-primary"
+                        : "rounded border px-3 py-1"}
+                >
+                    {ai === "missing"
+                        ? "Missing AI ✓"
+                        : "Missing AI"}
+                </Link>
+            </div>
+
+            {(status || ai) && (
+                <Link
+                    href={
+                        searchQuery
+                            ? `/dashboard/terms?search=${encodeURIComponent(searchQuery)}`
+                            : "/dashboard/terms"
+                    }
+                    className="rounded border px-3 py-1"
+                >
+                    Clear Filters
+                </Link>
+            )}
 
             <TermsSearch />
 
@@ -162,7 +234,11 @@ export default async function TermsPage({ searchParams, }: PageProps) {
                 </p>
             )}
 
-            <TermsTable terms={termListItems} hasSearch={hasSearch} hasActiveFilter={Boolean(status)} />
+            <TermsTable
+                terms={termListItems}
+                hasSearch={hasSearch}
+                hasActiveFilter={Boolean(status || ai)}
+            />
         </div>
     );
 }
