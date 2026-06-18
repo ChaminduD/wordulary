@@ -57,6 +57,19 @@ export default async function CollectionsPage() {
                         </form>
                     </div>
                 ))}
+
+                {collections?.length === 0 && (
+                    <div className="rounded-lg border p-8 text-center">
+                        <h3 className="font-semibold">
+                            No collections yet
+                        </h3>
+
+                        <p className="mt-2 text-sm text-muted-foreground">
+                            Create your first collection
+                            to organize your vocabulary.
+                        </p>
+                    </div>
+                )}
             </div>
         </div>
     );
