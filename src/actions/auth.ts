@@ -20,8 +20,13 @@ export async function signInAction(formData: FormData) {
         });
 
     if (error) {
-        console.error(error);
-        return;
+        if (
+            error.message.includes("Email not confirmed")
+        ) {
+            redirect("/login?error=email_not_confirmed");
+        }
+
+        redirect("/login?error=invalid_credentials");
     }
 
     redirect("/dashboard");

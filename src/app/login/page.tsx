@@ -4,7 +4,14 @@ import { createClient } from "@/lib/supabase/server";
 import Link from "next/link";
 import { signInAction } from "@/actions/auth";
 
-export default async function LoginPage() {
+type PageProps = {
+  searchParams: Promise<{
+    error?: string;
+  }>;
+};
+
+export default async function LoginPage({ searchParams }: PageProps) {
+  const { error } = await searchParams;
   const supabase = await createClient();
 
   const {
@@ -28,6 +35,18 @@ export default async function LoginPage() {
         <GoogleSignInButton />
 
         <p>or</p>
+
+        {error === "invalid_credentials" && (
+          <p className="text-sm text-red-500">
+            Invalid email or password.
+          </p>
+        )}
+
+        {error === "email_not_confirmed" && (
+          <p className="text-sm text-red-500">
+            Please verify your email before signing in.
+          </p>
+        )}
         
         <form
           action={signInAction}
@@ -56,7 +75,7 @@ export default async function LoginPage() {
             Sign In
           </button>
         </form>
-        
+
         <p>Don&apos;t have an account?</p>
 
         <Link
