@@ -29,10 +29,10 @@ export default async function ReviewPage() {
 
     if (!terms?.length) {
         return (
-            <div className="space-y-2">
-                <h1 className="text-2xl font-bold">
+            <div>
+                <h2 className="text-xl font-bold">
                     Review
-                </h1>
+                </h2>
 
                 <p className="text-muted-foreground">
                     No learning terms available.
@@ -43,9 +43,9 @@ export default async function ReviewPage() {
 
     return (
         <div>
-            <h1 className="text-2xl font-bold">
+            <h2 className="text-xl font-bold">
                 Review
-            </h1>
+            </h2>
 
             <ReviewSession terms={terms} />
         </div>

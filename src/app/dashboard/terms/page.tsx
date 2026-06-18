@@ -124,9 +124,9 @@ export default async function TermsPage({ searchParams, }: PageProps) {
         <div className="space-y-4">
             <div className="flex items-start justify-between gap-4">
                 <div>
-                    <h1 className="text-2xl font-bold">
+                    <h2 className="text-xl font-bold">
                         Your Terms
-                    </h1>
+                    </h2>
 
                     <p className="text-muted-foreground">
                         Manage and study your vocabulary.

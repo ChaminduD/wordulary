@@ -27,7 +27,7 @@ export default async function DashboardPage() {
                     Vocabulary Overview
                 </h2>
 
-                <p className="mt-2 text-muted-foreground">
+                <p className="text-muted-foreground">
                     Track your learning progress.
                 </p>
             </div>
