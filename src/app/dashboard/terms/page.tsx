@@ -68,6 +68,17 @@ export default async function TermsPage({ searchParams, }: PageProps) {
             createdAt: term.created_at,
         }));
 
+    const { count: totalTerms } =
+        await supabase
+            .from("terms")
+            .select("*", {
+                count: "exact",
+                head: true,
+            })
+            .eq("user_id", user.id);
+
+    const hasTerms = (totalTerms ?? 0) > 0;
+
     const activeStatus = status ?? "";
 
     function getFilterClass(value: string) {
@@ -139,99 +150,103 @@ export default async function TermsPage({ searchParams, }: PageProps) {
                 </div>
             </div>
 
-            <div className="flex gap-2">
-                <Link
-                    href={
-                        status === "new"
-                            ? getFilterHref(undefined, ai)
-                            : getFilterHref("new", ai)
-                    }
-                    className={getFilterClass("new")}
+            {hasTerms && (
+                <>
+                    <div className="flex gap-2">
+                        <Link
+                            href={
+                                status === "new"
+                                    ? getFilterHref(undefined, ai)
+                                    : getFilterHref("new", ai)
+                            }
+                            className={getFilterClass("new")}
 
-                >
-                    {status === "new"
-                        ? "New ✓"
-                        : "New"}
-                </Link>
+                        >
+                            {status === "new"
+                                ? "New ✓"
+                                : "New"}
+                        </Link>
 
-                <Link
-                    href={
-                        status === "learning"
-                            ? getFilterHref(undefined, ai)
-                            : getFilterHref("learning", ai)
-                    }
-                    className={getFilterClass("learning")}
-                >
-                    {status === "learning"
-                        ? "Learning ✓"
-                        : "Learning"}
-                </Link>
+                        <Link
+                            href={
+                                status === "learning"
+                                    ? getFilterHref(undefined, ai)
+                                    : getFilterHref("learning", ai)
+                            }
+                            className={getFilterClass("learning")}
+                        >
+                            {status === "learning"
+                                ? "Learning ✓"
+                                : "Learning"}
+                        </Link>
 
-                <Link
-                    href={
-                        status === "mastered"
-                            ? getFilterHref(undefined, ai)
-                            : getFilterHref("mastered", ai)
-                    }
-                    className={getFilterClass("mastered")}
-                >
-                    {status === "mastered"
-                        ? "Mastered ✓"
-                        : "Mastered"}
-                </Link>
-            </div>
+                        <Link
+                            href={
+                                status === "mastered"
+                                    ? getFilterHref(undefined, ai)
+                                    : getFilterHref("mastered", ai)
+                            }
+                            className={getFilterClass("mastered")}
+                        >
+                            {status === "mastered"
+                                ? "Mastered ✓"
+                                : "Mastered"}
+                        </Link>
+                    </div>
 
-            <div className="flex gap-2">
-                <Link
-                    href={
-                        ai === "generated"
-                            ? getFilterHref(status)
-                            : getFilterHref(status, "generated")
-                    }
-                    className={ai === "generated"
-                        ? "rounded border px-3 py-1 border-primary"
-                        : "rounded border px-3 py-1"}
-                >
-                    {ai === "generated"
-                        ? "Generated ✓"
-                        : "Generated"}
-                </Link>
+                    <div className="flex gap-2">
+                        <Link
+                            href={
+                                ai === "generated"
+                                    ? getFilterHref(status)
+                                    : getFilterHref(status, "generated")
+                            }
+                            className={ai === "generated"
+                                ? "rounded border px-3 py-1 border-primary"
+                                : "rounded border px-3 py-1"}
+                        >
+                            {ai === "generated"
+                                ? "Generated ✓"
+                                : "Generated"}
+                        </Link>
 
-                <Link
-                    href={
-                        ai === "missing"
-                            ? getFilterHref(status)
-                            : getFilterHref(status, "missing")
-                    }
-                    className={ai === "missing"
-                        ? "rounded border px-3 py-1 border-primary"
-                        : "rounded border px-3 py-1"}
-                >
-                    {ai === "missing"
-                        ? "Missing AI ✓"
-                        : "Missing AI"}
-                </Link>
-            </div>
+                        <Link
+                            href={
+                                ai === "missing"
+                                    ? getFilterHref(status)
+                                    : getFilterHref(status, "missing")
+                            }
+                            className={ai === "missing"
+                                ? "rounded border px-3 py-1 border-primary"
+                                : "rounded border px-3 py-1"}
+                        >
+                            {ai === "missing"
+                                ? "Missing AI ✓"
+                                : "Missing AI"}
+                        </Link>
+                    </div>
 
-            {(status || ai) && (
-                <Link
-                    href={
-                        searchQuery
-                            ? `/dashboard/terms?search=${encodeURIComponent(searchQuery)}`
-                            : "/dashboard/terms"
-                    }
-                    className="rounded border px-3 py-1"
-                >
-                    Clear Filters
-                </Link>
-            )}
+                    {(status || ai) && (
+                        <Link
+                            href={
+                                searchQuery
+                                    ? `/dashboard/terms?search=${encodeURIComponent(searchQuery)}`
+                                    : "/dashboard/terms"
+                            }
+                            className="rounded border px-3 py-1"
+                        >
+                            Clear Filters
+                        </Link>
+                    )}
 
-            <TermsSearch />
+                    <TermsSearch />
 
-            {termListItems.length > 0 && (
-                <p>
-                    Showing {termListItems.length} {termListItems.length === 1 ? "term" : "terms"}
-                </p>
+                    {termListItems.length > 0 && (
+                        <p>
+                            Showing {termListItems.length} {termListItems.length === 1 ? "term" : "terms"}
+                        </p>
+                    )}
+                </>
             )}
 
             <TermsTable
