@@ -9,12 +9,14 @@ type GenerateAiContentButtonProps = {
 
 export function GenerateAiContentButton({ termId, }: GenerateAiContentButtonProps) {
     const [loading, setLoading] = useState(false);
+    const [error, setError] = useState<string | null>(null);
 
     const router = useRouter();
 
     async function handleGenerate() {
         try {
             setLoading(true);
+            setError(null);
 
             const response = await fetch(
                 `/api/terms/${termId}/generate`,
@@ -32,20 +34,35 @@ export function GenerateAiContentButton({ termId, }: GenerateAiContentButtonProp
             router.refresh();
         } catch (error) {
             console.error(error);
+
+            setError(
+                error instanceof Error
+                    ? error.message
+                    : "Failed to generate AI content"
+            );
         } finally {
             setLoading(false);
         }
     }
 
     return (
-        <button
-            className="rounded border px-4 py-2"
-            disabled={loading}
-            onClick={handleGenerate}
-        >
-            {loading
-                ? "Generating..."
-                : "Generate AI Content"}
-        </button>
+        <>
+            <button
+                className="rounded border px-4 py-2"
+                disabled={loading}
+                onClick={handleGenerate}
+            >
+                {loading
+                    ? "Generating..."
+                    : "Generate AI Content"}
+            </button>
+            {
+                error && (
+                    <p className="text-sm text-red-500">
+                        {error}
+                    </p>
+                )
+            }
+        </>
     );
 }

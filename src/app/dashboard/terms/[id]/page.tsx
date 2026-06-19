@@ -64,6 +64,7 @@ export default async function TermPage({ params, }: PageProps) {
                     <StatusSelector
                         termId={term.id}
                         status={term.status}
+                        aiGenerated={term.ai_generated}
                     />
                 </div>
 

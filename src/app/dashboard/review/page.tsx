@@ -21,7 +21,8 @@ export default async function ReviewPage() {
                 status
             `)
             .eq("user_id", user.id)
-            .eq("status", "learning");
+            .eq("status", "learning")
+            .eq("ai_generated", true);
 
     if (error) {
         throw error;

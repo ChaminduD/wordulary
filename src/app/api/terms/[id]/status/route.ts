@@ -33,6 +33,30 @@ export async function PATCH(request: Request, { params }: RouteContext) {
             );
         }
 
+        const {
+            data: term,
+            error: termError,
+        } = await supabase
+            .from("terms")
+            .select("ai_generated")
+            .eq("id", id)
+            .eq("user_id", user.id)
+            .single();
+
+        if (termError || !term) {
+            return NextResponse.json(
+                { error: "Term not found" },
+                { status: 404 }
+            );
+        }
+
+        if (!term.ai_generated && status !== "new") {
+            return NextResponse.json(
+                { error: "Generate AI content before changing the status." },
+                { status: 400 }
+            );
+        }
+
         const { error } = await supabase
             .from("terms")
             .update({ status, })

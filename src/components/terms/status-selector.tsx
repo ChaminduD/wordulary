@@ -6,9 +6,10 @@ import { useState } from "react";
 type StatusSelectorProps = {
     termId: string;
     status: string;
+    aiGenerated: boolean;
 };
 
-export function StatusSelector({ termId, status }: StatusSelectorProps) {
+export function StatusSelector({ termId, status, aiGenerated }: StatusSelectorProps) {
     const router = useRouter();
 
     const [saving, setSaving] = useState(false);
@@ -53,10 +54,30 @@ export function StatusSelector({ termId, status }: StatusSelectorProps) {
                 disabled={saving}
                 className="rounded border px-3 py-2"
             >
-                <option value="new">New</option>
-                <option value="learning">Learning</option>
-                <option value="mastered">Mastered</option>
+                <option value="new">
+                    New
+                </option>
+
+                <option
+                    value="learning"
+                    disabled={!aiGenerated}
+                >
+                    Learning
+                </option>
+
+                <option
+                    value="mastered"
+                    disabled={!aiGenerated}
+                >
+                    Mastered
+                </option>
             </select>
+
+            {!aiGenerated && (
+                <p className="text-sm text-muted-foreground">
+                    Generate AI content to unlock Learning and Mastered.
+                </p>
+            )}
 
             {saving && (
                 <span className="text-sm text-muted-foreground">Saving...</span>
