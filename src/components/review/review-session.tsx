@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 type ReviewTerm = {
     id: string;
@@ -19,6 +20,8 @@ export function ReviewSession({ terms, }: ReviewSessionProps) {
     const [updating, setUpdating] = useState(false);
 
     const currentTerm = terms[currentIndex];
+
+    const router = useRouter();
 
     function handleNext() {
         setCurrentIndex((current) =>
@@ -51,22 +54,46 @@ export function ReviewSession({ terms, }: ReviewSessionProps) {
         }
     }
 
+    function handlePrevious() {
+        if (currentIndex === 0) {
+            return;
+        }
+
+        setCurrentIndex((current) => current - 1);
+
+        setShowAnswer(false);
+    }
+
     if (!currentTerm) {
         return (
-            <div className="space-y-4">
+            <div className="mt-2">
                 <h2 className="text-2xl font-bold">
                     Review Complete
                 </h2>
 
-                <p className="text-muted-foreground">
+                <p className="text-muted-foreground mb-4">
                     You&apos;ve reviewed all available terms.
                 </p>
+
+                <button
+                    type="button"
+                    className="rounded border px-4 py-2"
+                    onClick={() => {
+                        window.location.href = "/dashboard/review";
+                    }}
+                >
+                    Start Over
+                </button>
             </div>
         );
     }
 
     return (
         <div className="space-y-6">
+            <p className="text-sm text-muted-foreground">
+                Term {currentIndex + 1} of {terms.length}
+            </p>
+
             <h2 className="text-3xl font-bold">
                 {currentTerm.term}
             </h2>
@@ -110,6 +137,16 @@ export function ReviewSession({ terms, }: ReviewSessionProps) {
                     </div>
 
                     <div className="flex gap-4">
+                        {currentIndex > 0 && (
+                            <button
+                                type="button"
+                                className="rounded border px-4 py-2"
+                                onClick={handlePrevious}
+                            >
+                                Previous
+                            </button>
+                        )}
+
                         <button
                             type="button"
                             disabled={updating}

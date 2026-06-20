@@ -37,6 +37,8 @@ export default async function ReviewPage() {
 
                 <p className="text-muted-foreground">
                     No learning terms available.
+
+                    Generate AI content and mark terms as Learning to start reviewing.
                 </p>
             </div>
         );
