@@ -12,9 +12,10 @@ type ReviewTerm = {
 
 type ReviewSessionProps = {
     terms: ReviewTerm[];
+    collectionId?: string;
 };
 
-export function ReviewSession({ terms, }: ReviewSessionProps) {
+export function ReviewSession({ terms, collectionId, }: ReviewSessionProps) {
     const [showAnswer, setShowAnswer] = useState(false);
     const [currentIndex, setCurrentIndex] = useState(0);
     const [updating, setUpdating] = useState(false);
@@ -79,7 +80,10 @@ export function ReviewSession({ terms, }: ReviewSessionProps) {
                     type="button"
                     className="rounded border px-4 py-2"
                     onClick={() => {
-                        window.location.href = "/dashboard/review";
+                        window.location.href =
+                            collectionId
+                                ? `/dashboard/review?collection=${collectionId}`
+                                : "/dashboard/review";
                     }}
                 >
                     Start Over
