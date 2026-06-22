@@ -16,7 +16,7 @@ export async function POST(request: Request) {
             );
         }
 
-        const { error } =
+        const { data: term, error, } =
             await supabase
                 .from("terms")
                 .insert({
@@ -39,7 +39,9 @@ export async function POST(request: Request) {
                     ai_generated: true,
 
                     status: "new",
-                });
+                })
+                .select("id")
+                .single();
 
         if (error) {
             if (error.code === "23505") {
@@ -50,6 +52,25 @@ export async function POST(request: Request) {
             }
 
             throw error;
+        }
+
+        if (body.collectionIds?.length) {
+            const collectionLinks =
+                body.collectionIds.map(
+                    (collectionId: string) => ({
+                        term_id: term.id,
+                        collection_id: collectionId,
+                    })
+                );
+
+            const { error: collectionError, } =
+                await supabase
+                    .from("term_collections")
+                    .insert(collectionLinks);
+
+            if (collectionError) {
+                throw collectionError;
+            }
         }
 
         return NextResponse.json({ success: true, });

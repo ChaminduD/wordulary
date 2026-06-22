@@ -1,7 +1,23 @@
 import { TermGenerator } from "@/components/terms/term-generator";
 import Link from "next/link";
+import { createClient } from "@/lib/supabase/server";
 
-export default function NewTermPage() {
+export default async function NewTermPage() {
+    const supabase = await createClient();
+
+    const { data: { user }, } = await supabase.auth.getUser();
+
+    if (!user) {
+        throw new Error("User not authenticated");
+    }
+
+    const { data: collections } =
+        await supabase
+            .from("collections")
+            .select("id, name")
+            .eq("user_id", user.id)
+            .order("name");
+
     return (
         <div className="space-y-8">
             <div>
@@ -14,7 +30,9 @@ export default function NewTermPage() {
                 </p>
             </div>
 
-            <TermGenerator />
+            <TermGenerator
+                collections={collections ?? []}
+            />
 
             <div className="space-y-4">
                 <p>Need to import multiple terms?</p>

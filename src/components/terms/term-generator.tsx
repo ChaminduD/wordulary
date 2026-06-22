@@ -5,13 +5,21 @@ import type { GeneratedTerm } from "@/types/term";
 import { TermPreviewCard } from "@/components/terms/term-preview-card";
 import { useRouter } from "next/navigation";
 
-export function TermGenerator() {
+type TermGeneratorProps = {
+    collections: {
+        id: string;
+        name: string;
+    }[];
+};
+
+export function TermGenerator({ collections, }: TermGeneratorProps) {
     const [generatedTerm, setGeneratedTerm] = useState<GeneratedTerm | null>(null);
     const [term, setTerm] = useState("");
     const [loading, setLoading] = useState(false);
     const [generateError, setGenerateError] = useState<string | null>(null);
     const [saveError, setSaveError] = useState<string | null>(null);
     const [saving, setSaving] = useState(false);
+    const [selectedCollectionIds, setSelectedCollectionIds] = useState<string[]>([]);
 
     const router = useRouter();
 
@@ -78,7 +86,10 @@ export function TermGenerator() {
                         headers: {
                             "Content-Type": "application/json",
                         },
-                        body: JSON.stringify(generatedTerm),
+                        body: JSON.stringify({
+                            ...generatedTerm,
+                            collectionIds: selectedCollectionIds,
+                        }),
                     }
                 );
 
@@ -95,6 +106,24 @@ export function TermGenerator() {
         } finally {
             setSaving(false);
         }
+    }
+
+    function handleCollectionChange(
+        collectionId: string,
+        checked: boolean
+    ) {
+        if (checked) {
+            setSelectedCollectionIds((current) => [
+                ...current,
+                collectionId,
+            ]);
+
+            return;
+        }
+
+        setSelectedCollectionIds((current) =>
+            current.filter((id) => id !== collectionId)
+        );
     }
 
     return (
@@ -133,10 +162,36 @@ export function TermGenerator() {
             )}
 
             {generatedTerm && (
-                <>
+                <div className="space-y-4 mt-4">
                     <TermPreviewCard
                         generatedTerm={generatedTerm}
                     />
+
+                    <div className="space-y-2">
+                        <h3 className="font-medium">
+                            Collections (optional)
+                        </h3>
+
+                        {collections.map((collection) => (
+                            <label
+                                key={collection.id}
+                                className="flex items-center gap-2"
+                            >
+                                <input
+                                    type="checkbox"
+                                    checked={selectedCollectionIds.includes(collection.id)}
+                                    onChange={(event) =>
+                                        handleCollectionChange(
+                                            collection.id,
+                                            event.target.checked
+                                        )
+                                    }
+                                />
+
+                                {collection.name}
+                            </label>
+                        ))}
+                    </div>
 
                     {saveError && (
                         <p className="text-sm text-red-500">
@@ -151,7 +206,7 @@ export function TermGenerator() {
                     >
                         {saving ? "Saving..." : "Save Term"}
                     </button>
-                </>
+                </div>
 
             )}
         </div>
