@@ -2,11 +2,19 @@
 
 import { useState } from "react";
 
-export function ImportTermsForm() {
+type ImportTermsFormProps = {
+    collections: {
+        id: string;
+        name: string;
+    }[];
+};
+
+export function ImportTermsForm({ collections, }: ImportTermsFormProps) {
     const [termsText, setTermsText] = useState("");
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState<string | null>(null);
     const [error, setError] = useState<string | null>(null);
+    const [selectedCollectionIds, setSelectedCollectionIds] = useState<string[]>([]);
 
     async function handleImport() {
         const terms = termsText
@@ -32,6 +40,7 @@ export function ImportTermsForm() {
                     },
                     body: JSON.stringify({
                         terms,
+                        collectionIds: selectedCollectionIds,
                     }),
                 }
             );
@@ -63,6 +72,24 @@ export function ImportTermsForm() {
         }
     }
 
+    function handleCollectionChange(
+        collectionId: string,
+        checked: boolean
+    ) {
+        if (checked) {
+            setSelectedCollectionIds((current) => [
+                ...current,
+                collectionId,
+            ]);
+
+            return;
+        }
+
+        setSelectedCollectionIds((current) =>
+            current.filter((id) => id !== collectionId)
+        );
+    }
+
     return (
         <div className="space-y-4">
             {message && (
@@ -76,6 +103,35 @@ export function ImportTermsForm() {
                     {error}
                 </p>
             )}
+
+            <div className="space-y-2">
+                <h3 className="font-medium">
+                    Collections (optional)
+                </h3>
+
+                {collections.map((collection) => (
+                    <label
+                        key={collection.id}
+                        className="flex items-center gap-2"
+                    >
+                        <input
+                            type="checkbox"
+                            checked={selectedCollectionIds.includes(
+                                collection.id
+                            )}
+                            onChange={(event) =>
+                                handleCollectionChange(
+                                    collection.id,
+                                    event.target.checked
+                                )
+                            }
+                        />
+
+                        {collection.name}
+                    </label>
+                ))}
+            </div>
+
             <textarea
                 value={termsText}
                 onChange={(event) =>

@@ -1,7 +1,23 @@
 import { ImportTermsForm } from "@/components/terms/import-terms-form";
 import Link from "next/link";
+import { createClient } from "@/lib/supabase/server";
 
-export default function ImportTermsPage() {
+export default async function ImportTermsPage() {
+    const supabase = await createClient();
+
+    const { data: { user }, } = await supabase.auth.getUser();
+
+    if (!user) {
+        throw new Error("User not authenticated");
+    }
+
+    const { data: collections } =
+        await supabase
+            .from("collections")
+            .select("id, name")
+            .eq("user_id", user.id)
+            .order("name");
+
     return (
         <div className="space-y-6">
             <div>
@@ -15,7 +31,9 @@ export default function ImportTermsPage() {
             </div>
 
             <div className="rounded-lg border p-6">
-                <ImportTermsForm />
+                <ImportTermsForm
+                    collections={collections ?? []}
+                />
             </div>
 
             <div className="space-y-4">
