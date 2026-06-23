@@ -4,6 +4,7 @@ import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 
 import { DashboardSidebar } from "@/components/dashboard/dashboard-sidebar";
+import { MobileBottomNav } from "@/components/navigation/mobile-bottom-nav";
 
 type DashboardLayoutProps = {
     children: ReactNode;
@@ -31,9 +32,11 @@ export default async function DashboardLayout({
         <>
             <DashboardSidebar userName={userName} />
 
-            <main className="ml-64 min-h-screen p-6">
+            <main className="min-h-screen p-6 pb-24 md:ml-64 md:pb-6">
                 {children}
             </main>
+
+            <MobileBottomNav />
         </>
     );
 }
