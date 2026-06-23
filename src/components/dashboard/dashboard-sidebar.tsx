@@ -1,8 +1,13 @@
 import Link from "next/link";
+import { SignOutButton } from "@/components/auth/sign-out-button";
 
-export function DashboardSidebar() {
+type DashboardSidebarProps = {
+    userName: string;
+};
+
+export function DashboardSidebar({ userName, }: DashboardSidebarProps) {
     return (
-        <aside className="w-64 border-r p-4">
+        <aside className="fixed left-0 top-0 flex h-screen w-64 flex-col border-r bg-background p-4">
             <div className="mb-8">
                 <h2 className="text-xl font-bold">
                     Wordulary
@@ -38,6 +43,18 @@ export function DashboardSidebar() {
                     Review
                 </Link>
             </nav>
+
+            <div className="mt-auto border-t pt-4">
+                <p className="font-medium">
+                    {userName}
+                </p>
+
+                <p className="mb-4 text-sm text-muted-foreground">
+                    Continue learning
+                </p>
+
+                <SignOutButton />
+            </div>
         </aside>
     );
 }
