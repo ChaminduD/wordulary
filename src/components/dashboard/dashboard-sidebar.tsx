@@ -1,5 +1,6 @@
-import Link from "next/link";
 import { SignOutButton } from "@/components/auth/sign-out-button";
+import { navigation } from "@/lib/navigation";
+import { NavLink } from "@/components/navigation/nav-link";
 
 type DashboardSidebarProps = {
     userName: string;
@@ -15,33 +16,17 @@ export function DashboardSidebar({ userName, }: DashboardSidebarProps) {
             </div>
 
             <nav className="space-y-2">
-                <Link
-                    href="/dashboard"
-                    className="block rounded-md px-3 py-2 hover:bg-muted"
-                >
-                    Dashboard
-                </Link>
+                {navigation.map((item) => {
 
-                <Link
-                    href="/dashboard/terms"
-                    className="block rounded-md px-3 py-2 hover:bg-muted"
-                >
-                    Terms
-                </Link>
-
-                <Link
-                    href="/dashboard/collections"
-                    className="block rounded-md px-3 py-2 hover:bg-muted"
-                >
-                    Collections
-                </Link>
-
-                <Link
-                    href="/dashboard/review"
-                    className="block rounded-md px-3 py-2 hover:bg-muted"
-                >
-                    Review
-                </Link>
+                    return (
+                        <NavLink
+                            key={item.href}
+                            href={item.href}
+                            label={item.label}
+                            icon={item.icon}
+                        />
+                    );
+                })}
             </nav>
 
             <div className="mt-auto border-t pt-4">
