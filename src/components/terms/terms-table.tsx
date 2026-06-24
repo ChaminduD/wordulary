@@ -50,86 +50,142 @@ export function TermsTable({ terms, hasSearch, hasActiveFilter }: TermsTableProp
     }
 
     return (
-        <div className="rounded-lg border">
-            <table className="w-full">
-                <thead>
-                    <tr className="border-b">
-                        <th className="p-4 text-left">
-                            Term
-                        </th>
+        <>
+            <div className="hidden rounded-lg border md:block">
+                <table className="w-full">
+                    <thead>
+                        <tr className="border-b">
+                            <th className="p-4 text-left">
+                                Term
+                            </th>
 
-                        <th className="p-4 text-left">
-                            Type
-                        </th>
+                            <th className="p-4 text-left">
+                                Type
+                            </th>
 
-                        <th className="p-4 text-left">
-                            Status
-                        </th>
+                            <th className="p-4 text-left">
+                                Status
+                            </th>
 
-                        <th className="p-4 text-left">
-                            AI Status
-                        </th>
+                            <th className="p-4 text-left">
+                                AI Status
+                            </th>
 
-                        <th className="p-4 text-left">
-                            Created
-                        </th>
+                            <th className="p-4 text-left">
+                                Created
+                            </th>
 
-                        <th className="p-4 text-left">
-                            Actions
-                        </th>
-                    </tr>
-                </thead>
-
-                <tbody>
-                    {terms.map((term) => (
-                        <tr
-                            key={term.id}
-                            className="border-b"
-                        >
-                            <td className="p-4">
-                                <Link
-                                    href={`/dashboard/terms/${term.id}`}
-                                    className="hover:underline"
-                                >
-                                    {term.term}
-                                </Link>
-                            </td>
-
-                            <td className="p-4">
-                                {term.termType}
-                            </td>
-
-                            <td className="p-4 capitalize">
-                                {term.status}
-                            </td>
-
-                            <td className="p-4">
-                                {term.aiGenerated
-                                    ? "Generated"
-                                    : "Missing AI"}
-                            </td>
-
-                            <td className="p-4">
-                                {new Date(
-                                    term.createdAt
-                                ).toLocaleDateString()}
-                            </td>
-
-                            <td className="p-4">
-                                <form action={deleteTermAction}>
-                                    <input
-                                        type="hidden"
-                                        name="id"
-                                        value={term.id}
-                                    />
-
-                                    <ConfirmDeleteButton />
-                                </form>
-                            </td>
+                            <th className="p-4 text-left">
+                                Actions
+                            </th>
                         </tr>
-                    ))}
-                </tbody>
-            </table>
-        </div>
+                    </thead>
+
+                    <tbody>
+                        {terms.map((term) => (
+                            <tr
+                                key={term.id}
+                                className="border-b"
+                            >
+                                <td className="p-4">
+                                    <Link
+                                        href={`/dashboard/terms/${term.id}`}
+                                        className="hover:underline"
+                                    >
+                                        {term.term}
+                                    </Link>
+                                </td>
+
+                                <td className="p-4">
+                                    {term.termType}
+                                </td>
+
+                                <td className="p-4 capitalize">
+                                    {term.status}
+                                </td>
+
+                                <td className="p-4">
+                                    {term.aiGenerated
+                                        ? "Generated"
+                                        : "Missing AI"}
+                                </td>
+
+                                <td className="p-4">
+                                    {new Date(
+                                        term.createdAt
+                                    ).toLocaleDateString()}
+                                </td>
+
+                                <td className="p-4">
+                                    <form action={deleteTermAction}>
+                                        <input
+                                            type="hidden"
+                                            name="id"
+                                            value={term.id}
+                                        />
+
+                                        <ConfirmDeleteButton />
+                                    </form>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
+
+            <div className="space-y-3 md:hidden">
+                {terms.map((term) => (
+                    <div
+                        key={term.id}
+                        className="rounded-lg border p-4"
+                    >
+                        <Link
+                            href={`/dashboard/terms/${term.id}`}
+                            className="font-medium hover:underline"
+                        >
+                            {term.term}
+                        </Link>
+
+                        <div className="mt-2 space-y-1 text-sm text-muted-foreground">
+                            <p>
+                                Type: {term.termType}
+                            </p>
+
+                            <p className="capitalize">
+                                Status: {term.status}
+                            </p>
+
+                            <p>
+                                AI: {
+                                    term.aiGenerated
+                                        ? "Generated"
+                                        : "Missing AI"
+                                }
+                            </p>
+
+                            <p>
+                                Created: {
+                                    new Date(
+                                        term.createdAt
+                                    ).toLocaleDateString()
+                                }
+                            </p>
+                        </div>
+
+                        <div className="mt-4">
+                            <form action={deleteTermAction}>
+                                <input
+                                    type="hidden"
+                                    name="id"
+                                    value={term.id}
+                                />
+
+                                <ConfirmDeleteButton />
+                            </form>
+                        </div>
+                    </div>
+                ))}
+            </div>
+        </>
     );
 }

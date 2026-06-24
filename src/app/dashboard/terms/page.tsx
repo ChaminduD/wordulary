@@ -2,6 +2,7 @@ import { createClient } from "@/lib/supabase/server";
 import { TermsTable } from "@/components/terms/terms-table";
 import { TermsSearch } from "@/components/terms/terms-search";
 import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 type PageProps = {
     searchParams: Promise<{
@@ -122,7 +123,7 @@ export default async function TermsPage({ searchParams, }: PageProps) {
 
     return (
         <div className="space-y-4">
-            <div className="flex items-start justify-between gap-4">
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
                 <div>
                     <h2 className="text-xl font-bold">
                         Your Terms
@@ -133,20 +134,18 @@ export default async function TermsPage({ searchParams, }: PageProps) {
                     </p>
                 </div>
 
-                <div className="flex gap-2">
-                    <Link
-                        href="/dashboard/terms/new"
-                        className="rounded border px-4 py-2"
-                    >
-                        Add Term
-                    </Link>
+                <div className="flex flex-wrap gap-2">
+                    <Button asChild>
+                        <Link href="/dashboard/terms/new">
+                            Add Term
+                        </Link>
+                    </Button>
 
-                    <Link
-                        href="/dashboard/terms/import"
-                        className="rounded border px-4 py-2"
-                    >
-                        Import Terms
-                    </Link>
+                    <Button variant="outline" asChild>
+                        <Link href="/dashboard/terms/import">
+                            Import Terms
+                        </Link>
+                    </Button>
                 </div>
             </div>
 
@@ -235,7 +234,7 @@ export default async function TermsPage({ searchParams, }: PageProps) {
                             }
                             className="rounded border px-3 py-1"
                         >
-                            Clear Filters
+                            ✕ Clear Filters
                         </Link>
                     )}
 

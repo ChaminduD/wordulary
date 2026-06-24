@@ -8,7 +8,7 @@ export function ConfirmDeleteButton({ label = "Delete", }: ConfirmDeleteButtonPr
     return (
         <button
             type="submit"
-            className="text-sm"
+            className="rounded border px-3 py-1 text-sm"
             onClick={(event) => {
                 const confirmed = window.confirm("Delete this term?");
 
