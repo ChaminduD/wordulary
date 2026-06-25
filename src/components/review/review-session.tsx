@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 
 type ReviewTerm = {
@@ -22,8 +21,6 @@ export function ReviewSession({ terms, collectionId, }: ReviewSessionProps) {
     const [updating, setUpdating] = useState(false);
 
     const currentTerm = terms[currentIndex];
-
-    const router = useRouter();
 
     function handleNext() {
         setCurrentIndex((current) =>

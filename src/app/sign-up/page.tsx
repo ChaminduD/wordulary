@@ -1,15 +1,20 @@
 import Link from "next/link";
 import { signUpAction } from "@/actions/auth";
+import { Button } from "@/components/ui/button";
 
 export default function SignUpPage() {
     return (
-        <main className="flex min-h-screen items-center justify-center">
-            <div className="w-full max-w-sm space-y-6">
+        <main className="flex min-h-screen items-center justify-center p-4">
+            <div className="w-full max-w-sm space-y-6 rounded-lg border p-6">
 
                 <div className="text-center">
                     <h1 className="text-3xl font-bold">
-                        Create Account
+                        Wordulary
                     </h1>
+
+                    <p className="mt-2 text-center text-muted-foreground">
+                        Create your account
+                    </p>
                 </div>
 
                 <form
@@ -40,20 +45,23 @@ export default function SignUpPage() {
                         className="w-full rounded border px-3 py-2"
                     />
 
-                    <button
+                    <Button
                         type="submit"
-                        className="w-full rounded border px-4 py-2"
+                        className="w-full"
                     >
                         Create Account
-                    </button>
+                    </Button>
                 </form>
 
-                <Link
-                    href="/login"
-                    className="block text-center text-sm"
-                >
-                    Already have an account?
-                </Link>
+                <p className="text-center text-sm text-muted-foreground">
+                    Already have an account?{" "}
+                    <Link
+                        href="/login"
+                        className="font-medium hover:underline"
+                    >
+                        Sign in
+                    </Link>
+                </p>
 
             </div>
         </main>

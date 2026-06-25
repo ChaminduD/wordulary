@@ -3,6 +3,7 @@ import { GoogleSignInButton } from "@/components/auth/google-sign-in-button";
 import { createClient } from "@/lib/supabase/server";
 import Link from "next/link";
 import { signInAction } from "@/actions/auth";
+import { Button } from "@/components/ui/button";
 
 type PageProps = {
   searchParams: Promise<{
@@ -23,8 +24,8 @@ export default async function LoginPage({ searchParams }: PageProps) {
   }
 
   return (
-    <main className="flex min-h-screen items-center justify-center">
-      <div className="w-full max-w-sm space-y-6">
+    <main className="flex min-h-screen items-center justify-center p-4">
+      <div className="w-full max-w-sm space-y-6 rounded-lg border p-6">
         <div className="text-center">
           <h1 className="text-3xl font-bold">Wordulary</h1>
           <p className="mt-2 text-muted-foreground">
@@ -34,20 +35,22 @@ export default async function LoginPage({ searchParams }: PageProps) {
 
         <GoogleSignInButton />
 
-        <p>or</p>
+        <p className="text-center text-sm text-muted-foreground">
+          or
+        </p>
 
         {error === "invalid_credentials" && (
-          <p className="text-sm text-red-500">
+          <p className="text-center text-sm text-red-500">
             Invalid email or password.
           </p>
         )}
 
         {error === "email_not_confirmed" && (
-          <p className="text-sm text-red-500">
+          <p className="text-center text-sm text-red-500">
             Please verify your email before signing in.
           </p>
         )}
-        
+
         <form
           action={signInAction}
           className="space-y-4"
@@ -68,22 +71,23 @@ export default async function LoginPage({ searchParams }: PageProps) {
             required
           />
 
-          <button
+          <Button
             type="submit"
-            className="w-full rounded border px-4 py-2"
+            className="w-full"
           >
             Sign In
-          </button>
+          </Button>
         </form>
 
-        <p>Don&apos;t have an account?</p>
-
-        <Link
-          href="/sign-up"
-          className="block text-center text-sm"
-        >
-          Create an account
-        </Link>
+        <p className="text-center text-sm text-muted-foreground">
+          Don&apos;t have an account?{" "}
+          <Link
+            href="/sign-up"
+            className="font-medium hover:underline"
+          >
+            Create one
+          </Link>
+        </p>
       </div>
     </main>
   );

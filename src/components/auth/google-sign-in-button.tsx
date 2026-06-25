@@ -16,7 +16,11 @@ export function GoogleSignInButton() {
     };
 
     return (
-        <Button onClick={handleSignIn}>
+        <Button
+            type="button"
+            className="w-full"
+            onClick={handleSignIn}
+        >
             Continue with Google
         </Button>
     );
