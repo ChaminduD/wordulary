@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
 
 type ReviewTerm = {
     id: string;
@@ -76,9 +77,9 @@ export function ReviewSession({ terms, collectionId, }: ReviewSessionProps) {
                     You&apos;ve reviewed all available terms.
                 </p>
 
-                <button
+                <Button
                     type="button"
-                    className="rounded border px-4 py-2"
+                    variant="outline"
                     onClick={() => {
                         window.location.href =
                             collectionId
@@ -87,7 +88,7 @@ export function ReviewSession({ terms, collectionId, }: ReviewSessionProps) {
                     }}
                 >
                     Start Over
-                </button>
+                </Button>
             </div>
         );
     }
@@ -103,13 +104,12 @@ export function ReviewSession({ terms, collectionId, }: ReviewSessionProps) {
             </h2>
 
             {!showAnswer ? (
-                <button
+                <Button
                     type="button"
-                    className="rounded border px-4 py-2"
                     onClick={() => setShowAnswer(true)}
                 >
                     Show Definition
-                </button>
+                </Button>
             ) : null}
 
             {showAnswer && (
@@ -140,33 +140,32 @@ export function ReviewSession({ terms, collectionId, }: ReviewSessionProps) {
                         </ul>
                     </div>
 
-                    <div className="flex gap-4">
+                    <div className="flex flex-col gap-2 sm:flex-row">
                         {currentIndex > 0 && (
-                            <button
+                            <Button
                                 type="button"
-                                className="rounded border px-4 py-2"
+                                variant="ghost"
                                 onClick={handlePrevious}
                             >
                                 Previous
-                            </button>
+                            </Button>
                         )}
 
-                        <button
+                        <Button
                             type="button"
-                            disabled={updating}
-                            className="rounded border px-4 py-2"
                             onClick={handleMarkMastered}
+                            disabled={updating}
                         >
                             Mark Mastered
-                        </button>
+                        </Button>
 
-                        <button
+                        <Button
                             type="button"
-                            className="rounded border px-4 py-2"
+                            variant="outline"
                             onClick={handleNext}
                         >
                             Next Term
-                        </button>
+                        </Button>
                     </div>
                 </div>
             )}

@@ -2,6 +2,7 @@ import { deleteCollection } from "@/actions/collections";
 import { CreateCollectionForm } from "@/components/collections/create-collection-form";
 import { createClient } from "@/lib/supabase/server";
 import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 export default async function CollectionsPage() {
     const supabase = await createClient();
@@ -54,12 +55,13 @@ export default async function CollectionsPage() {
                                 value={collection.id}
                             />
 
-                            <button
+                            <Button
                                 type="submit"
-                                className="text-sm"
+                                variant="destructive"
+                                size="sm"
                             >
                                 Delete
-                            </button>
+                            </Button>
                         </form>
                     </div>
                 ))}

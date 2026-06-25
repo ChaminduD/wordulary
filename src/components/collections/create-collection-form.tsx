@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { createCollection } from "@/actions/collections";
+import { Button } from "@/components/ui/button";
 
 export function CreateCollectionForm() {
     const [name, setName] = useState("");
@@ -66,18 +67,17 @@ export function CreateCollectionForm() {
                     setMessage(null);
                 }}
                 placeholder="Collection name"
-                className="rounded border px-3 py-2"
+                className="w-full rounded border px-3 py-2"
             />
 
-            <button
+            <Button
                 type="submit"
                 disabled={loading}
-                className="rounded border px-4 py-2"
             >
                 {loading
                     ? "Creating..."
-                    : "Create Collection"}
-            </button>
+                    : "Create"}
+            </Button>
         </form>
     );
 }

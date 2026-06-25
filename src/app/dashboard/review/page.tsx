@@ -66,7 +66,7 @@ export default async function ReviewPage({ searchParams, }: PageProps) {
 
     if (!terms?.length) {
         return (
-            <div>
+            <div className="space-y-4">
                 <h2 className="text-xl font-bold">
                     Review
                 </h2>
@@ -86,7 +86,7 @@ export default async function ReviewPage({ searchParams, }: PageProps) {
     }
 
     return (
-        <div>
+        <div className="space-y-4">
             <h2 className="text-xl font-bold">
                 Review
             </h2>
