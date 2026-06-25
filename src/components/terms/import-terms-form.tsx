@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { Button } from "@/components/ui/button";
 
 type ImportTermsFormProps = {
     collections: {
@@ -143,13 +144,13 @@ export function ImportTermsForm({ collections, }: ImportTermsFormProps) {
                 className="min-h-[250px] w-full rounded border p-3"
             />
 
-            <button
+            <Button
+                type="button"
                 onClick={handleImport}
-                className="rounded border px-4 py-2"
                 disabled={loading}
             >
                 {loading ? "Importing..." : "Import Terms"}
-            </button>
+            </Button>
         </div>
     );
 }

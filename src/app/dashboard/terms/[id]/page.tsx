@@ -170,6 +170,7 @@ export default async function TermPage({ params, }: PageProps) {
 
                     <ConfirmDeleteButton
                         label="Delete Term"
+                        termName={term.term}
                     />
                 </form>
             </div>

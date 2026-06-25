@@ -4,6 +4,7 @@ import { useState } from "react";
 import type { GeneratedTerm } from "@/types/term";
 import { TermPreviewCard } from "@/components/terms/term-preview-card";
 import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
 
 type TermGeneratorProps = {
     collections: {
@@ -142,17 +143,16 @@ export function TermGenerator({ collections, }: TermGeneratorProps) {
                     className="w-full rounded border px-3 py-2"
                 />
 
-                <button
+                <Button
                     onClick={handleGenerate}
                     disabled={loading || saving}
-                    className="rounded border px-4 py-2"
                 >
                     {loading
                         ? "Generating..."
                         : isRegenerate
                             ? "Regenerate"
                             : "Generate"}
-                </button>
+                </Button>
             </div>
 
             {generateError && (
@@ -198,14 +198,13 @@ export function TermGenerator({ collections, }: TermGeneratorProps) {
                             {saveError}
                         </p>
                     )}
-                    <button
+                    <Button
                         type="button"
-                        className="rounded border px-4 py-2"
                         onClick={handleSave}
                         disabled={saving || loading}
                     >
                         {saving ? "Saving..." : "Save Term"}
-                    </button>
+                    </Button>
                 </div>
 
             )}

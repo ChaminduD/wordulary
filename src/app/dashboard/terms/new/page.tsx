@@ -1,6 +1,7 @@
 import { TermGenerator } from "@/components/terms/term-generator";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
+import { Button } from "@/components/ui/button";
 
 export default async function NewTermPage() {
     const supabase = await createClient();
@@ -37,12 +38,11 @@ export default async function NewTermPage() {
             <div className="space-y-4">
                 <p>Need to import multiple terms?</p>
 
-                <Link
-                    href="/dashboard/terms/import"
-                    className="rounded border px-4 py-2"
-                >
-                    Import Terms
-                </Link>
+                <Button variant="outline" asChild>
+                    <Link href="/dashboard/terms/import">
+                        Import Terms
+                    </Link>
+                </Button>
             </div>
         </div>
     );

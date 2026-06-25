@@ -124,7 +124,9 @@ export function TermsTable({ terms, hasSearch, hasActiveFilter }: TermsTableProp
                                             value={term.id}
                                         />
 
-                                        <ConfirmDeleteButton />
+                                        <ConfirmDeleteButton
+                                            termName={term.term}
+                                        />
                                     </form>
                                 </td>
                             </tr>
@@ -180,7 +182,9 @@ export function TermsTable({ terms, hasSearch, hasActiveFilter }: TermsTableProp
                                     value={term.id}
                                 />
 
-                                <ConfirmDeleteButton />
+                                <ConfirmDeleteButton
+                                    termName={term.term}
+                                />
                             </form>
                         </div>
                     </div>

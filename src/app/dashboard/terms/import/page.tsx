@@ -1,6 +1,7 @@
 import { ImportTermsForm } from "@/components/terms/import-terms-form";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
+import { Button } from "@/components/ui/button";
 
 export default async function ImportTermsPage() {
     const supabase = await createClient();
@@ -39,12 +40,11 @@ export default async function ImportTermsPage() {
             <div className="space-y-4">
                 <p>Need AI-generated definitions and examples?</p>
 
-                <Link
-                    href="/dashboard/terms/new"
-                    className="rounded border px-4 py-2"
-                >
-                    Add Term
-                </Link>
+                <Button variant="outline" asChild>
+                    <Link href="/dashboard/terms/new">
+                        Add Term
+                    </Link>
+                </Button>
             </div>
         </div>
     );

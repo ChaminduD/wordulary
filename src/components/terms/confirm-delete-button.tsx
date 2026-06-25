@@ -1,16 +1,25 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
+
 type ConfirmDeleteButtonProps = {
     label?: string;
+    termName: string;
 };
 
-export function ConfirmDeleteButton({ label = "Delete", }: ConfirmDeleteButtonProps) {
+export function ConfirmDeleteButton({
+    label = "Delete",
+    termName,
+}: ConfirmDeleteButtonProps) {
     return (
-        <button
+        <Button
             type="submit"
-            className="rounded border px-3 py-1 text-sm"
+            variant="destructive"
+            size="sm"
             onClick={(event) => {
-                const confirmed = window.confirm("Delete this term?");
+                const confirmed = window.confirm(
+                    `Are you sure you want to delete "${termName}"?`
+                );
 
                 if (!confirmed) {
                     event.preventDefault();
@@ -18,6 +27,6 @@ export function ConfirmDeleteButton({ label = "Delete", }: ConfirmDeleteButtonPr
             }}
         >
             {label}
-        </button>
+        </Button>
     );
 }
