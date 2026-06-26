@@ -50,17 +50,17 @@ export default async function TermPage({ params, }: PageProps) {
     return (
         <div className="space-y-6">
             <div>
-                <h1 className="text-2xl font-bold">
+                <h1 className="text-3xl font-semibold tracking-tight">
                     {term.term}
                 </h1>
 
-                <p className="text-muted-foreground">
+                <p className="mt-1 text-sm text-muted-foreground capitalize">
                     {term.term_type}
                 </p>
             </div>
 
-            <div className="rounded-lg border p-6">
-                <div className="mb-4 border-b-2 pb-2">
+            <div className="rounded-xl border bg-card p-6 space-y-8">
+                <div>
                     <StatusSelector
                         termId={term.id}
                         status={term.status}
@@ -68,7 +68,7 @@ export default async function TermPage({ params, }: PageProps) {
                     />
                 </div>
 
-                <div className="mb-4 border-b-2 pb-2">
+                <div>
                     <CollectionSelector
                         termId={term.id}
                         collections={collections ?? []}
@@ -76,7 +76,7 @@ export default async function TermPage({ params, }: PageProps) {
                     />
                 </div>
 
-                <h2 className="mb-4 font-semibold">
+                <h2 className="text-lg font-semibold">
                     AI Content
                 </h2>
 
@@ -89,23 +89,23 @@ export default async function TermPage({ params, }: PageProps) {
                         <GenerateAiContentButton termId={term.id} />
                     </div>
                 ) : (
-                    <div className="space-y-6">
+                    <div className="space-y-8">
                         <div>
-                            <h3 className="font-medium">
+                            <h3 className="text-sm font-semibold text-muted-foreground">
                                 Definition
                             </h3>
 
-                            <p className="mt-2">
+                            <p className="mt-2 leading-7">
                                 {term.definition}
                             </p>
                         </div>
 
                         <div>
-                            <h3 className="font-medium">
+                            <h3 className="text-sm font-semibold text-muted-foreground">
                                 Examples
                             </h3>
 
-                            <ul className="mt-2 list-disc pl-5">
+                            <ul className="mt-2 list-disc space-y-2 pl-5">
                                 {term.example_sentences?.map(
                                     (
                                         example: string,
@@ -118,31 +118,31 @@ export default async function TermPage({ params, }: PageProps) {
                         </div>
 
                         <div>
-                            <h3 className="font-medium">
+                            <h3 className="text-sm font-semibold text-muted-foreground">
                                 Synonyms
                             </h3>
 
-                            <p className="mt-2">
+                            <p className="mt-2 leading-7">
                                 {term.synonyms?.join(", ")}
                             </p>
                         </div>
 
                         <div>
-                            <h3 className="font-medium">
+                            <h3 className="text-sm font-semibold text-muted-foreground">
                                 Antonyms
                             </h3>
 
-                            <p className="mt-2">
+                            <p className="mt-2 leading-7">
                                 {term.antonyms?.join(", ")}
                             </p>
                         </div>
 
                         <div>
-                            <h3 className="font-medium">
+                            <h3 className="text-sm font-semibold text-muted-foreground">
                                 Difficulty
                             </h3>
 
-                            <p className="mt-2 capitalize">
+                            <p className="mt-2 leading-7 capitalize">
                                 {term.difficulty}
                             </p>
                         </div>
@@ -150,11 +150,11 @@ export default async function TermPage({ params, }: PageProps) {
                 )}
             </div>
             <div className="rounded-lg border p-6">
-                <h2 className="font-semibold">
+                <h2 className="text-lg font-semibold text-destructive">
                     Danger Zone
                 </h2>
 
-                <p className="mt-2 text-sm text-muted-foreground">
+                <p className="mt-1 text-sm text-muted-foreground">
                     Permanently delete this term.
                 </p>
 

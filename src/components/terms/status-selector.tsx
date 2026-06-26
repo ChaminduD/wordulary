@@ -47,7 +47,11 @@ export function StatusSelector({ termId, status, aiGenerated }: StatusSelectorPr
     }
 
     return (
-        <>
+        <div className="space-y-2">
+            <h3 className="font-medium">
+                Status
+            </h3>
+
             <select
                 defaultValue={status}
                 onChange={handleChange}
@@ -80,8 +84,8 @@ export function StatusSelector({ termId, status, aiGenerated }: StatusSelectorPr
             )}
 
             {saving && (
-                <span className="text-sm text-muted-foreground">Saving...</span>
+                <span className="ml-2 text-sm text-muted-foreground">Saving...</span>
             )}
-        </>
+        </div>
     );
 }

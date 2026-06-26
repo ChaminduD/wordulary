@@ -55,7 +55,7 @@ export function GenerateAiContentButton({ termId, }: GenerateAiContentButtonProp
             >
                 {loading
                     ? "Generating..."
-                    : "Generate AI Content"}
+                    : "Generate"}
             </Button>
             {
                 error && (
