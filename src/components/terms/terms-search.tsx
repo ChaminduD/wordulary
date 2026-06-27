@@ -29,7 +29,7 @@ export function TermsSearch() {
             type="text"
             value={value}
             onChange={(event) => setValue(event.target.value)}
-            placeholder="Search terms..."
+            placeholder="Search your vocabulary..."
             className="w-full rounded border px-3 py-2"
         />
     );

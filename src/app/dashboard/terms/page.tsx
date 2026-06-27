@@ -122,14 +122,14 @@ export default async function TermsPage({ searchParams, }: PageProps) {
     }
 
     return (
-        <div className="space-y-4">
+        <div className="space-y-6">
             <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
                 <div>
-                    <h2 className="text-xl font-bold">
+                    <h1 className="text-3xl font-semibold tracking-tight">
                         Your Terms
-                    </h2>
+                    </h1>
 
-                    <p className="text-muted-foreground">
+                    <p className="mt-1 text-sm text-muted-foreground">
                         Manage and study your vocabulary.
                     </p>
                 </div>
@@ -149,104 +149,122 @@ export default async function TermsPage({ searchParams, }: PageProps) {
                 </div>
             </div>
 
-            {hasTerms && (
-                <>
-                    <div className="flex gap-2">
-                        <Link
-                            href={
-                                status === "new"
-                                    ? getFilterHref(undefined, ai)
-                                    : getFilterHref("new", ai)
-                            }
-                            className={getFilterClass("new")}
+            <div className="rounded-xl border p-6 space-y-6">
+                <TermsSearch />
 
-                        >
-                            {status === "new"
-                                ? "New ✓"
-                                : "New"}
-                        </Link>
+                {hasTerms && (
+                    <>
+                        <div className="space-y-4 sm:space-y-0 sm:flex sm:gap-10">
+                            <div className="flex flex-col gap-2">
+                                <p className="text-sm font-semibold text-muted-foreground">
+                                    Status
+                                </p>
 
-                        <Link
-                            href={
-                                status === "learning"
-                                    ? getFilterHref(undefined, ai)
-                                    : getFilterHref("learning", ai)
-                            }
-                            className={getFilterClass("learning")}
-                        >
-                            {status === "learning"
-                                ? "Learning ✓"
-                                : "Learning"}
-                        </Link>
+                                <div className="flex gap-2 flex-wrap">
+                                    <Link
+                                        href={
+                                            status === "new"
+                                                ? getFilterHref(undefined, ai)
+                                                : getFilterHref("new", ai)
+                                        }
+                                        className={getFilterClass("new")}
 
-                        <Link
-                            href={
-                                status === "mastered"
-                                    ? getFilterHref(undefined, ai)
-                                    : getFilterHref("mastered", ai)
-                            }
-                            className={getFilterClass("mastered")}
-                        >
-                            {status === "mastered"
-                                ? "Mastered ✓"
-                                : "Mastered"}
-                        </Link>
-                    </div>
+                                    >
+                                        {status === "new"
+                                            ? "New ✓"
+                                            : "New"}
+                                    </Link>
 
-                    <div className="flex gap-2">
-                        <Link
-                            href={
-                                ai === "generated"
-                                    ? getFilterHref(status)
-                                    : getFilterHref(status, "generated")
-                            }
-                            className={ai === "generated"
-                                ? "rounded border px-3 py-1 border-primary"
-                                : "rounded border px-3 py-1"}
-                        >
-                            {ai === "generated"
-                                ? "Generated ✓"
-                                : "Generated"}
-                        </Link>
+                                    <Link
+                                        href={
+                                            status === "learning"
+                                                ? getFilterHref(undefined, ai)
+                                                : getFilterHref("learning", ai)
+                                        }
+                                        className={getFilterClass("learning")}
+                                    >
+                                        {status === "learning"
+                                            ? "Learning ✓"
+                                            : "Learning"}
+                                    </Link>
 
-                        <Link
-                            href={
-                                ai === "missing"
-                                    ? getFilterHref(status)
-                                    : getFilterHref(status, "missing")
-                            }
-                            className={ai === "missing"
-                                ? "rounded border px-3 py-1 border-primary"
-                                : "rounded border px-3 py-1"}
-                        >
-                            {ai === "missing"
-                                ? "Missing AI ✓"
-                                : "Missing AI"}
-                        </Link>
-                    </div>
+                                    <Link
+                                        href={
+                                            status === "mastered"
+                                                ? getFilterHref(undefined, ai)
+                                                : getFilterHref("mastered", ai)
+                                        }
+                                        className={getFilterClass("mastered")}
+                                    >
+                                        {status === "mastered"
+                                            ? "Mastered ✓"
+                                            : "Mastered"}
+                                    </Link>
+                                </div>
+                            </div>
 
-                    {(status || ai) && (
-                        <Link
-                            href={
-                                searchQuery
-                                    ? `/dashboard/terms?search=${encodeURIComponent(searchQuery)}`
-                                    : "/dashboard/terms"
-                            }
-                            className="rounded border px-3 py-1"
-                        >
-                            ✕ Clear Filters
-                        </Link>
-                    )}
+                            <div className="flex flex-col gap-2">
+                                <p className="text-sm font-semibold text-muted-foreground">
+                                    AI Content
+                                </p>
 
-                    <TermsSearch />
+                                <div className="flex gap-2 flex-wrap">
+                                    <Link
+                                        href={
+                                            ai === "generated"
+                                                ? getFilterHref(status)
+                                                : getFilterHref(status, "generated")
+                                        }
+                                        className={ai === "generated"
+                                            ? "rounded border px-3 py-1 border-primary"
+                                            : "rounded border px-3 py-1"}
+                                    >
+                                        {ai === "generated"
+                                            ? "Generated ✓"
+                                            : "Generated"}
+                                    </Link>
 
-                    {termListItems.length > 0 && (
-                        <p>
-                            Showing {termListItems.length} {termListItems.length === 1 ? "term" : "terms"}
-                        </p>
-                    )}
-                </>
-            )}
+                                    <Link
+                                        href={
+                                            ai === "missing"
+                                                ? getFilterHref(status)
+                                                : getFilterHref(status, "missing")
+                                        }
+                                        className={ai === "missing"
+                                            ? "rounded border px-3 py-1 border-primary"
+                                            : "rounded border px-3 py-1"}
+                                    >
+                                        {ai === "missing"
+                                            ? "Missing ✓"
+                                            : "Missing"}
+                                    </Link>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="flex items-center justify-between text-sm">
+                            {termListItems.length > 0 && (
+                                <p>
+                                    {termListItems.length} {termListItems.length === 1 ? "term" : "terms"}
+                                </p>
+                            )}
+
+                            {(status || ai) && (
+                                <Link
+                                    href={
+                                        searchQuery
+                                            ? `/dashboard/terms?search=${encodeURIComponent(searchQuery)}`
+                                            : "/dashboard/terms"
+                                    }
+                                    className=""
+                                >
+                                    ✕ Clear Filters
+                                </Link>
+                            )}
+                        </div>
+                    </>
+                )}
+            </div>
 
             <TermsTable
                 terms={termListItems}

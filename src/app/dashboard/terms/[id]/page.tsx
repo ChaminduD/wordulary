@@ -59,7 +59,7 @@ export default async function TermPage({ params, }: PageProps) {
                 </p>
             </div>
 
-            <div className="rounded-xl border bg-card p-6 space-y-8">
+            <div className="rounded-xl border p-6 space-y-8">
                 <div>
                     <StatusSelector
                         termId={term.id}
@@ -149,7 +149,7 @@ export default async function TermPage({ params, }: PageProps) {
                     </div>
                 )}
             </div>
-            <div className="rounded-lg border p-6">
+            <div className="rounded-xl border p-6">
                 <h2 className="text-lg font-semibold text-destructive">
                     Danger Zone
                 </h2>

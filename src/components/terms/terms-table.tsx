@@ -13,7 +13,7 @@ export function TermsTable({ terms, hasSearch, hasActiveFilter }: TermsTableProp
     if (terms.length === 0) {
         if (hasSearch) {
             return (
-                <div className="rounded-lg border p-8 text-center">
+                <div className="rounded-xl border p-8 text-center">
                     <h3 className="font-semibold">
                         No matching terms found
                     </h3>
@@ -27,7 +27,7 @@ export function TermsTable({ terms, hasSearch, hasActiveFilter }: TermsTableProp
 
         if (hasActiveFilter) {
             return (
-                <div className="rounded-lg border p-8 text-center">
+                <div className="rounded-xl border p-8 text-center">
                     <h3 className="font-semibold">
                         No matching terms found
                     </h3>
@@ -36,7 +36,7 @@ export function TermsTable({ terms, hasSearch, hasActiveFilter }: TermsTableProp
         }
 
         return (
-            <div className="rounded-lg border p-8 text-center">
+            <div className="rounded-xl border p-8 text-center">
                 <h3 className="font-semibold">
                     No terms yet
                 </h3>
@@ -51,7 +51,7 @@ export function TermsTable({ terms, hasSearch, hasActiveFilter }: TermsTableProp
 
     return (
         <>
-            <div className="hidden rounded-lg border md:block">
+            <div className="hidden rounded-xl border md:block">
                 <table className="w-full">
                     <thead>
                         <tr className="border-b">
@@ -139,7 +139,7 @@ export function TermsTable({ terms, hasSearch, hasActiveFilter }: TermsTableProp
                 {terms.map((term) => (
                     <div
                         key={term.id}
-                        className="rounded-lg border p-4"
+                        className="rounded-xl border p-4"
                     >
                         <Link
                             href={`/dashboard/terms/${term.id}`}
