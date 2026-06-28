@@ -1,4 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
+import { ProgressCard } from "@/components/dashboard/progress-card";
+import { DashboardHero } from "@/components/dashboard/dashboard-hero";
 
 export default async function DashboardPage() {
     const supabase = await createClient();
@@ -13,7 +15,7 @@ export default async function DashboardPage() {
         await supabase
             .from("terms")
             .select("status")
-            .eq("user_id", user?.id);
+            .eq("user_id", user.id);
 
     const { count: collectionsCount } =
         await supabase
@@ -26,75 +28,51 @@ export default async function DashboardPage() {
 
     const totalTerms = terms?.length ?? 0;
 
-    const newTerms = terms?.filter((term) => term.status === "new").length ?? 0;
-
     const learningTerms = terms?.filter((term) => term.status === "learning").length ?? 0;
 
     const masteredTerms = terms?.filter((term) => term.status === "mastered").length ?? 0;
 
     return (
-        <div className="space-y-6">
-            <div>
-                <h2 className="text-xl font-semibold">
-                    Vocabulary Overview
+        <div className="space-y-8">
+            <section>
+                <h1 className="text-3xl font-semibold tracking-tight">
+                    Welcome back
+                </h1>
+
+                <p className="mt-1 text-sm text-muted-foreground">
+                    Continue building your vocabulary.
+                </p>
+            </section>
+
+            <DashboardHero />
+
+            <section className="space-y-4">
+                <h2 className="text-lg font-semibold">
+                    Your Progress
                 </h2>
 
-                <p className="text-muted-foreground">
-                    Track your learning progress.
-                </p>
-            </div>
+                <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+                    <ProgressCard
+                        value={totalTerms}
+                        label="Total Terms"
+                    />
 
-            <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-5">
-                <div className="rounded-lg border p-6">
-                    <p className="text-sm text-muted-foreground">
-                        Total Terms
-                    </p>
+                    <ProgressCard
+                        value={learningTerms}
+                        label="Learning"
+                    />
 
-                    <p className="mt-2 text-3xl font-bold">
-                        {totalTerms}
-                    </p>
+                    <ProgressCard
+                        value={masteredTerms}
+                        label="Mastered"
+                    />
+
+                    <ProgressCard
+                        value={collectionsCount ?? 0}
+                        label="Collections"
+                    />
                 </div>
-
-                <div className="rounded-lg border p-6">
-                    <p className="text-sm text-muted-foreground">
-                        New
-                    </p>
-
-                    <p className="mt-2 text-3xl font-bold">
-                        {newTerms}
-                    </p>
-                </div>
-
-                <div className="rounded-lg border p-6">
-                    <p className="text-sm text-muted-foreground">
-                        Learning
-                    </p>
-
-                    <p className="mt-2 text-3xl font-bold">
-                        {learningTerms}
-                    </p>
-                </div>
-
-                <div className="rounded-lg border p-6">
-                    <p className="text-sm text-muted-foreground">
-                        Mastered
-                    </p>
-
-                    <p className="mt-2 text-3xl font-bold">
-                        {masteredTerms}
-                    </p>
-                </div>
-
-                <div className="rounded-lg border p-6">
-                    <p className="text-sm text-muted-foreground">
-                        Collections
-                    </p>
-
-                    <p className="mt-2 text-3xl font-bold">
-                        {collectionsCount}
-                    </p>
-                </div>
-            </div>
+            </section>
         </div>
     );
 }
