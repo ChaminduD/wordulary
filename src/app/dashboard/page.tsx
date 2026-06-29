@@ -1,6 +1,7 @@
 import { createClient } from "@/lib/supabase/server";
 import { ProgressCard } from "@/components/dashboard/progress-card";
 import { DashboardHero } from "@/components/dashboard/dashboard-hero";
+import { getDashboardHero } from "@/lib/dashboard";
 
 export default async function DashboardPage() {
     const supabase = await createClient();
@@ -14,7 +15,7 @@ export default async function DashboardPage() {
     const { data: terms } =
         await supabase
             .from("terms")
-            .select("status")
+            .select("status, ai_generated")
             .eq("user_id", user.id);
 
     const { count: collectionsCount } =
@@ -32,6 +33,15 @@ export default async function DashboardPage() {
 
     const masteredTerms = terms?.filter((term) => term.status === "mastered").length ?? 0;
 
+    const missingAiTerms = terms?.filter((term) => !term.ai_generated).length ?? 0;
+
+    const hero = getDashboardHero({
+        totalTerms,
+        learningTerms,
+        masteredTerms,
+        missingAiTerms,
+    });
+
     return (
         <div className="space-y-8">
             <section>
@@ -44,7 +54,7 @@ export default async function DashboardPage() {
                 </p>
             </section>
 
-            <DashboardHero />
+            <DashboardHero {...hero} />
 
             <section className="space-y-4">
                 <h2 className="text-lg font-semibold">
