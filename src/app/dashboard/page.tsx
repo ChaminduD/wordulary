@@ -2,6 +2,7 @@ import { createClient } from "@/lib/supabase/server";
 import { ProgressCard } from "@/components/dashboard/progress-card";
 import { DashboardHero } from "@/components/dashboard/dashboard-hero";
 import { getDashboardHero } from "@/lib/dashboard";
+import { RecentTerms } from "@/components/dashboard/recent-terms";
 
 export default async function DashboardPage() {
     const supabase = await createClient();
@@ -26,6 +27,14 @@ export default async function DashboardPage() {
                 head: true,
             })
             .eq("user_id", user.id);
+
+    const { data: recentTerms } =
+        await supabase
+            .from("terms")
+            .select(`id, term, status`)
+            .eq("user_id", user.id)
+            .order("created_at", { ascending: false, })
+            .limit(5);
 
     const totalTerms = terms?.length ?? 0;
 
@@ -83,6 +92,8 @@ export default async function DashboardPage() {
                     />
                 </div>
             </section>
+
+            <RecentTerms terms={recentTerms ?? []} />
         </div>
     );
 }
