@@ -20,32 +20,40 @@ export default async function ImportTermsPage() {
             .order("name");
 
     return (
-        <div className="space-y-6">
-            <div>
-                <h2 className="text-xl font-bold">
+        <div className="space-y-8">
+            <section>
+                <h1 className="text-3xl font-semibold tracking-tight">
                     Import Terms
+                </h1>
+
+                <p className="mt-1 text-sm text-muted-foreground">
+                    Paste your vocabulary list and import multiple terms at once.
+                </p>
+            </section>
+
+            <ImportTermsForm
+                collections={collections ?? []}
+            />
+
+            <section className="rounded-xl border p-6">
+                <h2 className="text-lg font-semibold">
+                    Add Individual Terms
                 </h2>
 
-                <p className="text-muted-foreground">
-                    Paste your terms and import them into Wordulary.
+                <p className="mt-1 text-sm text-muted-foreground">
+                    Generate AI definitions, examples, synonyms and more for a single term.
                 </p>
-            </div>
 
-            <div className="rounded-lg border p-6">
-                <ImportTermsForm
-                    collections={collections ?? []}
-                />
-            </div>
-
-            <div className="space-y-4">
-                <p>Need AI-generated definitions and examples?</p>
-
-                <Button variant="outline" asChild>
+                <Button
+                    variant="outline"
+                    asChild
+                    className="mt-4"
+                >
                     <Link href="/dashboard/terms/new">
-                        Add Term
+                        Add New Term
                     </Link>
                 </Button>
-            </div>
+            </section>
         </div>
     );
 }

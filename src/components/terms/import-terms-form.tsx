@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
 
 type ImportTermsFormProps = {
     collections: {
@@ -92,65 +93,88 @@ export function ImportTermsForm({ collections, }: ImportTermsFormProps) {
     }
 
     return (
-        <div className="space-y-4">
+        <section className="space-y-4">
             {message && (
-                <p className="text-sm">
+                <p className="text-sm text-muted-foreground">
                     {message}
                 </p>
             )}
 
             {error && (
-                <p className="text-sm text-red-500">
+                <p className="text-sm text-destructive">
                     {error}
                 </p>
             )}
 
-            <div className="space-y-2">
-                <h3 className="font-medium">
-                    Collections (optional)
-                </h3>
+            <div className="space-y-4">
+                <div>
+                    <h2 className="text-lg font-semibold">
+                        Vocabulary List
+                    </h2>
 
-                {collections.map((collection) => (
-                    <label
-                        key={collection.id}
-                        className="flex items-center gap-2"
-                    >
-                        <input
-                            type="checkbox"
-                            checked={selectedCollectionIds.includes(
-                                collection.id
-                            )}
-                            onChange={(event) =>
-                                handleCollectionChange(
-                                    collection.id,
-                                    event.target.checked
-                                )
-                            }
-                        />
+                    <p className="mt-1 text-sm text-muted-foreground">
+                        Enter one word, phrase, or idiom per line.
+                    </p>
+                </div>
 
-                        {collection.name}
-                    </label>
-                ))}
+                <Textarea
+                    value={termsText}
+                    onChange={(event) =>
+                        setTermsText(
+                            event.target.value
+                        )
+                    }
+                    placeholder="Enter one term per line"
+                    className="min-h-[250px]"
+                />
             </div>
 
-            <textarea
-                value={termsText}
-                onChange={(event) =>
-                    setTermsText(
-                        event.target.value
-                    )
-                }
-                placeholder="Enter one term per line"
-                className="min-h-[250px] w-full rounded border p-3"
-            />
+            {collections.length > 0 && (
+                <div className="space-y-4">
+                    <div>
+                        <h2 className="text-lg font-semibold">
+                            Collections (optional)
+                        </h2>
+
+                        <p className="mt-1 text-sm text-muted-foreground">
+                            Choose one or more collections for the imported terms.
+                        </p>
+                    </div>
+
+                    <div className="space-y-2">
+                        {collections.map((collection) => (
+                            <label
+                                key={collection.id}
+                                className="flex items-center gap-2"
+                            >
+                                <input
+                                    type="checkbox"
+                                    checked={selectedCollectionIds.includes(
+                                        collection.id
+                                    )}
+                                    onChange={(event) =>
+                                        handleCollectionChange(
+                                            collection.id,
+                                            event.target.checked
+                                        )
+                                    }
+                                />
+
+                                {collection.name}
+                            </label>
+                        ))}
+                    </div>
+                </div>
+            )}
 
             <Button
                 type="button"
+                className="mt-2 w-full sm:w-auto"
                 onClick={handleImport}
                 disabled={loading}
             >
                 {loading ? "Importing..." : "Import Terms"}
             </Button>
-        </div>
+        </section>
     );
 }

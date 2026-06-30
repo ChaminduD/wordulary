@@ -5,6 +5,7 @@ import type { GeneratedTerm } from "@/types/term";
 import { TermPreviewCard } from "@/components/terms/term-preview-card";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
 type TermGeneratorProps = {
     collections: {
@@ -128,10 +129,9 @@ export function TermGenerator({ collections, }: TermGeneratorProps) {
     }
 
     return (
-        <div>
-            <div className="space-y-4">
-                <input
-                    type="text"
+        <section>
+            <div className="flex flex-col gap-3 sm:flex-row">
+                <Input
                     value={term}
                     onChange={(event) => {
                         setTerm(event.target.value);
@@ -140,10 +140,10 @@ export function TermGenerator({ collections, }: TermGeneratorProps) {
                         setSaveError(null);
                     }}
                     placeholder="Enter a word, phrase, or idiom"
-                    className="w-full rounded border px-3 py-2"
                 />
 
                 <Button
+                    className="w-full sm:w-auto"
                     onClick={handleGenerate}
                     disabled={loading || saving}
                 >
@@ -156,50 +156,61 @@ export function TermGenerator({ collections, }: TermGeneratorProps) {
             </div>
 
             {generateError && (
-                <p className="text-sm text-red-500">
+                <p className="mt-3 text-sm text-destructive">
                     {generateError}
                 </p>
             )}
 
             {generatedTerm && (
-                <div className="space-y-4 mt-4">
+                <div className="mt-8 space-y-6">
                     <TermPreviewCard
                         generatedTerm={generatedTerm}
                     />
 
-                    <div className="space-y-2">
-                        <h3 className="font-medium">
-                            Collections (optional)
-                        </h3>
+                    {collections.length > 0 && (
+                        <div className="space-y-4">
+                            <div>
+                                <h2 className="text-lg font-semibold">
+                                    Collections (optional)
+                                </h2>
 
-                        {collections.map((collection) => (
-                            <label
-                                key={collection.id}
-                                className="flex items-center gap-2"
-                            >
-                                <input
-                                    type="checkbox"
-                                    checked={selectedCollectionIds.includes(collection.id)}
-                                    onChange={(event) =>
-                                        handleCollectionChange(
-                                            collection.id,
-                                            event.target.checked
-                                        )
-                                    }
-                                />
+                                <p className="mt-1 text-sm text-muted-foreground">
+                                    Choose one or more collections for this term.
+                                </p>
+                            </div>
 
-                                {collection.name}
-                            </label>
-                        ))}
-                    </div>
+                            <div className="space-y-2">
+                                {collections.map((collection) => (
+                                    <label
+                                        key={collection.id}
+                                        className="flex items-center gap-2"
+                                    >
+                                        <input
+                                            type="checkbox"
+                                            checked={selectedCollectionIds.includes(collection.id)}
+                                            onChange={(event) =>
+                                                handleCollectionChange(
+                                                    collection.id,
+                                                    event.target.checked
+                                                )
+                                            }
+                                        />
+
+                                        {collection.name}
+                                    </label>
+                                ))}
+                            </div>
+                        </div>
+                    )}
 
                     {saveError && (
-                        <p className="text-sm text-red-500">
+                        <p className="mt-3 text-sm text-destructive">
                             {saveError}
                         </p>
                     )}
                     <Button
                         type="button"
+                        className="mt-2"
                         onClick={handleSave}
                         disabled={saving || loading}
                     >
@@ -208,6 +219,6 @@ export function TermGenerator({ collections, }: TermGeneratorProps) {
                 </div>
 
             )}
-        </div>
+        </section>
     );
 }

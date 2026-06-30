@@ -21,29 +21,39 @@ export default async function NewTermPage() {
 
     return (
         <div className="space-y-8">
-            <div>
-                <h2 className="text-xl font-semibold">
+            <section>
+                <h1 className="text-3xl font-semibold tracking-tight">
                     Add New Term
-                </h2>
+                </h1>
 
-                <p className="text-muted-foreground">
+                <p className="mt-1 text-sm text-muted-foreground">
                     Generate vocabulary content with AI.
                 </p>
-            </div>
+            </section>
 
             <TermGenerator
                 collections={collections ?? []}
             />
 
-            <div className="space-y-4">
-                <p>Need to import multiple terms?</p>
+            <section className="rounded-xl border p-6">
+                <h2 className="text-lg font-semibold">
+                    Import Multiple Terms
+                </h2>
 
-                <Button variant="outline" asChild>
+                <p className="mt-1 text-sm text-muted-foreground">
+                    Already have a vocabulary list? Import multiple terms at once.
+                </p>
+
+                <Button
+                    variant="outline"
+                    asChild
+                    className="mt-4"
+                >
                     <Link href="/dashboard/terms/import">
                         Import Terms
                     </Link>
                 </Button>
-            </div>
+            </section>
         </div>
     );
 }
