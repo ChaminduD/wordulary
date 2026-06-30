@@ -51,30 +51,43 @@ export default async function CollectionPage({ params, }: PageProps) {
 
     if (totalTerms === 0) {
         return (
-            <div className="space-y-2">
-                <h2 className="text-xl font-semibold">
-                    {collection.name}
-                </h2>
+            <div className="space-y-8">
+                <section>
+                    <h1 className="text-3xl font-semibold tracking-tight">
+                        {collection.name}
+                    </h1>
 
-                <p className="text-muted-foreground">
-                    No terms in this collection yet.
-                </p>
+                    <p className="mt-1 text-sm text-muted-foreground">
+                        0 terms
+                    </p>
+                </section>
+
+                <section className="rounded-xl border p-8 text-center">
+                    <h2 className="font-semibold">
+                        No terms yet
+                    </h2>
+
+                    <p className="mt-2 text-sm text-muted-foreground">
+                        Add terms to this collection from the Term Details page.
+                    </p>
+                </section>
             </div>
         );
     }
 
     return (
-        <>
-            <div className="space-y-2">
-                <h2 className="text-xl font-semibold">
+        <div className="space-y-8">
+            <section>
+                <h1 className="text-3xl font-semibold tracking-tight">
                     {collection.name}
-                </h2>
-                <p className="text-muted-foreground">
-                    {totalTerms} terms
-                </p>
-            </div>
+                </h1>
 
-            <div className="space-y-3">
+                <p className="mt-1 text-sm text-muted-foreground">
+                    {totalTerms} {totalTerms === 1 ? "term" : "terms"}
+                </p>
+            </section>
+
+            <section className="space-y-3">
                 {collectionTerms?.map((collectionTerm) => {
                     const term = collectionTerm.terms as unknown as CollectionTerm;
 
@@ -85,7 +98,7 @@ export default async function CollectionPage({ params, }: PageProps) {
                     return (
                         <div
                             key={collectionTerm.term_id}
-                            className="rounded border p-3"
+                            className="rounded-xl border p-4"
                         >
                             <Link
                                 href={`/dashboard/terms/${term.id}`}
@@ -94,17 +107,19 @@ export default async function CollectionPage({ params, }: PageProps) {
                                 {term.term}
                             </Link>
 
-                            <p className="text-sm text-muted-foreground capitalize">
-                                {term.term_type.replaceAll("_", " ")}
-                            </p>
+                            <div className="mt-2 space-y-1">
+                                <p className="text-sm text-muted-foreground capitalize">
+                                    {term.term_type.replaceAll("_", " ")}
+                                </p>
 
-                            <p className="mt-2 text-sm capitalize">
-                                {term.status}
-                            </p>
+                                <p className="text-sm capitalize">
+                                    {term.status}
+                                </p>
+                            </div>
                         </div>
                     );
                 })}
-            </div>
-        </>
+            </section>
+        </div>
     );
 }

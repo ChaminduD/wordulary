@@ -132,6 +132,7 @@ export function TermGenerator({ collections, }: TermGeneratorProps) {
         <section>
             <div className="flex flex-col gap-3 sm:flex-row">
                 <Input
+                    type="text"
                     value={term}
                     onChange={(event) => {
                         setTerm(event.target.value);
