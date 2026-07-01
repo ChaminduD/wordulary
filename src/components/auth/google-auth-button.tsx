@@ -2,8 +2,9 @@
 
 import { Button } from "@/components/ui/button";
 import { createClient } from "@/lib/supabase/client";
+import { GoogleIcon } from "@/components/icons/google-icon";
 
-export function GoogleSignInButton() {
+export function GoogleAuthButton() {
     const handleSignIn = async () => {
         const supabase = createClient();
 
@@ -17,10 +18,12 @@ export function GoogleSignInButton() {
 
     return (
         <Button
-            type="button"
+            variant="outline"
             className="w-full"
+            type="button"
             onClick={handleSignIn}
         >
+            <GoogleIcon className="size-4" />
             Continue with Google
         </Button>
     );
