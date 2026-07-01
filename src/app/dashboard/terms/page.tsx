@@ -84,7 +84,7 @@ export default async function TermsPage({ searchParams, }: PageProps) {
 
     function getFilterClass(value: string) {
         return activeStatus === value
-            ? "rounded border px-3 py-1 border-primary"
+            ? "rounded border px-3 py-1 bg-accent border-primary"
             : "rounded border px-3 py-1";
     }
 
@@ -170,9 +170,7 @@ export default async function TermsPage({ searchParams, }: PageProps) {
                                         className={getFilterClass("new")}
 
                                     >
-                                        {status === "new"
-                                            ? "New ✓"
-                                            : "New"}
+                                        New
                                     </Link>
 
                                     <Link
@@ -183,9 +181,7 @@ export default async function TermsPage({ searchParams, }: PageProps) {
                                         }
                                         className={getFilterClass("learning")}
                                     >
-                                        {status === "learning"
-                                            ? "Learning ✓"
-                                            : "Learning"}
+                                        Learning
                                     </Link>
 
                                     <Link
@@ -196,9 +192,7 @@ export default async function TermsPage({ searchParams, }: PageProps) {
                                         }
                                         className={getFilterClass("mastered")}
                                     >
-                                        {status === "mastered"
-                                            ? "Mastered ✓"
-                                            : "Mastered"}
+                                        Mastered
                                     </Link>
                                 </div>
                             </div>
@@ -216,12 +210,10 @@ export default async function TermsPage({ searchParams, }: PageProps) {
                                                 : getFilterHref(status, "generated")
                                         }
                                         className={ai === "generated"
-                                            ? "rounded border px-3 py-1 border-primary"
+                                            ? "rounded border px-3 py-1 bg-accent border-primary"
                                             : "rounded border px-3 py-1"}
                                     >
-                                        {ai === "generated"
-                                            ? "Generated ✓"
-                                            : "Generated"}
+                                        Generated
                                     </Link>
 
                                     <Link
@@ -231,18 +223,16 @@ export default async function TermsPage({ searchParams, }: PageProps) {
                                                 : getFilterHref(status, "missing")
                                         }
                                         className={ai === "missing"
-                                            ? "rounded border px-3 py-1 border-primary"
+                                            ? "rounded border px-3 py-1 bg-accent border-primary"
                                             : "rounded border px-3 py-1"}
                                     >
-                                        {ai === "missing"
-                                            ? "Missing ✓"
-                                            : "Missing"}
+                                        Missing AI
                                     </Link>
                                 </div>
                             </div>
                         </div>
 
-                        <div className="flex items-center justify-between text-sm">
+                        <div className="flex items-center justify-between text-sm text-muted-foreground">
                             {termListItems.length > 0 && (
                                 <p>
                                     {termListItems.length} {termListItems.length === 1 ? "term" : "terms"}
@@ -256,7 +246,7 @@ export default async function TermsPage({ searchParams, }: PageProps) {
                                             ? `/dashboard/terms?search=${encodeURIComponent(searchQuery)}`
                                             : "/dashboard/terms"
                                     }
-                                    className=""
+                                    className="text-muted-foreground hover:text-foreground hover:underline"
                                 >
                                     ✕ Clear Filters
                                 </Link>

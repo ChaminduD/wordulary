@@ -42,8 +42,7 @@ export function TermsTable({ terms, hasSearch, hasActiveFilter }: TermsTableProp
                 </h3>
 
                 <p className="mt-2 text-sm text-muted-foreground">
-                    Import your existing vocabulary
-                    or add a new term to get started.
+                    Import your vocabulary list or add your first term to start building your library.
                 </p>
             </div>
         );
@@ -55,27 +54,27 @@ export function TermsTable({ terms, hasSearch, hasActiveFilter }: TermsTableProp
                 <table className="w-full">
                     <thead>
                         <tr className="border-b">
-                            <th className="p-4 text-left">
+                            <th className="p-4 text-left text-sm font-semibold text-muted-foreground">
                                 Term
                             </th>
 
-                            <th className="p-4 text-left">
+                            <th className="p-4 text-left text-sm font-semibold text-muted-foreground">
                                 Type
                             </th>
 
-                            <th className="p-4 text-left">
+                            <th className="p-4 text-left text-sm font-semibold text-muted-foreground">
                                 Status
                             </th>
 
-                            <th className="p-4 text-left">
+                            <th className="p-4 text-left text-sm font-semibold text-muted-foreground">
                                 AI Status
                             </th>
 
-                            <th className="p-4 text-left">
+                            <th className="p-4 text-left text-sm font-semibold text-muted-foreground">
                                 Created
                             </th>
 
-                            <th className="p-4 text-left">
+                            <th className="p-4 text-left text-sm font-semibold text-muted-foreground">
                                 Actions
                             </th>
                         </tr>
@@ -85,7 +84,7 @@ export function TermsTable({ terms, hasSearch, hasActiveFilter }: TermsTableProp
                         {terms.map((term) => (
                             <tr
                                 key={term.id}
-                                className="border-b"
+                                className="border-b transition-colors hover:bg-muted/50"
                             >
                                 <td className="p-4">
                                     <Link
@@ -143,7 +142,7 @@ export function TermsTable({ terms, hasSearch, hasActiveFilter }: TermsTableProp
                     >
                         <Link
                             href={`/dashboard/terms/${term.id}`}
-                            className="font-medium hover:underline"
+                            className="font-semibold hover:underline"
                         >
                             {term.term}
                         </Link>

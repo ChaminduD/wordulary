@@ -2,6 +2,7 @@
 
 import { useRouter, useSearchParams, } from "next/navigation";
 import { useEffect, useState, } from "react";
+import { Input } from "@/components/ui/input";
 
 export function TermsSearch() {
     const router = useRouter();
@@ -25,12 +26,11 @@ export function TermsSearch() {
     }, [value, router]);
 
     return (
-        <input
-            type="text"
+        <Input
+            type="search"
             value={value}
             onChange={(event) => setValue(event.target.value)}
-            placeholder="Search your vocabulary..."
-            className="w-full rounded border px-3 py-2"
+            placeholder="Search vocabulary..."
         />
     );
 }
