@@ -2,6 +2,13 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select";
 
 type StatusSelectorProps = {
     termId: string;
@@ -14,23 +21,22 @@ export function StatusSelector({ termId, status, aiGenerated }: StatusSelectorPr
 
     const [saving, setSaving] = useState(false);
 
-    async function handleChange(event: React.ChangeEvent<HTMLSelectElement>) {
-        const nextStatus = event.target.value;
-
+    async function handleChange(nextStatus: string) {
         try {
             setSaving(true);
 
-            const response =
-                await fetch(
-                    `/api/terms/${termId}/status`,
-                    {
-                        method: "PATCH",
-                        headers: {
-                            "Content-Type": "application/json",
-                        },
-                        body: JSON.stringify({ status: nextStatus, }),
-                    }
-                );
+            const response = await fetch(
+                `/api/terms/${termId}/status`,
+                {
+                    method: "PATCH",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        status: nextStatus,
+                    }),
+                }
+            );
 
             const data = await response.json();
 
@@ -48,43 +54,50 @@ export function StatusSelector({ termId, status, aiGenerated }: StatusSelectorPr
 
     return (
         <div className="space-y-2">
-            <h3 className="font-medium">
-                Status
-            </h3>
+            <div>
+                <h2 className="text-lg font-semibold">
+                    Status
+                </h2>
 
-            <select
-                defaultValue={status}
-                onChange={handleChange}
+                {!aiGenerated && (
+                    <p className="mt-1 text-sm text-muted-foreground">
+                        Generate AI content to unlock Learning and Mastered.
+                    </p>
+                )}
+            </div>
+
+            <Select
+                value={status}
+                onValueChange={handleChange}
                 disabled={saving}
-                className="rounded border px-3 py-2"
             >
-                <option value="new">
-                    New
-                </option>
+                <SelectTrigger className="w-full sm:w-64">
+                    <SelectValue />
+                </SelectTrigger>
 
-                <option
-                    value="learning"
-                    disabled={!aiGenerated}
-                >
-                    Learning
-                </option>
+                <SelectContent>
+                    <SelectItem value="new">
+                        New
+                    </SelectItem>
 
-                <option
-                    value="mastered"
-                    disabled={!aiGenerated}
-                >
-                    Mastered
-                </option>
-            </select>
+                    <SelectItem
+                        value="learning"
+                        disabled={!aiGenerated}
+                    >
+                        Learning
+                    </SelectItem>
 
-            {!aiGenerated && (
-                <p className="text-sm text-muted-foreground">
-                    Generate AI content to unlock Learning and Mastered.
-                </p>
-            )}
+                    <SelectItem
+                        value="mastered"
+                        disabled={!aiGenerated}
+                    >
+                        Mastered
+                    </SelectItem>
+                </SelectContent>
+            </Select>
 
             {saving && (
-                <span className="ml-2 text-sm text-muted-foreground">Saving...</span>
+                <span className="text-sm text-muted-foreground">Saving...</span>
             )}
         </div>
     );

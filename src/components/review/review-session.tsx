@@ -65,12 +65,12 @@ export function ReviewSession({ terms, collectionId, }: ReviewSessionProps) {
 
     if (!currentTerm) {
         return (
-            <div className="mt-2">
-                <h2 className="text-2xl font-bold">
+            <section className="rounded-xl border p-8 text-center">
+                <h2 className="text-xl font-semibold">
                     Review Complete
                 </h2>
 
-                <p className="text-muted-foreground mb-4">
+                <p className="mt-2 text-sm text-muted-foreground mb-4">
                     You&apos;ve reviewed all available terms.
                 </p>
 
@@ -86,14 +86,14 @@ export function ReviewSession({ terms, collectionId, }: ReviewSessionProps) {
                 >
                     Start Over
                 </Button>
-            </div>
+            </section>
         );
     }
 
     return (
-        <div className="space-y-6">
+        <section className="space-y-6">
             <p className="text-sm text-muted-foreground">
-                Term {currentIndex + 1} of {terms.length}
+                {currentIndex + 1} / {terms.length}
             </p>
 
             <h2 className="text-3xl font-bold">
@@ -110,26 +110,26 @@ export function ReviewSession({ terms, collectionId, }: ReviewSessionProps) {
             ) : null}
 
             {showAnswer && (
-                <div className="space-y-4 rounded border p-4">
+                <div className="rounded-xl border p-6 space-y-6">
                     <div>
-                        <h3 className="font-medium">
+                        <h3 className="text-sm font-semibold text-muted-foreground">
                             Definition
                         </h3>
 
-                        <p>
+                        <p className="mt-2 leading-7">
                             {currentTerm.definition}
                         </p>
                     </div>
 
                     <div>
-                        <h3 className="font-medium">
+                        <h3 className="text-sm font-semibold text-muted-foreground">
                             Examples
                         </h3>
 
-                        <ul className="list-disc pl-5">
+                        <ul className="mt-2 list-disc space-y-2 pl-5">
                             {currentTerm.example_sentences?.map(
                                 (example, index) => (
-                                    <li key={index}>
+                                    <li key={index} className="leading-7">
                                         {example}
                                     </li>
                                 )
@@ -150,22 +150,22 @@ export function ReviewSession({ terms, collectionId, }: ReviewSessionProps) {
 
                         <Button
                             type="button"
-                            onClick={handleMarkMastered}
-                            disabled={updating}
-                        >
-                            Mark Mastered
-                        </Button>
-
-                        <Button
-                            type="button"
                             variant="outline"
                             onClick={handleNext}
                         >
                             Next Term
                         </Button>
+
+                        <Button
+                            type="button"
+                            onClick={handleMarkMastered}
+                            disabled={updating}
+                        >
+                            Mark Mastered
+                        </Button>
                     </div>
                 </div>
             )}
-        </div>
+        </section>
     );
 }

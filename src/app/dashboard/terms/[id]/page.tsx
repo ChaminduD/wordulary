@@ -111,7 +111,7 @@ export default async function TermPage({ params, }: PageProps) {
                                         example: string,
                                         index: number
                                     ) => (
-                                        <li key={index}>{example}</li>
+                                        <li key={index} className="leading-7">{example}</li>
                                     )
                                 )}
                             </ul>

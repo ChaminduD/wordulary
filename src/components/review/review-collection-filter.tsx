@@ -1,6 +1,13 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select";
 
 type ReviewCollectionFilterProps = {
     collections: {
@@ -18,35 +25,35 @@ export function ReviewCollectionFilter({
     const router = useRouter();
 
     return (
-        <select
-            value={selectedCollectionId ?? ""}
-            onChange={(event) => {
-                const collectionId = event.target.value;
-
-                if (!collectionId) {
+        <Select
+            value={selectedCollectionId ?? "all"}
+            onValueChange={(value) => {
+                if (value === "all") {
                     router.push("/dashboard/review");
-
                     return;
                 }
 
-                router.push(`/dashboard/review?collection=${collectionId}`);
+                router.push(`/dashboard/review?collection=${value}`);
             }}
-            className="rounded border px-3 py-2"
         >
-            <option value="">
-                All Learning Terms
-            </option>
+            <SelectTrigger className="w-full sm:w-64">
+                <SelectValue placeholder="All Learning Terms" />
+            </SelectTrigger>
 
-            {collections.map(
-                (collection) => (
-                    <option
+            <SelectContent>
+                <SelectItem value="all">
+                    All Learning Terms
+                </SelectItem>
+
+                {collections.map((collection) => (
+                    <SelectItem
                         key={collection.id}
                         value={collection.id}
                     >
                         {collection.name}
-                    </option>
-                )
-            )}
-        </select>
+                    </SelectItem>
+                ))}
+            </SelectContent>
+        </Select>
     );
 }
