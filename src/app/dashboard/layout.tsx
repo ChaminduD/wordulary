@@ -3,7 +3,7 @@ import { ReactNode } from "react";
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 
-import { DashboardSidebar } from "@/components/dashboard/dashboard-sidebar";
+import { DashboardSidebar } from "@/components/navigation/dashboard-sidebar";
 import { MobileBottomNav } from "@/components/navigation/mobile-bottom-nav";
 
 type DashboardLayoutProps = {

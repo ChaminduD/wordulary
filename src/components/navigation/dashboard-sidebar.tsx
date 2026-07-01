@@ -10,7 +10,7 @@ export function DashboardSidebar({ userName, }: DashboardSidebarProps) {
     return (
         <aside className="fixed left-0 top-0 hidden h-screen w-64 flex-col border-r bg-background p-4 md:flex">
             <div className="mb-8">
-                <h2 className="text-xl font-bold">
+                <h2 className="text-2xl font-semibold tracking-tight">
                     Wordulary
                 </h2>
             </div>

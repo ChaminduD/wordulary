@@ -8,6 +8,7 @@ import {
     FolderOpen,
     Brain,
 } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 const icons = {
     home: House,
@@ -41,17 +42,23 @@ export function NavLink({
     return (
         <Link
             href={href}
-            className={
+            className={cn(
+                "flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors",
                 isActive
-                    ? "flex items-center gap-3 rounded-md bg-muted px-3 py-2 font-medium"
-                    : "flex items-center gap-3 rounded-md px-3 py-2 hover:bg-muted"
-            }
+                    ? "bg-muted text-primary font-medium"
+                    : "text-muted-foreground hover:bg-muted hover:text-foreground"
+            )}
         >
-            <Icon className="h-4 w-4" />
+            <Icon
+                className={cn(
+                    "size-4 transition-colors",
+                    isActive
+                        ? "text-primary"
+                        : "text-muted-foreground"
+                )}
+            />
 
-            <span>
-                {label}
-            </span>
+            <span>{label}</span>
         </Link>
     );
 }
