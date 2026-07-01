@@ -7,6 +7,7 @@ import {
     BookOpen,
     FolderOpen,
     Brain,
+    User,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -15,6 +16,7 @@ const icons = {
     book: BookOpen,
     folder: FolderOpen,
     brain: Brain,
+    profile: User,
 };
 
 type NavLinkProps = {
@@ -49,14 +51,7 @@ export function NavLink({
                     : "text-muted-foreground hover:bg-muted hover:text-foreground"
             )}
         >
-            <Icon
-                className={cn(
-                    "size-4 transition-colors",
-                    isActive
-                        ? "text-primary"
-                        : "text-muted-foreground"
-                )}
-            />
+            <Icon className="size-5" />
 
             <span>{label}</span>
         </Link>

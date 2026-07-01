@@ -23,14 +23,9 @@ export default async function DashboardLayout({
         redirect("/login");
     }
 
-    const userName =
-        user.user_metadata.full_name ??
-        user.email ??
-        "User";
-
     return (
         <>
-            <DashboardSidebar userName={userName} />
+            <DashboardSidebar />
 
             <main className="min-h-screen p-6 pb-24 md:ml-64 md:pb-6">
                 {children}
