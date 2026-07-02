@@ -146,3 +146,7 @@
 @utility pr-safe {
   padding-right: env(safe-area-inset-right);
 }
+
+html {
+  scroll-behavior: smooth;
+}
