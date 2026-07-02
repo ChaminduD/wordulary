@@ -6,6 +6,7 @@ import { signInAction } from "@/actions/auth";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
+import { Logo } from "@/components/branding/logo";
 
 type PageProps = {
   searchParams: Promise<{
@@ -27,14 +28,17 @@ export default async function LoginPage({ searchParams }: PageProps) {
 
   return (
     <main className="flex min-h-screen items-center justify-center p-4">
-      <div className="w-full max-w-sm space-y-6 rounded-xl border p-6">
-        <div className="text-center">
-          <h1 className="text-3xl font-semibold tracking-tight">
-            Wordulary
-          </h1>
+      <div className="w-full max-w-sm space-y-6 rounded-xl border p-8">
+        <div className="space-y-3 text-center">
+          <div className="flex justify-center">
+            <Logo
+              priority
+              className="mx-auto"
+            />
+          </div>
 
-          <p className="mt-2 text-sm text-muted-foreground">
-            Build your vocabulary with AI
+          <p className="text-sm text-muted-foreground">
+            Learn vocabulary smarter with AI.
           </p>
         </div>
 

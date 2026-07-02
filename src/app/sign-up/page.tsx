@@ -4,17 +4,21 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { GoogleAuthButton } from "@/components/auth/google-auth-button";
 import { Separator } from "@/components/ui/separator";
+import { Logo } from "@/components/branding/logo";
 
 export default function SignUpPage() {
     return (
         <main className="flex min-h-screen items-center justify-center p-4">
-            <div className="w-full max-w-sm space-y-6 rounded-xl border p-6">
-                <div className="text-center">
-                    <h1 className="text-3xl font-semibold tracking-tight">
-                        Wordulary
-                    </h1>
+            <div className="w-full max-w-sm space-y-6 rounded-xl border p-8">
+                <div className="space-y-3 text-center">
+                    <div className="flex justify-center">
+                        <Logo
+                            priority
+                            className="mx-auto"
+                        />
+                    </div>
 
-                    <p className="mt-2 text-sm text-muted-foreground">
+                    <p className="text-sm text-muted-foreground">
                         Create your account
                     </p>
                 </div>
