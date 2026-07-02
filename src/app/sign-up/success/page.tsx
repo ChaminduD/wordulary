@@ -23,6 +23,16 @@ export default function SignUpSuccessPage() {
                         before signing in.
                     </p>
                 </div>
+
+                <Button
+                    variant="outline"
+                    asChild
+                    className="w-full"
+                >
+                    <Link href="/login">
+                        Back to Sign In
+                    </Link>
+                </Button>
             </div>
         </main>
     );

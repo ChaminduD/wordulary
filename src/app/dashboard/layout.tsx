@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 
 import { DashboardSidebar } from "@/components/navigation/dashboard-sidebar";
 import { MobileBottomNav } from "@/components/navigation/mobile-bottom-nav";
+import { MobileHeader } from "@/components/navigation/mobile-header";
 
 type DashboardLayoutProps = {
     children: ReactNode;
@@ -27,7 +28,9 @@ export default async function DashboardLayout({
         <>
             <DashboardSidebar />
 
-            <main className="min-h-screen p-6 pb-24 md:ml-64 md:pb-6">
+            <MobileHeader />
+
+            <main className="min-h-screen px-6 pb-24 pt-20 md:ml-64 md:py-6">
                 {children}
             </main>
 
