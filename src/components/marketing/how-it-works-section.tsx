@@ -8,7 +8,7 @@ export function HowItWorksSection() {
             className="py-24 md:py-28"
         >
             <Container>
-                <div className="mx-auto max-w-2xl text-center">
+                <div className="mx-auto max-w-3xl text-center">
                     <p className="text-sm font-medium text-primary">
                         How It Works
                     </p>
@@ -18,8 +18,7 @@ export function HowItWorksSection() {
                     </h2>
 
                     <p className="mt-4 text-lg leading-8 text-muted-foreground">
-                        From collecting new words to mastering them with AI,
-                        Wordulary keeps the process simple.
+                        Go from collecting words to mastering them with AI.
                     </p>
                 </div>
 
