@@ -12,11 +12,15 @@ export function FeaturesSection() {
     return (
         <section
             id="features"
-            className="py-24 md:py-28"
+            className="bg-muted/20 py-24 md:py-28"
         >
             <Container>
                 <div className="mx-auto max-w-2xl text-center">
-                    <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">
+                    <p className="text-sm font-medium text-primary">
+                        Features
+                    </p>
+
+                    <h2 className="mt-3 text-3xl font-semibold tracking-tight md:text-4xl">
                         Built for better vocabulary learning.
                     </h2>
 
