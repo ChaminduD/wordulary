@@ -11,11 +11,12 @@ import { Logo } from "@/components/branding/logo";
 type PageProps = {
   searchParams: Promise<{
     error?: string;
+    success?: string;
   }>;
 };
 
 export default async function LoginPage({ searchParams }: PageProps) {
-  const { error } = await searchParams;
+  const { error, success } = await searchParams;
   const supabase = await createClient();
 
   const {
@@ -61,6 +62,12 @@ export default async function LoginPage({ searchParams }: PageProps) {
         {error === "email_not_confirmed" && (
           <p className="text-center text-sm text-destructive">
             Please verify your email before signing in.
+          </p>
+        )}
+
+        {success === "password_updated" && (
+          <p className="text-center text-sm text-green-600">
+            Your password has been updated successfully. You can now sign in.
           </p>
         )}
 
