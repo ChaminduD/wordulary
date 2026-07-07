@@ -47,6 +47,12 @@ export default async function ForgotPasswordPage({ searchParams, }: PageProps) {
                     </p>
                 )}
 
+                {error === "rate_limit" && (
+                    <p className="text-center text-sm text-destructive">
+                        Please wait a moment before requesting another reset email.
+                    </p>
+                )}
+
                 <form
                     action={forgotPasswordAction}
                     className="space-y-4"

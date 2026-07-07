@@ -15,6 +15,10 @@ export async function forgotPasswordAction(formData: FormData) {
         });
 
     if (error) {
+        if (error.code === "over_email_send_rate_limit") {
+            redirect("/forgot-password?error=rate_limit");
+        }
+
         redirect("/forgot-password?error=reset_failed");
     }
 
