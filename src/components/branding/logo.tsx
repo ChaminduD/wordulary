@@ -16,16 +16,13 @@ export function Logo({
     return (
         <Link
             href={href}
-            className={cn(
-                "inline-flex w-fit",
-                className
-            )}
+            className={cn("inline-flex", className)}
         >
             <Image
                 src="/branding/logo.svg"
                 alt="Wordulary"
                 width={170}
-                height={36}
+                height={29}
                 sizes="170px"
                 priority={priority}
             />
