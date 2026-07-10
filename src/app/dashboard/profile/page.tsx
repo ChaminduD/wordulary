@@ -1,5 +1,10 @@
 import { createClient } from "@/lib/supabase/server";
 import { SignOutButton } from "@/components/auth/sign-out-button";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "Profile",
+};
 
 export default async function ProfilePage() {
     const supabase = await createClient();

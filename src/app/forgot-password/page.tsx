@@ -1,9 +1,13 @@
 import Link from "next/link";
-
 import { Logo } from "@/components/branding/logo";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { forgotPasswordAction } from "@/actions/forgot-password";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "Forgot Password",
+};
 
 type PageProps = {
     searchParams: Promise<{

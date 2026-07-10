@@ -1,11 +1,17 @@
 import { LegalLayout } from "@/components/legal/legal-layout";
 import { LegalSection } from "@/components/legal/legal-section";
+import { siteConfig } from "@/lib/site";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "Terms of Service",
+};
 
 export default function TermsPage() {
     return (
         <LegalLayout
             title="Terms of Service"
-            lastUpdated="June 2026"
+            lastUpdated={siteConfig.termsLastUpdated}
         >
             <LegalSection title="Acceptance of Terms">
                 <p>

@@ -3,6 +3,11 @@ import { TermsTable } from "@/components/terms/terms-table";
 import { TermsSearch } from "@/components/terms/terms-search";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "Vocabulary",
+};
 
 type PageProps = {
     searchParams: Promise<{

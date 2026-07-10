@@ -2,6 +2,11 @@ import { Logo } from "@/components/branding/logo";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { resetPasswordAction } from "@/actions/reset-password";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "Reset Password",
+};
 
 type PageProps = {
     searchParams: Promise<{

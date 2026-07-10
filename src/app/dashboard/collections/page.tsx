@@ -3,6 +3,11 @@ import { CreateCollectionForm } from "@/components/collections/create-collection
 import { createClient } from "@/lib/supabase/server";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "Collections",
+};
 
 export default async function CollectionsPage() {
     const supabase = await createClient();

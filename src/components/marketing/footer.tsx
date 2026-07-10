@@ -1,7 +1,7 @@
 import Link from "next/link";
-
 import { Container } from "./container";
 import { LogoMark } from "../branding/logo-mark";
+import { siteConfig } from "@/lib/site";
 
 export function Footer() {
     return (
@@ -32,7 +32,7 @@ export function Footer() {
                         </Link>
 
                         <Link
-                            href="https://github.com/"
+                            href={siteConfig.github}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="text-muted-foreground transition-colors hover:text-foreground"

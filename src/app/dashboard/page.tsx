@@ -3,6 +3,11 @@ import { ProgressCard } from "@/components/dashboard/progress-card";
 import { DashboardHero } from "@/components/dashboard/dashboard-hero";
 import { getDashboardHero } from "@/lib/dashboard";
 import { RecentTerms } from "@/components/dashboard/recent-terms";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "Dashboard",
+};
 
 export default async function DashboardPage() {
     const supabase = await createClient();

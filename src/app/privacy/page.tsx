@@ -1,11 +1,17 @@
 import { LegalLayout } from "@/components/legal/legal-layout";
 import { LegalSection } from "@/components/legal/legal-section";
+import { siteConfig } from "@/lib/site";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "Privacy Policy",
+};
 
 export default function PrivacyPage() {
     return (
         <LegalLayout
             title="Privacy Policy"
-            lastUpdated="June 2026"
+            lastUpdated={siteConfig.privacyLastUpdated}
         >
             <LegalSection title="Introduction">
                 <p>

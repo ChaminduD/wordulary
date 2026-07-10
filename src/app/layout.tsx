@@ -1,16 +1,23 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { siteConfig } from "@/lib/site";
 
 const inter = Inter({
-    subsets: ["latin"],
-    variable: "--font-inter",
-    display: "swap",
+  subsets: ["latin"],
+  variable: "--font-inter",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "Wordulary",
-  description: "Learn vocabulary smarter with AI",
+  metadataBase: new URL(siteConfig.url),
+
+  title: {
+    default: siteConfig.name,
+    template: `%s | ${siteConfig.name}`,
+  },
+
+  description: siteConfig.description,
 };
 
 export default function RootLayout({

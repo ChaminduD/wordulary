@@ -1,6 +1,11 @@
 import { createClient } from "@/lib/supabase/server";
 import { ReviewSession } from "@/components/review/review-session";
 import { ReviewCollectionFilter } from "@/components/review/review-collection-filter";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "Review",
+};
 
 type PageProps = {
     searchParams: Promise<{

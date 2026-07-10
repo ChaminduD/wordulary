@@ -5,6 +5,11 @@ import { Input } from "@/components/ui/input";
 import { GoogleAuthButton } from "@/components/auth/google-auth-button";
 import { Separator } from "@/components/ui/separator";
 import { Logo } from "@/components/branding/logo";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "Create Account",
+};
 
 export default function SignUpPage() {
     return (

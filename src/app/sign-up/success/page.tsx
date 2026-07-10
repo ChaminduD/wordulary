@@ -1,6 +1,11 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Logo } from "@/components/branding/logo";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "Verify Your Email",
+};
 
 export default function SignUpSuccessPage() {
     return (

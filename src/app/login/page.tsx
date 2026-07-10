@@ -7,6 +7,11 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { Logo } from "@/components/branding/logo";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "Sign In",
+};
 
 type PageProps = {
   searchParams: Promise<{
