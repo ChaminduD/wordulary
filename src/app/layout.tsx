@@ -18,6 +18,13 @@ export const metadata: Metadata = {
   },
 
   description: siteConfig.description,
+
+  applicationName: siteConfig.name,
+
+  icons: {
+    icon: "/favicon.ico",
+    apple: "/icon-192.png",
+  },
 };
 
 export default function RootLayout({

@@ -22,7 +22,7 @@ export function LogoMark({
                 src="/branding/logo-mark.svg"
                 alt="Wordulary"
                 width={32}
-                height={32}
+                height={22}
                 priority={priority}
             />
         </Link>
