@@ -14,7 +14,7 @@ type PageProps = {
     }>;
 };
 
-export default async function ResetPasswordPage({ searchParams, }: PageProps) {
+export default async function ResetPasswordPage({ searchParams }: PageProps) {
     const { error } = await searchParams;
 
     return (

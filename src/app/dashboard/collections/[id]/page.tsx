@@ -13,12 +13,12 @@ type PageProps = {
     params: Promise<{ id: string; }>;
 };
 
-export default async function CollectionPage({ params, }: PageProps) {
+export default async function CollectionPage({ params }: PageProps) {
     const supabase = await createClient();
 
     const { id } = await params;
 
-    const { data: collection, error, } =
+    const { data: collection, error } =
         await supabase
             .from("collections")
             .select("*")
@@ -29,7 +29,7 @@ export default async function CollectionPage({ params, }: PageProps) {
         notFound();
     }
 
-    const { data: collectionTerms, error: collectionTermsError, } =
+    const { data: collectionTerms, error: collectionTermsError } =
         await supabase
             .from("term_collections")
             .select(`

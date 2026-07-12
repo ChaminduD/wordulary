@@ -7,16 +7,16 @@ export async function POST(request: Request) {
 
         const supabase = await createClient();
 
-        const { data: { user }, } = await supabase.auth.getUser();
+        const { data: { user } } = await supabase.auth.getUser();
 
         if (!user) {
             return NextResponse.json(
-                { error: "User not authenticated", },
-                { status: 401, }
+                { error: "User not authenticated" },
+                { status: 401 }
             );
         }
 
-        const { data: term, error, } =
+        const { data: term, error } =
             await supabase
                 .from("terms")
                 .insert({
@@ -46,8 +46,8 @@ export async function POST(request: Request) {
         if (error) {
             if (error.code === "23505") {
                 return NextResponse.json(
-                    { error: "This term already exists in your vocabulary.", },
-                    { status: 409, }
+                    { error: "This term already exists in your vocabulary." },
+                    { status: 409 }
                 );
             }
 
@@ -63,7 +63,7 @@ export async function POST(request: Request) {
                     })
                 );
 
-            const { error: collectionError, } =
+            const { error: collectionError } =
                 await supabase
                     .from("term_collections")
                     .insert(collectionLinks);
@@ -73,13 +73,13 @@ export async function POST(request: Request) {
             }
         }
 
-        return NextResponse.json({ success: true, });
+        return NextResponse.json({ success: true });
     } catch (error) {
         console.error(error);
 
         return NextResponse.json(
-            { error: "Failed to save term", },
-            { status: 500, }
+            { error: "Failed to save term" },
+            { status: 500 }
         );
     }
 }

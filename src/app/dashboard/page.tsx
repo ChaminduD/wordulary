@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 export default async function DashboardPage() {
     const supabase = await createClient();
 
-    const { data: { user }, } = await supabase.auth.getUser();
+    const { data: { user } } = await supabase.auth.getUser();
 
     if (!user) {
         throw new Error("User not authenticated");
@@ -38,7 +38,7 @@ export default async function DashboardPage() {
             .from("terms")
             .select(`id, term, status`)
             .eq("user_id", user.id)
-            .order("created_at", { ascending: false, })
+            .order("created_at", { ascending: false })
             .limit(5);
 
     const totalTerms = terms?.length ?? 0;

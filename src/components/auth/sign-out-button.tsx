@@ -8,7 +8,7 @@ type SignOutButtonProps = {
     className?: string;
 };
 
-export function SignOutButton({ className, }: SignOutButtonProps) {
+export function SignOutButton({ className }: SignOutButtonProps) {
     const router = useRouter();
 
     const handleSignOut = async () => {

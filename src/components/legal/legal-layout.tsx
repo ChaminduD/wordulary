@@ -1,6 +1,7 @@
 import { Container } from "@/components/marketing/container";
 import { LandingNavbar } from "../marketing/landing-navbar";
 import { Footer } from "../marketing/footer";
+import { createClient } from "@/lib/supabase/server";
 
 type LegalLayoutProps = {
     title: string;
@@ -8,14 +9,20 @@ type LegalLayoutProps = {
     children: React.ReactNode;
 };
 
-export function LegalLayout({
+export async function LegalLayout({
     title,
     lastUpdated,
     children,
 }: LegalLayoutProps) {
+    const supabase = await createClient();
+
+    const {
+        data: { user },
+    } = await supabase.auth.getUser();
+
     return (
         <>
-            <LandingNavbar />
+            <LandingNavbar user={user} />
 
             <main className="flex-1">
                 <Container className="max-w-3xl py-16 md:py-20">

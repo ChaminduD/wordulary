@@ -17,19 +17,19 @@ export async function PATCH(request: Request, { params }: RouteContext) {
 
         if (!allowedStatuses.includes(status)) {
             return NextResponse.json(
-                { error: "Invalid status", },
-                { status: 400, }
+                { error: "Invalid status" },
+                { status: 400 }
             );
         }
 
         const supabase = await createClient();
 
-        const { data: { user }, } = await supabase.auth.getUser();
+        const { data: { user } } = await supabase.auth.getUser();
 
         if (!user) {
             return NextResponse.json(
-                { error: "User not authenticated", },
-                { status: 401, }
+                { error: "User not authenticated" },
+                { status: 401 }
             );
         }
 
@@ -67,13 +67,13 @@ export async function PATCH(request: Request, { params }: RouteContext) {
             throw error;
         }
 
-        return NextResponse.json({ success: true, });
+        return NextResponse.json({ success: true });
     } catch (error) {
         console.error(error);
 
         return NextResponse.json(
-            { error: "Failed to update status", },
-            { status: 500, }
+            { error: "Failed to update status" },
+            { status: 500 }
         );
     }
 }

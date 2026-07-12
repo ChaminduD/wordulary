@@ -1,4 +1,4 @@
-import type { Difficulty, TermType, } from "./term";
+import type { Difficulty, TermType } from "./term";
 
 export type Term = {
     id: string;

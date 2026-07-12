@@ -17,9 +17,7 @@ export default async function ProfilePage() {
         throw new Error("User not authenticated");
     }
 
-    const userName =
-        user.user_metadata.full_name ??
-        "User";
+    const userName = user.user_metadata.full_name ?? "User";
 
     return (
         <div className="space-y-8">

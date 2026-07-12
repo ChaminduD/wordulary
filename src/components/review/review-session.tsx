@@ -15,7 +15,7 @@ type ReviewSessionProps = {
     collectionId?: string;
 };
 
-export function ReviewSession({ terms, collectionId, }: ReviewSessionProps) {
+export function ReviewSession({ terms, collectionId }: ReviewSessionProps) {
     const [showAnswer, setShowAnswer] = useState(false);
     const [currentIndex, setCurrentIndex] = useState(0);
     const [updating, setUpdating] = useState(false);
@@ -41,7 +41,7 @@ export function ReviewSession({ terms, collectionId, }: ReviewSessionProps) {
                     headers: {
                         "Content-Type": "application/json",
                     },
-                    body: JSON.stringify({ status: "mastered", }),
+                    body: JSON.stringify({ status: "mastered" }),
                 }
             );
 

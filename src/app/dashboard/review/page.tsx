@@ -13,10 +13,10 @@ type PageProps = {
     }>;
 };
 
-export default async function ReviewPage({ searchParams, }: PageProps) {
+export default async function ReviewPage({ searchParams }: PageProps) {
     const supabase = await createClient();
 
-    const { data: { user }, } = await supabase.auth.getUser();
+    const { data: { user } } = await supabase.auth.getUser();
 
     if (!user) {
         throw new Error("User not authenticated");
@@ -57,7 +57,7 @@ export default async function ReviewPage({ searchParams, }: PageProps) {
         query = query.in("id", termIds);
     }
 
-    const { data: terms, error, } = await query;
+    const { data: terms, error } = await query;
 
     const { data: collections } =
         await supabase

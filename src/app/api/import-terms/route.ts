@@ -10,19 +10,19 @@ export async function POST(request: Request) {
 
         if (!Array.isArray(terms) || terms.length === 0) {
             return NextResponse.json(
-                { error: "At least one term is required", },
-                { status: 400, }
+                { error: "At least one term is required" },
+                { status: 400 }
             );
         }
 
         const supabase = await createClient();
 
-        const { data: { user }, } = await supabase.auth.getUser();
+        const { data: { user } } = await supabase.auth.getUser();
 
         if (!user) {
             return NextResponse.json(
-                { error: "User not authenticated", },
-                { status: 401, }
+                { error: "User not authenticated" },
+                { status: 401 }
             );
         }
 
@@ -62,7 +62,7 @@ export async function POST(request: Request) {
         );
 
         if (rows.length > 0) {
-            const { data: createdTerms, error, } =
+            const { data: createdTerms, error } =
                 await supabase
                     .from("terms")
                     .insert(rows)
@@ -86,7 +86,7 @@ export async function POST(request: Request) {
                         )
                     );
 
-                const { error: collectionError, } =
+                const { error: collectionError } =
                     await supabase
                         .from("term_collections")
                         .insert(collectionLinks);
@@ -105,8 +105,8 @@ export async function POST(request: Request) {
         console.error(error);
 
         return NextResponse.json(
-            { error: "Failed to import terms", },
-            { status: 500, }
+            { error: "Failed to import terms" },
+            { status: 500 }
         );
     }
 }

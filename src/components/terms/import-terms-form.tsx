@@ -11,7 +11,7 @@ type ImportTermsFormProps = {
     }[];
 };
 
-export function ImportTermsForm({ collections, }: ImportTermsFormProps) {
+export function ImportTermsForm({ collections }: ImportTermsFormProps) {
     const [termsText, setTermsText] = useState("");
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState<string | null>(null);

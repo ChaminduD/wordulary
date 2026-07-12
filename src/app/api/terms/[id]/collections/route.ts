@@ -12,16 +12,16 @@ export async function PATCH(
     try {
         const { id: termId } = await params;
 
-        const { collectionId, checked, } = await request.json();
+        const { collectionId, checked } = await request.json();
 
         const supabase = await createClient();
 
-        const { data: { user }, } = await supabase.auth.getUser();
+        const { data: { user } } = await supabase.auth.getUser();
 
         if (!user) {
             return NextResponse.json(
-                { error: "User not authenticated", },
-                { status: 401, }
+                { error: "User not authenticated" },
+                { status: 401 }
             );
         }
 
@@ -50,13 +50,13 @@ export async function PATCH(
             }
         }
 
-        return NextResponse.json({ success: true, });
+        return NextResponse.json({ success: true });
     } catch (error) {
         console.error(error);
 
         return NextResponse.json(
-            { error: "Failed to update collection", },
-            { status: 500, }
+            { error: "Failed to update collection" },
+            { status: 500 }
         );
     }
 }

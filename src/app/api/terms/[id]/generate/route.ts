@@ -15,12 +15,12 @@ export async function POST(
 
         const supabase = await createClient();
 
-        const { data: { user }, } = await supabase.auth.getUser();
+        const { data: { user } } = await supabase.auth.getUser();
 
         if (!user) {
             return NextResponse.json(
-                { error: "User not authenticated", },
-                { status: 401, }
+                { error: "User not authenticated" },
+                { status: 401 }
             );
         }
 
@@ -36,8 +36,8 @@ export async function POST(
 
         if (fetchError || !term) {
             return NextResponse.json(
-                { error: "Term not found", },
-                { status: 404, }
+                { error: "Term not found" },
+                { status: 404 }
             );
         }
 
@@ -67,7 +67,7 @@ export async function POST(
             throw updateError;
         }
 
-        return NextResponse.json({ success: true, });
+        return NextResponse.json({ success: true });
     } catch (error) {
         console.error(error);
 
@@ -78,14 +78,14 @@ export async function POST(
 
         if (message.includes("429")) {
             return NextResponse.json(
-                { error: "AI quota reached. Please wait a minute and try again.", },
+                { error: "AI quota reached. Please wait a minute and try again." },
                 { status: 429 }
             );
         }
 
         if (message.includes("503")) {
             return NextResponse.json(
-                { error: "AI service is busy. Please try again shortly.", },
+                { error: "AI service is busy. Please try again shortly." },
                 { status: 503 }
             );
         }

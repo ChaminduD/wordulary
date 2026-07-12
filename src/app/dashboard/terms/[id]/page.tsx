@@ -10,12 +10,12 @@ type PageProps = {
     params: Promise<{ id: string; }>;
 };
 
-export default async function TermPage({ params, }: PageProps) {
+export default async function TermPage({ params }: PageProps) {
     const { id } = await params;
 
     const supabase = await createClient();
 
-    const { data: { user }, } = await supabase.auth.getUser();
+    const { data: { user } } = await supabase.auth.getUser();
 
     if (!user) {
         notFound();
@@ -33,13 +33,13 @@ export default async function TermPage({ params, }: PageProps) {
         notFound();
     }
 
-    const { data: collections, } =
+    const { data: collections } =
         await supabase
             .from("collections")
             .select("id, name")
             .order("name");
 
-    const { data: assignedCollections, } =
+    const { data: assignedCollections } =
         await supabase
             .from("term_collections")
             .select("collection_id")

@@ -8,7 +8,7 @@ type GenerateAiContentButtonProps = {
     termId: string;
 };
 
-export function GenerateAiContentButton({ termId, }: GenerateAiContentButtonProps) {
+export function GenerateAiContentButton({ termId }: GenerateAiContentButtonProps) {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
 

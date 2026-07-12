@@ -14,7 +14,7 @@ type TermGeneratorProps = {
     }[];
 };
 
-export function TermGenerator({ collections, }: TermGeneratorProps) {
+export function TermGenerator({ collections }: TermGeneratorProps) {
     const [generatedTerm, setGeneratedTerm] = useState<GeneratedTerm | null>(null);
     const [term, setTerm] = useState("");
     const [loading, setLoading] = useState(false);
@@ -47,7 +47,7 @@ export function TermGenerator({ collections, }: TermGeneratorProps) {
                     headers: {
                         "Content-Type": "application/json",
                     },
-                    body: JSON.stringify({ term, }),
+                    body: JSON.stringify({ term }),
                 }
             );
 

@@ -8,7 +8,7 @@ type RecentTermsProps = {
     }[];
 };
 
-export function RecentTerms({ terms, }: RecentTermsProps) {
+export function RecentTerms({ terms }: RecentTermsProps) {
     if (terms.length === 0) {
         return null;
     }

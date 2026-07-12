@@ -17,14 +17,14 @@ type PageProps = {
     }>;
 };
 
-export default async function TermsPage({ searchParams, }: PageProps) {
+export default async function TermsPage({ searchParams }: PageProps) {
     const { search, status, ai } = await searchParams;
 
     const hasSearch = Boolean(search?.trim());
 
     const supabase = await createClient();
 
-    const { data: { user }, } = await supabase.auth.getUser();
+    const { data: { user } } = await supabase.auth.getUser();
 
     if (!user) {
         throw new Error("User not authenticated");
@@ -58,7 +58,7 @@ export default async function TermsPage({ searchParams, }: PageProps) {
         query = query.eq("ai_generated", false);
     }
 
-    const { data: terms, error } = await query.order("created_at", { ascending: false, });
+    const { data: terms, error } = await query.order("created_at", { ascending: false });
 
     if (error) {
         throw error;

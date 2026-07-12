@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 export default async function ImportTermsPage() {
     const supabase = await createClient();
 
-    const { data: { user }, } = await supabase.auth.getUser();
+    const { data: { user } } = await supabase.auth.getUser();
 
     if (!user) {
         throw new Error("User not authenticated");

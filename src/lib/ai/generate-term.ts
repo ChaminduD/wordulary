@@ -7,7 +7,7 @@ function sleep(ms: number) {
 }
 
 export async function generateTerm(term: string): Promise<GeneratedTerm> {
-  const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY, });
+  const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 
   const prompt = `
     Generate vocabulary learning data for the term "${term}".
@@ -80,8 +80,7 @@ export async function generateTerm(term: string): Promise<GeneratedTerm> {
 
   const parsed = JSON.parse(text);
 
-  const generatedTerm =
-    generatedTermSchema.parse(parsed);
+  const generatedTerm = generatedTermSchema.parse(parsed);
 
   return generatedTerm;
 }

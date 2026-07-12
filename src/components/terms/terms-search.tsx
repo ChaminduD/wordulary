@@ -1,7 +1,7 @@
 "use client";
 
-import { useRouter, useSearchParams, } from "next/navigation";
-import { useEffect, useState, } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 import { Input } from "@/components/ui/input";
 
 export function TermsSearch() {
