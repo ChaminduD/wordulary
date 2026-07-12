@@ -4,6 +4,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { forgotPasswordAction } from "@/actions/forgot-password";
 import type { Metadata } from "next";
+import { redirect } from "next/navigation";
+import { createClient } from "@/lib/supabase/server";
 
 export const metadata: Metadata = {
     title: "Forgot Password",
@@ -16,8 +18,18 @@ type PageProps = {
     }>;
 };
 
-export default async function ForgotPasswordPage({ searchParams, }: PageProps) {
+export default async function ForgotPasswordPage({ searchParams }: PageProps) {
     const { success, error, } = await searchParams;
+
+    const supabase = await createClient();
+
+    const {
+        data: { user },
+    } = await supabase.auth.getUser();
+
+    if (user) {
+        redirect("/dashboard");
+    }
 
     return (
         <main className="flex min-h-screen items-center justify-center p-4">

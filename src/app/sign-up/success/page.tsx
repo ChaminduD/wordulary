@@ -2,12 +2,24 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Logo } from "@/components/branding/logo";
 import type { Metadata } from "next";
+import { redirect } from "next/navigation";
+import { createClient } from "@/lib/supabase/server";
 
 export const metadata: Metadata = {
     title: "Verify Your Email",
 };
 
-export default function SignUpSuccessPage() {
+export default async function SignUpSuccessPage() {
+    const supabase = await createClient();
+
+    const {
+        data: { user },
+    } = await supabase.auth.getUser();
+
+    if (user) {
+        redirect("/dashboard");
+    }
+
     return (
         <main className="flex min-h-screen items-center justify-center p-4">
             <div className="w-full max-w-sm space-y-6 rounded-xl border p-6 text-center">

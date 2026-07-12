@@ -6,12 +6,24 @@ import { GoogleAuthButton } from "@/components/auth/google-auth-button";
 import { Separator } from "@/components/ui/separator";
 import { Logo } from "@/components/branding/logo";
 import type { Metadata } from "next";
+import { redirect } from "next/navigation";
+import { createClient } from "@/lib/supabase/server";
 
 export const metadata: Metadata = {
     title: "Create Account",
 };
 
-export default function SignUpPage() {
+export default async function SignUpPage() {
+    const supabase = await createClient();
+
+    const {
+        data: { user },
+    } = await supabase.auth.getUser();
+
+    if (user) {
+        redirect("/dashboard");
+    }
+
     return (
         <main className="flex min-h-screen items-center justify-center p-4">
             <div className="w-full max-w-sm space-y-6 rounded-xl border p-8">
