@@ -5,19 +5,30 @@ import { HowItWorksSection } from "@/components/marketing/how-it-works-section";
 import { CtaSection } from "@/components/marketing/cta-section";
 import { Footer } from "@/components/marketing/footer";
 import type { Metadata } from "next";
+import { createClient } from "@/lib/supabase/server";
 
 export const metadata: Metadata = {
     title: "Learn Vocabulary Smarter with AI",
 };
 
-export default function Home() {
+export default async function HomePage() {
+    const supabase = await createClient();
+
+    const {
+        data: { user },
+    } = await supabase.auth.getUser();
+
     return (
         <>
-            <LandingNavbar />
-            <HeroSection />
-            <FeaturesSection />
-            <HowItWorksSection />
-            <CtaSection />
+            <LandingNavbar user={user} />
+
+            <main className="flex-1">
+                <HeroSection user={user} />
+                <FeaturesSection />
+                <HowItWorksSection />
+                <CtaSection user={user} />
+            </main>
+
             <Footer />
         </>
     );

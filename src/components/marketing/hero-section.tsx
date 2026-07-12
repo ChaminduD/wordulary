@@ -9,8 +9,13 @@ import {
 } from "lucide-react";
 import { FeatureBadge } from "./feature-badge";
 import { DashboardPreview } from "./dashboard-preview";
+import type { User } from "@supabase/supabase-js";
 
-export function HeroSection() {
+type HeroSectionProps = {
+    user: User | null;
+};
+
+export function HeroSection({ user }: HeroSectionProps) {
     return (
         <section className="py-24 md:py-32">
             <Container>
@@ -48,28 +53,40 @@ export function HeroSection() {
                             </div>
                         </div>
 
-                        <div className="flex flex-col gap-3 sm:flex-row">
+                        {user ? (
                             <Button
                                 asChild
                                 size="lg"
                                 className="h-11 px-6"
                             >
-                                <Link href="/sign-up">
-                                    Get Started
+                                <Link href="/dashboard">
+                                    Go to Dashboard
                                 </Link>
                             </Button>
+                        ) : (
+                            <div className="flex flex-col gap-3 sm:flex-row">
+                                <Button
+                                    asChild
+                                    size="lg"
+                                    className="h-11 px-6"
+                                >
+                                    <Link href="/sign-up">
+                                        Get Started
+                                    </Link>
+                                </Button>
 
-                            <Button
-                                asChild
-                                variant="outline"
-                                size="lg"
-                                className="h-11 px-6"
-                            >
-                                <Link href="/login">
-                                    Sign In
-                                </Link>
-                            </Button>
-                        </div>
+                                <Button
+                                    asChild
+                                    variant="outline"
+                                    size="lg"
+                                    className="h-11 px-6"
+                                >
+                                    <Link href="/login">
+                                        Sign In
+                                    </Link>
+                                </Button>
+                            </div>
+                        )}
                     </div>
 
                     <DashboardPreview />
