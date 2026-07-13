@@ -26,6 +26,8 @@ export default async function CollectionsPage() {
         console.error(error);
     }
 
+    const collectionList = collections ?? [];
+
     return (
         <div className="space-y-8">
             <section>
@@ -41,14 +43,16 @@ export default async function CollectionsPage() {
             <CreateCollectionForm />
 
             <section className="space-y-3">
-                <p className="text-sm text-muted-foreground">
-                    {collections?.length ?? 0}{" "}
-                    {(collections?.length ?? 0) === 1
-                        ? "collection"
-                        : "collections"}
-                </p>
+                {collectionList.length > 0 && (
+                    <p className="text-sm text-muted-foreground">
+                        {collectionList.length}{" "}
+                        {collectionList.length === 1
+                            ? "collection"
+                            : "collections"}
+                    </p>
+                )}
 
-                {collections?.map((collection) => (
+                {collectionList.map((collection) => (
                     <div
                         key={collection.id}
                         className="flex items-center justify-between rounded-xl border p-4"
@@ -78,7 +82,7 @@ export default async function CollectionsPage() {
                     </div>
                 ))}
 
-                {collections?.length === 0 && (
+                {collectionList.length === 0 && (
                     <div className="rounded-xl border p-8 text-center">
                         <h3 className="font-semibold">
                             No collections yet

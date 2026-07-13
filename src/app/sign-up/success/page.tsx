@@ -36,10 +36,17 @@ export default async function SignUpSuccessPage() {
                     </h1>
 
                     <p className="mt-2 text-sm text-muted-foreground">
-                        We&apos;ve sent you a verification link. Please verify your email
-                        before signing in.
+                        If a verification email was sent, please check your inbox and spam folder before signing in.
                     </p>
                 </div>
+
+                <p className="text-sm text-muted-foreground">
+                    If you&apos;ve previously signed in with Google, use{" "}
+                    <span className="font-medium text-foreground">
+                        Continue with Google
+                    </span>{" "}
+                    on the Sign In page instead of creating a password.
+                </p>
 
                 <Button
                     variant="outline"
