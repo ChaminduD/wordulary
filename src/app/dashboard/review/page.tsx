@@ -144,6 +144,7 @@ export default async function ReviewPage({ searchParams }: PageProps) {
             </section>
 
             <ReviewSession
+                key={collection ?? "all"}
                 terms={terms}
                 collectionId={collection}
             />

@@ -19,7 +19,11 @@ export async function resetPasswordAction(formData: FormData) {
     });
 
     if (error) {
-        redirect("/reset-password?error=update_failed");
+        console.error("Reset password error:", error);
+
+        redirect(
+            `/reset-password?error=${encodeURIComponent(error.message)}`
+        );
     }
 
     await supabase.auth.signOut();

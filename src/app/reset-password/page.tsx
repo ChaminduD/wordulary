@@ -49,6 +49,12 @@ export default async function ResetPasswordPage({ searchParams }: PageProps) {
                     </p>
                 )}
 
+                {error && (
+                    <p className="text-center text-sm text-destructive">
+                        {decodeURIComponent(error)}
+                    </p>
+                )}
+
                 <form
                     action={resetPasswordAction}
                     className="space-y-4"

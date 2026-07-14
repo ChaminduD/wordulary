@@ -22,7 +22,7 @@ export default async function SignUpSuccessPage() {
 
     return (
         <main className="flex min-h-screen items-center justify-center p-4">
-            <div className="w-full max-w-sm space-y-6 rounded-xl border p-6 text-center">
+            <div className="w-full max-w-sm space-y-6 rounded-xl border p-8 text-center">
                 <div className="flex justify-center">
                     <Logo
                         priority
