@@ -49,9 +49,9 @@ export default async function ResetPasswordPage({ searchParams }: PageProps) {
                     </p>
                 )}
 
-                {error && (
+                {error === "same_password" && (
                     <p className="text-center text-sm text-destructive">
-                        {decodeURIComponent(error)}
+                        Your new password must be different from your current password.
                     </p>
                 )}
 

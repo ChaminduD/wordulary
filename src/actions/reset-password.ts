@@ -19,11 +19,17 @@ export async function resetPasswordAction(formData: FormData) {
     });
 
     if (error) {
-        console.error("Reset password error:", error);
+        console.error(error);
 
-        redirect(
-            `/reset-password?error=${encodeURIComponent(error.message)}`
-        );
+        if (
+            error.message
+                .toLowerCase()
+                .includes("different from the old password")
+        ) {
+            redirect("/reset-password?error=same_password");
+        }
+
+        redirect("/reset-password?error=update_failed");
     }
 
     await supabase.auth.signOut();
