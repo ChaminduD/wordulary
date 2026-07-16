@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { useTransition } from "react";
 import {
     Select,
     SelectContent,
@@ -8,6 +9,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
+import { LoadingSpinner } from "@/components/ui/loading-spinner";
 
 type ReviewCollectionFilterProps = {
     collections: {
@@ -23,21 +25,31 @@ export function ReviewCollectionFilter({
     selectedCollectionId,
 }: ReviewCollectionFilterProps) {
     const router = useRouter();
+    const [isPending, startTransition] = useTransition();
 
     return (
         <Select
+            disabled={isPending}
             value={selectedCollectionId ?? "all"}
             onValueChange={(value) => {
-                if (value === "all") {
-                    router.push("/dashboard/review");
-                    return;
-                }
+                startTransition(() => {
+                    if (value === "all") {
+                        router.push("/dashboard/review");
+                        return;
+                    }
 
-                router.push(`/dashboard/review?collection=${value}`);
+                    router.push(`/dashboard/review?collection=${value}`);
+                });
             }}
         >
             <SelectTrigger className="w-full sm:w-64">
-                <SelectValue placeholder="All Learning Terms" />
+                <div className="flex w-full items-center justify-between">
+                    <SelectValue placeholder="All Learning Terms" />
+
+                    {isPending && (
+                        <LoadingSpinner className="ml-2 size-4 shrink-0" />
+                    )}
+                </div>
             </SelectTrigger>
 
             <SelectContent>

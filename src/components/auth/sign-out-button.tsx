@@ -1,6 +1,8 @@
 "use client";
 
+import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { LoadingSpinner } from "@/components/ui/loading-spinner";
 import { Button } from "@/components/ui/button";
 import { createClient } from "@/lib/supabase/client";
 
@@ -11,14 +13,22 @@ type SignOutButtonProps = {
 export function SignOutButton({ className }: SignOutButtonProps) {
     const router = useRouter();
 
-    const handleSignOut = async () => {
-        const supabase = createClient();
+    const [isSigningOut, setIsSigningOut] = useState(false);
 
-        await supabase.auth.signOut();
+    async function handleSignOut() {
+        try {
+            setIsSigningOut(true);
 
-        router.push("/login");
-        router.refresh();
-    };
+            const supabase = createClient();
+
+            await supabase.auth.signOut();
+
+            router.push("/login");
+            router.refresh();
+        } finally {
+            setIsSigningOut(false);
+        }
+    }
 
     return (
         <Button
@@ -26,8 +36,13 @@ export function SignOutButton({ className }: SignOutButtonProps) {
             variant="outline"
             className={className}
             onClick={handleSignOut}
+            disabled={isSigningOut}
         >
-            Sign Out
+            {isSigningOut && (
+                <LoadingSpinner />
+            )}
+
+            {isSigningOut ? "Signing Out..." : "Sign Out"}
         </Button>
     );
 }
