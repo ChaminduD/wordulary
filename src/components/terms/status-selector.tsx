@@ -9,6 +9,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
+import { LoadingSpinner } from "../ui/loading-spinner";
 
 type StatusSelectorProps = {
     termId: string;
@@ -97,7 +98,10 @@ export function StatusSelector({ termId, status, aiGenerated }: StatusSelectorPr
             </Select>
 
             {saving && (
-                <span className="text-sm text-muted-foreground">Saving...</span>
+                <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                    <LoadingSpinner className="size-3" />
+                    Saving...
+                </div>
             )}
         </div>
     );

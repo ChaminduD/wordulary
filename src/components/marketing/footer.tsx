@@ -18,14 +18,14 @@ export function Footer() {
 
                     <nav className="flex flex-wrap gap-6 text-sm">
                         <Link
-                            href="/privacy"
+                            href="/privacy-policy"
                             className="text-muted-foreground transition-colors hover:text-foreground"
                         >
                             Privacy
                         </Link>
 
                         <Link
-                            href="/terms"
+                            href="/terms-of-service"
                             className="text-muted-foreground transition-colors hover:text-foreground"
                         >
                             Terms

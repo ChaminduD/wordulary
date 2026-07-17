@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
+import { LoadingSpinner } from "@/components/ui/loading-spinner";
 
 type GenerateAiContentButtonProps = {
     termId: string;
@@ -53,9 +54,9 @@ export function GenerateAiContentButton({ termId }: GenerateAiContentButtonProps
                 disabled={loading}
                 onClick={handleGenerate}
             >
-                {loading
-                    ? "Generating..."
-                    : "Generate"}
+                {loading && <LoadingSpinner />}
+
+                {loading ? "Generating..." : "Generate"}
             </Button>
             {
                 error && (

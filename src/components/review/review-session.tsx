@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { LoadingSpinner } from "@/components/ui/loading-spinner";
 
 type ReviewTerm = {
     id: string;
@@ -161,7 +162,11 @@ export function ReviewSession({ terms, collectionId }: ReviewSessionProps) {
                             onClick={handleMarkMastered}
                             disabled={updating}
                         >
-                            Mark Mastered
+                            {updating && <LoadingSpinner />}
+
+                            {updating
+                                ? "Marking..."
+                                : "Mark Mastered"}
                         </Button>
                     </div>
                 </div>

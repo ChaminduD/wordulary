@@ -1,11 +1,11 @@
 import Link from "next/link";
 import { Logo } from "@/components/branding/logo";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { forgotPasswordAction } from "@/actions/forgot-password";
 import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
+import { SubmitButton } from "@/components/ui/submit-button";
 
 export const metadata: Metadata = {
     title: "Forgot Password",
@@ -80,12 +80,12 @@ export default async function ForgotPasswordPage({ searchParams }: PageProps) {
                         required
                     />
 
-                    <Button
-                        type="submit"
+                    <SubmitButton
                         className="w-full"
+                        pendingText="Sending Reset Link..."
                     >
                         Send Reset Link
-                    </Button>
+                    </SubmitButton>
                 </form>
 
                 <p className="text-center text-sm text-muted-foreground">

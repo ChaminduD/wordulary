@@ -6,6 +6,7 @@ import { TermPreviewCard } from "@/components/terms/term-preview-card";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { LoadingSpinner } from "@/components/ui/loading-spinner";
 
 type TermGeneratorProps = {
     collections: {
@@ -148,6 +149,8 @@ export function TermGenerator({ collections }: TermGeneratorProps) {
                     onClick={handleGenerate}
                     disabled={loading || saving}
                 >
+                    {loading && <LoadingSpinner />}
+
                     {loading
                         ? "Generating..."
                         : isRegenerate
@@ -215,6 +218,8 @@ export function TermGenerator({ collections }: TermGeneratorProps) {
                         onClick={handleSave}
                         disabled={saving || loading}
                     >
+                        {saving && <LoadingSpinner />}
+
                         {saving ? "Saving..." : "Save Term"}
                     </Button>
                 </div>

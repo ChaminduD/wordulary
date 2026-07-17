@@ -1,30 +1,51 @@
 "use client";
 
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { createClient } from "@/lib/supabase/client";
+import { LoadingSpinner } from "@/components/ui/loading-spinner";
 import { GoogleIcon } from "@/components/icons/google-icon";
+import { createClient } from "@/lib/supabase/client";
 
 export function GoogleAuthButton() {
-    const handleSignIn = async () => {
-        const supabase = createClient();
+    const [loading, setLoading] = useState(false);
 
-        await supabase.auth.signInWithOAuth({
-            provider: "google",
-            options: {
-                redirectTo: `${window.location.origin}/auth/callback`,
-            },
-        });
-    };
+    async function handleSignIn() {
+        try {
+            setLoading(true);
+
+            const supabase = createClient();
+
+            await supabase.auth.signInWithOAuth({
+                provider: "google",
+                options: {
+                    redirectTo: `${window.location.origin}/auth/callback`,
+                },
+            });
+        } catch (error) {
+            console.error(error);
+            setLoading(false);
+        }
+    }
 
     return (
         <Button
             variant="outline"
             className="w-full"
             type="button"
+            disabled={loading}
             onClick={handleSignIn}
         >
-            <GoogleIcon className="size-4" />
-            Continue with Google
+            {loading ? (
+                <>
+                    <LoadingSpinner />
+                    Redirecting...
+                </>
+            ) : (
+                <>
+                    <GoogleIcon className="size-4" />
+                    Continue with Google
+                </>
+            )}
         </Button>
     );
 }

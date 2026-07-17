@@ -3,14 +3,14 @@ import { GoogleAuthButton } from "@/components/auth/google-auth-button";
 import { createClient } from "@/lib/supabase/server";
 import Link from "next/link";
 import { signInAction } from "@/actions/auth";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { Logo } from "@/components/branding/logo";
 import type { Metadata } from "next";
+import { SubmitButton } from "@/components/ui/submit-button";
 
 export const metadata: Metadata = {
-    title: "Sign In",
+  title: "Sign In",
 };
 
 type PageProps = {
@@ -103,12 +103,12 @@ export default async function LoginPage({ searchParams }: PageProps) {
             </Link>
           </div>
 
-          <Button
-            type="submit"
+          <SubmitButton
             className="w-full"
+            pendingText="Signing In..."
           >
             Sign In
-          </Button>
+          </SubmitButton>
         </form>
 
         <p className="text-center text-sm text-muted-foreground">

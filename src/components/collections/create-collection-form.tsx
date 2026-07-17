@@ -4,6 +4,7 @@ import { useState } from "react";
 import { createCollection } from "@/actions/collections";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { LoadingSpinner } from "@/components/ui/loading-spinner";
 
 export function CreateCollectionForm() {
     const [name, setName] = useState("");
@@ -87,9 +88,9 @@ export function CreateCollectionForm() {
                         className="w-full sm:w-auto"
                         disabled={loading}
                     >
-                        {loading
-                            ? "Creating..."
-                            : "Create"}
+                        {loading && <LoadingSpinner />}
+
+                        {loading ? "Creating..." : "Create"}
                     </Button>
                 </div>
             </form>

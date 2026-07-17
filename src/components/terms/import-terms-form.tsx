@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
+import { LoadingSpinner } from "@/components/ui/loading-spinner";
 
 type ImportTermsFormProps = {
     collections: {
@@ -173,6 +174,8 @@ export function ImportTermsForm({ collections }: ImportTermsFormProps) {
                 onClick={handleImport}
                 disabled={loading}
             >
+                {loading && <LoadingSpinner />}
+
                 {loading ? "Importing..." : "Import Terms"}
             </Button>
         </section>

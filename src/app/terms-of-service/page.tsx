@@ -7,7 +7,7 @@ export const metadata: Metadata = {
     title: "Terms of Service",
 };
 
-export default function TermsPage() {
+export default function TermsOfServicePage() {
     return (
         <LegalLayout
             title="Terms of Service"

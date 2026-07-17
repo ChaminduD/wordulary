@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { signUpAction } from "@/actions/auth";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { GoogleAuthButton } from "@/components/auth/google-auth-button";
 import { Separator } from "@/components/ui/separator";
@@ -8,6 +7,7 @@ import { Logo } from "@/components/branding/logo";
 import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
+import { SubmitButton } from "@/components/ui/submit-button";
 
 export const metadata: Metadata = {
     title: "Create Account",
@@ -75,12 +75,12 @@ export default async function SignUpPage() {
                         required
                     />
 
-                    <Button
-                        type="submit"
+                    <SubmitButton
                         className="w-full"
+                        pendingText="Creating Account..."
                     >
                         Create Account
-                    </Button>
+                    </SubmitButton>
                 </form>
 
                 <p className="text-center text-sm text-muted-foreground">

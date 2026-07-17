@@ -7,7 +7,7 @@ export const metadata: Metadata = {
     title: "Privacy Policy",
 };
 
-export default function PrivacyPage() {
+export default function PrivacyPolicyPage() {
     return (
         <LegalLayout
             title="Privacy Policy"

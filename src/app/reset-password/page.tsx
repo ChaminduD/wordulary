@@ -1,8 +1,8 @@
 import { Logo } from "@/components/branding/logo";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { resetPasswordAction } from "@/actions/reset-password";
 import type { Metadata } from "next";
+import { SubmitButton } from "@/components/ui/submit-button";
 
 export const metadata: Metadata = {
     title: "Reset Password",
@@ -73,12 +73,12 @@ export default async function ResetPasswordPage({ searchParams }: PageProps) {
                         required
                     />
 
-                    <Button
-                        type="submit"
+                    <SubmitButton
                         className="w-full"
+                        pendingText="Updating Password..."
                     >
                         Update Password
-                    </Button>
+                    </SubmitButton>
                 </form>
             </div>
         </main>

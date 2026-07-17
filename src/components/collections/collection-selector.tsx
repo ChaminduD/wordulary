@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { LoadingSpinner } from "../ui/loading-spinner";
 
 type CollectionSelectorProps = {
     termId: string;
@@ -89,9 +90,10 @@ export function CollectionSelector({
             )}
 
             {saving && (
-                <p className="text-sm text-muted-foreground">
+                <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                    <LoadingSpinner className="size-3" />
                     Saving...
-                </p>
+                </div>
             )}
         </div>
     );
