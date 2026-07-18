@@ -43,14 +43,12 @@ export default async function CollectionsPage() {
             <CreateCollectionForm />
 
             <section className="space-y-3">
-                {collectionList.length > 0 && (
-                    <p className="text-sm text-muted-foreground">
-                        {collectionList.length}{" "}
-                        {collectionList.length === 1
-                            ? "collection"
-                            : "collections"}
-                    </p>
-                )}
+                <p className="text-sm text-muted-foreground">
+                    {collectionList.length}{" "}
+                    {collectionList.length === 1
+                        ? "collection"
+                        : "collections"}
+                </p>
 
                 {collectionList.map((collection) => (
                     <div

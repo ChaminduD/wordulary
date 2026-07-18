@@ -1,6 +1,7 @@
 import { createClient } from "@/lib/supabase/server";
 import { TermsTable } from "@/components/terms/terms-table";
 import { TermsSearch } from "@/components/terms/terms-search";
+import { TermsFilters } from "@/components/terms/terms-filters";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import type { Metadata } from "next";
@@ -85,46 +86,7 @@ export default async function TermsPage({ searchParams }: PageProps) {
 
     const hasTerms = (totalTerms ?? 0) > 0;
 
-    const activeStatus = status ?? "";
-
-    function getFilterClass(value: string) {
-        return activeStatus === value
-            ? "rounded border px-3 py-1 bg-accent border-primary"
-            : "rounded border px-3 py-1";
-    }
-
     const searchQuery = search?.trim() ?? "";
-
-    function getFilterHref(
-        nextStatus?: string,
-        nextAi?: string
-    ) {
-        const params = new URLSearchParams();
-
-        if (searchQuery) {
-            params.set(
-                "search",
-                searchQuery
-            );
-        }
-
-        if (nextStatus) {
-            params.set(
-                "status",
-                nextStatus
-            );
-        }
-
-        if (nextAi) {
-            params.set("ai", nextAi);
-        }
-
-        const query = params.toString();
-
-        return query
-            ? `/dashboard/terms?${query}`
-            : "/dashboard/terms";
-    }
 
     return (
         <div className="space-y-6">
@@ -157,108 +119,13 @@ export default async function TermsPage({ searchParams }: PageProps) {
             <div className="rounded-xl border p-6 space-y-6">
                 <TermsSearch />
 
-                {hasTerms && (
-                    <>
-                        <div className="space-y-4 sm:space-y-0 sm:flex sm:gap-10">
-                            <div className="flex flex-col gap-2">
-                                <p className="text-sm font-semibold text-muted-foreground">
-                                    Status
-                                </p>
-
-                                <div className="flex gap-2 flex-wrap">
-                                    <Link
-                                        href={
-                                            status === "new"
-                                                ? getFilterHref(undefined, ai)
-                                                : getFilterHref("new", ai)
-                                        }
-                                        className={getFilterClass("new")}
-
-                                    >
-                                        New
-                                    </Link>
-
-                                    <Link
-                                        href={
-                                            status === "learning"
-                                                ? getFilterHref(undefined, ai)
-                                                : getFilterHref("learning", ai)
-                                        }
-                                        className={getFilterClass("learning")}
-                                    >
-                                        Learning
-                                    </Link>
-
-                                    <Link
-                                        href={
-                                            status === "mastered"
-                                                ? getFilterHref(undefined, ai)
-                                                : getFilterHref("mastered", ai)
-                                        }
-                                        className={getFilterClass("mastered")}
-                                    >
-                                        Mastered
-                                    </Link>
-                                </div>
-                            </div>
-
-                            <div className="flex flex-col gap-2">
-                                <p className="text-sm font-semibold text-muted-foreground">
-                                    AI Content
-                                </p>
-
-                                <div className="flex gap-2 flex-wrap">
-                                    <Link
-                                        href={
-                                            ai === "generated"
-                                                ? getFilterHref(status)
-                                                : getFilterHref(status, "generated")
-                                        }
-                                        className={ai === "generated"
-                                            ? "rounded border px-3 py-1 bg-accent border-primary"
-                                            : "rounded border px-3 py-1"}
-                                    >
-                                        Generated
-                                    </Link>
-
-                                    <Link
-                                        href={
-                                            ai === "missing"
-                                                ? getFilterHref(status)
-                                                : getFilterHref(status, "missing")
-                                        }
-                                        className={ai === "missing"
-                                            ? "rounded border px-3 py-1 bg-accent border-primary"
-                                            : "rounded border px-3 py-1"}
-                                    >
-                                        Missing AI
-                                    </Link>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="flex items-center justify-between text-sm text-muted-foreground">
-                            {termListItems.length > 0 && (
-                                <p>
-                                    {termListItems.length} {termListItems.length === 1 ? "term" : "terms"}
-                                </p>
-                            )}
-
-                            {(status || ai) && (
-                                <Link
-                                    href={
-                                        searchQuery
-                                            ? `/dashboard/terms?search=${encodeURIComponent(searchQuery)}`
-                                            : "/dashboard/terms"
-                                    }
-                                    className="text-muted-foreground hover:text-foreground hover:underline"
-                                >
-                                    ✕ Clear Filters
-                                </Link>
-                            )}
-                        </div>
-                    </>
-                )}
+                <TermsFilters
+                    hasTerms={hasTerms}
+                    status={status ?? ""}
+                    ai={ai ?? ""}
+                    searchQuery={searchQuery}
+                    resultCount={termListItems.length}
+                />
             </div>
 
             <TermsTable
