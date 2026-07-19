@@ -34,6 +34,7 @@ export function GenerateAiContentButton({ termId }: GenerateAiContentButtonProps
             }
 
             router.refresh();
+            return;
         } catch (error) {
             console.error(error);
 
@@ -42,7 +43,7 @@ export function GenerateAiContentButton({ termId }: GenerateAiContentButtonProps
                     ? error.message
                     : "Failed to generate AI content"
             );
-        } finally {
+            
             setLoading(false);
         }
     }
