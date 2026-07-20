@@ -1,6 +1,5 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { LoadingSpinner } from "../ui/loading-spinner";
 
@@ -20,7 +19,7 @@ export function CollectionSelector({
     collections,
     selectedCollectionIds,
 }: CollectionSelectorProps) {
-    const router = useRouter();
+    const [selectedIds, setSelectedIds] = useState(selectedCollectionIds);
 
     const [saving, setSaving] = useState(false);
 
@@ -28,8 +27,20 @@ export function CollectionSelector({
         collectionId: string,
         checked: boolean
     ) {
+        if (saving) return;
+
+        const previousIds = [...selectedIds];
+
         try {
             setSaving(true);
+
+            if (checked) {
+                setSelectedIds(prev => [...prev, collectionId]);
+            } else {
+                setSelectedIds(prev =>
+                    prev.filter(id => id !== collectionId)
+                );
+            }
 
             const response =
                 await fetch(
@@ -51,10 +62,10 @@ export function CollectionSelector({
             if (!response.ok) {
                 throw new Error(data.error ?? "Failed to update collection");
             }
-
-            router.refresh();
         } catch (error) {
             console.error(error);
+
+            setSelectedIds(previousIds);
         } finally {
             setSaving(false);
         }
@@ -74,7 +85,7 @@ export function CollectionSelector({
                     >
                         <input
                             type="checkbox"
-                            checked={selectedCollectionIds.includes(collection.id)}
+                            checked={selectedIds.includes(collection.id)}
                             disabled={saving}
                             onChange={(event) =>
                                 handleChange(

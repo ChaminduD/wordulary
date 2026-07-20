@@ -1,6 +1,5 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 import {
     Select,
@@ -18,13 +17,18 @@ type StatusSelectorProps = {
 };
 
 export function StatusSelector({ termId, status, aiGenerated }: StatusSelectorProps) {
-    const router = useRouter();
-
+    const [currentStatus, setCurrentStatus] = useState(status);
     const [saving, setSaving] = useState(false);
 
     async function handleChange(nextStatus: string) {
+        if (saving) return;
+        if (nextStatus === currentStatus) return;
+
+        const previousStatus = currentStatus;
+
         try {
             setSaving(true);
+            setCurrentStatus(nextStatus);
 
             const response = await fetch(
                 `/api/terms/${termId}/status`,
@@ -44,10 +48,10 @@ export function StatusSelector({ termId, status, aiGenerated }: StatusSelectorPr
             if (!response.ok) {
                 throw new Error(data.error ?? "Failed to update status");
             }
-
-            router.refresh();
         } catch (error) {
             console.error(error);
+
+            setCurrentStatus(previousStatus);
         } finally {
             setSaving(false);
         }
@@ -68,7 +72,7 @@ export function StatusSelector({ termId, status, aiGenerated }: StatusSelectorPr
             </div>
 
             <Select
-                value={status}
+                value={currentStatus}
                 onValueChange={handleChange}
                 disabled={saving}
             >
