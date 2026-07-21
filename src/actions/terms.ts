@@ -78,7 +78,7 @@ export async function deleteTermAction(
         return;
     }
 
-    revalidatePath("/dashboard/terms");
+    revalidatePath("/dashboard/terms", "page");
 
     redirect("/dashboard/terms");
 }
