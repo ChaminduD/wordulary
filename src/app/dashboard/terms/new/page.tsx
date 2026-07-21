@@ -2,6 +2,11 @@ import { TermGenerator } from "@/components/terms/term-generator";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { Button } from "@/components/ui/button";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "Add New Term",
+};
 
 export default async function NewTermPage() {
     const supabase = await createClient();

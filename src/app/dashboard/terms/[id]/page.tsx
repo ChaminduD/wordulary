@@ -5,10 +5,36 @@ import { StatusSelector } from "@/components/terms/status-selector";
 import { CollectionSelector } from "@/components/collections/collection-selector";
 import { deleteTermAndRedirectAction } from "@/actions/terms";
 import { ConfirmDeleteButton } from "@/components/terms/confirm-delete-button";
+import type { Metadata } from "next";
 
 type PageProps = {
     params: Promise<{ id: string; }>;
 };
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+    const { id } = await params;
+
+    const supabase = await createClient();
+
+    const { data: { user } } = await supabase.auth.getUser();
+
+    if (!user) {
+        return {
+            title: "Term",
+        };
+    }
+
+    const { data: term } = await supabase
+        .from("terms")
+        .select("term")
+        .eq("id", id)
+        .eq("user_id", user.id)
+        .single();
+
+    return {
+        title: term?.term ?? "Term",
+    };
+}
 
 export default async function TermPage({ params }: PageProps) {
     const { id } = await params;

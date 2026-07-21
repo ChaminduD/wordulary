@@ -104,7 +104,7 @@ export default async function TermsPage({ searchParams }: PageProps) {
                 <div className="flex flex-wrap gap-2">
                     <Button asChild>
                         <Link href="/dashboard/terms/new">
-                            Add Term
+                            Add New Term
                         </Link>
                     </Button>
 

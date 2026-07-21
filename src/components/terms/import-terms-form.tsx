@@ -64,10 +64,14 @@ export function ImportTermsForm({ collections }: ImportTermsFormProps) {
                     ? "duplicate"
                     : "duplicates";
 
-            setMessage(
-                `Imported ${data.imported} ${importedLabel}. Skipped ${data.skipped} ${skippedLabel}.`
-            );
+            const message =
+                data.skipped > 0
+                    ? `Successfully imported ${data.imported} ${importedLabel}. Skipped ${data.skipped} ${skippedLabel}.`
+                    : `Successfully imported ${data.imported} ${importedLabel}.`;
+
+            setMessage(message);
             setTermsText("");
+            setSelectedCollectionIds([]);
         } catch (error) {
             setError(error instanceof Error ? error.message : "Import failed");
         } finally {
@@ -95,18 +99,6 @@ export function ImportTermsForm({ collections }: ImportTermsFormProps) {
 
     return (
         <section className="space-y-4">
-            {message && (
-                <p className="text-sm text-muted-foreground">
-                    {message}
-                </p>
-            )}
-
-            {error && (
-                <p className="text-sm text-destructive">
-                    {error}
-                </p>
-            )}
-
             <div className="space-y-4">
                 <div>
                     <h2 className="text-lg font-semibold">
@@ -118,17 +110,42 @@ export function ImportTermsForm({ collections }: ImportTermsFormProps) {
                     </p>
                 </div>
 
-                <Textarea
-                    value={termsText}
-                    onChange={(event) =>
-                        setTermsText(
-                            event.target.value
-                        )
-                    }
-                    placeholder="Enter one term per line"
-                    className="min-h-[250px]"
-                />
+                <div className="space-y-2">
+                    <Textarea
+                        value={termsText}
+                        onChange={(event) =>
+                            setTermsText(
+                                event.target.value
+                            )
+                        }
+                        placeholder="Enter one term per line"
+                        className="min-h-[250px]"
+                    />
+
+                    <Button
+                        type="button"
+                        className="w-full sm:w-auto"
+                        onClick={handleImport}
+                        disabled={loading}
+                    >
+                        {loading && <LoadingSpinner />}
+
+                        {loading ? "Importing..." : "Import Terms"}
+                    </Button>
+                </div>
             </div>
+
+            {message && (
+                <div className="rounded-md border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-800">
+                    {message}
+                </div>
+            )}
+
+            {error && (
+                <div className="rounded-md border border-destructive/20 bg-destructive/10 px-4 py-3 text-sm text-destructive">
+                    {error}
+                </div>
+            )}
 
             {collections.length > 0 && (
                 <div className="space-y-4">
@@ -167,17 +184,6 @@ export function ImportTermsForm({ collections }: ImportTermsFormProps) {
                     </div>
                 </div>
             )}
-
-            <Button
-                type="button"
-                className="mt-2 w-full sm:w-auto"
-                onClick={handleImport}
-                disabled={loading}
-            >
-                {loading && <LoadingSpinner />}
-
-                {loading ? "Importing..." : "Import Terms"}
-            </Button>
         </section>
     );
 }

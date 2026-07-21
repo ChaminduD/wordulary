@@ -2,6 +2,11 @@ import { ImportTermsForm } from "@/components/terms/import-terms-form";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { Button } from "@/components/ui/button";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "Import Terms",
+};
 
 export default async function ImportTermsPage() {
     const supabase = await createClient();
