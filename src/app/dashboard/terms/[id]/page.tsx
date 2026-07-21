@@ -3,7 +3,7 @@ import { createClient } from "@/lib/supabase/server";
 import { GenerateAiContentButton } from "@/components/terms/generate-ai-content-button";
 import { StatusSelector } from "@/components/terms/status-selector";
 import { CollectionSelector } from "@/components/collections/collection-selector";
-import { deleteTermAction } from "@/actions/terms";
+import { deleteTermAndRedirectAction } from "@/actions/terms";
 import { ConfirmDeleteButton } from "@/components/terms/confirm-delete-button";
 
 type PageProps = {
@@ -159,7 +159,7 @@ export default async function TermPage({ params }: PageProps) {
                 </p>
 
                 <form
-                    action={deleteTermAction}
+                    action={deleteTermAndRedirectAction}
                     className="mt-4"
                 >
                     <input

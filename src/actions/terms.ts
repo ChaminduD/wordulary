@@ -48,15 +48,7 @@ export async function saveTermAction(generatedTerm: GeneratedTerm) {
     revalidatePath("/dashboard/terms");
 }
 
-export async function deleteTermAction(
-    formData: FormData
-) {
-    const id = formData.get("id");
-
-    if (typeof id !== "string") {
-        return;
-    }
-
+async function deleteTerm(id: string) {
     const supabase = await createClient();
 
     const {
@@ -64,7 +56,7 @@ export async function deleteTermAction(
     } = await supabase.auth.getUser();
 
     if (!user) {
-        return;
+        throw new Error("User not authenticated");
     }
 
     const { error } = await supabase
@@ -74,9 +66,32 @@ export async function deleteTermAction(
         .eq("user_id", user.id);
 
     if (error) {
-        console.error(error);
+        throw error;
+    }
+}
+
+export async function deleteTermAction(formData: FormData) {
+    const id = formData.get("id");
+
+    if (typeof id !== "string") {
         return;
     }
 
+    await deleteTerm(id);
+
     revalidatePath("/dashboard/terms", "page");
+}
+
+export async function deleteTermAndRedirectAction(formData: FormData) {
+    const id = formData.get("id");
+
+    if (typeof id !== "string") {
+        return;
+    }
+
+    await deleteTerm(id);
+
+    revalidatePath("/dashboard/terms", "page");
+
+    redirect("/dashboard/terms");
 }

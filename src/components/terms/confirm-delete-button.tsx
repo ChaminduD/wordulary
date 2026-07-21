@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
+import { DeleteButton } from "@/components/ui/delete-button";
 
 type ConfirmDeleteButtonProps = {
     label?: string;
@@ -12,10 +12,7 @@ export function ConfirmDeleteButton({
     termName,
 }: ConfirmDeleteButtonProps) {
     return (
-        <Button
-            type="submit"
-            variant="destructive"
-            size="sm"
+        <DeleteButton
             onClick={(event) => {
                 const confirmed = window.confirm(
                     `Are you sure you want to delete "${termName}"?`
@@ -27,6 +24,6 @@ export function ConfirmDeleteButton({
             }}
         >
             {label}
-        </Button>
+        </DeleteButton>
     );
 }
