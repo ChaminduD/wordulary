@@ -2,6 +2,8 @@ import type { TermListItem } from "@/types/term-list-item";
 import Link from "next/link";
 import { deleteTermAction } from "@/actions/terms";
 import { ConfirmDeleteButton } from "./confirm-delete-button";
+import { Badge } from "@/components/ui/badge";
+import { Sparkles } from "lucide-react";
 
 type TermsTableProps = {
     terms: TermListItem[];
@@ -138,42 +140,41 @@ export function TermsTable({ terms, hasSearch, hasActiveFilter }: TermsTableProp
                 {terms.map((term) => (
                     <div
                         key={term.id}
-                        className="rounded-xl border p-4"
+                        className="rounded-xl border p-4 transition-colors hover:bg-muted/30"
                     >
                         <Link
                             href={`/dashboard/terms/${term.id}`}
-                            className="font-semibold hover:underline"
+                            className="block"
                         >
-                            {term.term}
+                            <h3 className="text-lg font-semibold hover:underline">
+                                {term.term}
+                            </h3>
+
+                            <div className="mt-1 flex items-center gap-2 text-sm text-muted-foreground">
+                                <span className="capitalize">
+                                    {term.termType}
+                                </span>
+
+                                <span>•</span>
+
+                                <span>
+                                    {new Date(term.createdAt).toLocaleDateString()}
+                                </span>
+                            </div>
                         </Link>
 
-                        <div className="mt-2 space-y-1 text-sm text-muted-foreground">
-                            <p>
-                                Type: {term.termType}
-                            </p>
+                        <div className="mt-3 flex items-center justify-between">
+                            <div className="flex flex-wrap gap-2">
+                                <Badge variant="secondary" className="capitalize">
+                                    {term.status}
+                                </Badge>
 
-                            <p className="capitalize">
-                                Status: {term.status}
-                            </p>
+                                <Badge variant="outline" className="gap-1">
+                                    {term.aiGenerated && <Sparkles className="size-3" />}
+                                    {term.aiGenerated ? "AI Generated" : "Missing AI"}
+                                </Badge>
+                            </div>
 
-                            <p>
-                                AI: {
-                                    term.aiGenerated
-                                        ? "Generated"
-                                        : "Missing AI"
-                                }
-                            </p>
-
-                            <p>
-                                Created: {
-                                    new Date(
-                                        term.createdAt
-                                    ).toLocaleDateString()
-                                }
-                            </p>
-                        </div>
-
-                        <div className="mt-4">
                             <form action={deleteTermAction}>
                                 <input
                                     type="hidden"
@@ -183,6 +184,7 @@ export function TermsTable({ terms, hasSearch, hasActiveFilter }: TermsTableProp
 
                                 <ConfirmDeleteButton
                                     termName={term.term}
+                                    iconOnly
                                 />
                             </form>
                         </div>
