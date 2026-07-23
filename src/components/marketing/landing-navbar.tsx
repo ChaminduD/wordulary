@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Logo } from "@/components/branding/logo";
 import { Button } from "@/components/ui/button";
 import type { User } from "@supabase/supabase-js";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 type LandingNavbarProps = {
     user: User | null;
@@ -33,6 +34,8 @@ export function LandingNavbar({ user }: LandingNavbarProps) {
                 </nav>
 
                 <div className="flex items-center gap-2">
+                    <ThemeToggle />
+                    
                     {user ? (
                         <Button asChild>
                             <Link href="/dashboard">
