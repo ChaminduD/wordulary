@@ -2,35 +2,19 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import {
-    House,
-    BookOpen,
-    FolderOpen,
-    Brain,
-} from "lucide-react";
 import { getSidebarLinkClass } from "@/lib/sidebar-link";
+import { User } from "lucide-react";
 
-const icons = {
-    home: House,
-    book: BookOpen,
-    folder: FolderOpen,
-    brain: Brain,
-};
-
-type NavLinkProps = {
+type AccountLinkProps = {
     href: string;
     label: string;
-    icon: keyof typeof icons;
 };
 
-export function NavLink({
+export function AccountLink({
     href,
     label,
-    icon,
-}: NavLinkProps) {
+}: AccountLinkProps) {
     const pathname = usePathname();
-
-    const Icon = icons[icon];
 
     const isActive =
         pathname === href ||
@@ -44,7 +28,7 @@ export function NavLink({
             href={href}
             className={getSidebarLinkClass(isActive)}
         >
-            <Icon className="size-5" />
+            <User className="size-5" />
 
             <span>{label}</span>
         </Link>

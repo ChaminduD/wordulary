@@ -1,6 +1,7 @@
 import { navigation } from "@/lib/navigation";
 import { NavLink } from "@/components/navigation/nav-link";
 import { Logo } from "@/components/branding/logo";
+import { SidebarFooter } from "@/components/navigation/sidebar-footer";
 
 export function DashboardSidebar() {
     return (
@@ -22,6 +23,8 @@ export function DashboardSidebar() {
                     );
                 })}
             </nav>
+
+            <SidebarFooter />
         </aside>
     );
 }

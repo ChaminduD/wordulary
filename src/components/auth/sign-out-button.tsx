@@ -2,15 +2,21 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { LogOut } from "lucide-react";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
 import { Button } from "@/components/ui/button";
 import { createClient } from "@/lib/supabase/client";
+import { getSidebarLinkClass } from "@/lib/sidebar-link";
 
 type SignOutButtonProps = {
     className?: string;
+    variant?: "default" | "sidebar";
 };
 
-export function SignOutButton({ className }: SignOutButtonProps) {
+export function SignOutButton({
+    className,
+    variant = "default",
+}: SignOutButtonProps) {
     const router = useRouter();
 
     const [isSigningOut, setIsSigningOut] = useState(false);
@@ -30,6 +36,27 @@ export function SignOutButton({ className }: SignOutButtonProps) {
         }
     }
 
+    if (variant === "sidebar") {
+        return (
+            <button
+                type="button"
+                className={getSidebarLinkClass(false)}
+                onClick={handleSignOut}
+                disabled={isSigningOut}
+            >
+                {isSigningOut ? (
+                    <LoadingSpinner />
+                ) : (
+                    <LogOut className="size-5" />
+                )}
+
+                <span>
+                    {isSigningOut ? "Signing Out..." : "Sign Out"}
+                </span>
+            </button>
+        );
+    }
+
     return (
         <Button
             type="button"
@@ -38,9 +65,7 @@ export function SignOutButton({ className }: SignOutButtonProps) {
             onClick={handleSignOut}
             disabled={isSigningOut}
         >
-            {isSigningOut && (
-                <LoadingSpinner />
-            )}
+            {isSigningOut && <LoadingSpinner />}
 
             {isSigningOut ? "Signing Out..." : "Sign Out"}
         </Button>
