@@ -2,8 +2,8 @@ import { deleteCollection } from "@/actions/collections";
 import { CreateCollectionForm } from "@/components/collections/create-collection-form";
 import { createClient } from "@/lib/supabase/server";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
 import type { Metadata } from "next";
+import { ConfirmDeleteButton } from "@/components/ui/confirm-delete-button";
 
 export const metadata: Metadata = {
     title: "Collections",
@@ -53,7 +53,7 @@ export default async function CollectionsPage() {
                 {collectionList.map((collection) => (
                     <div
                         key={collection.id}
-                        className="flex items-center justify-between rounded-xl border p-4"
+                        className="flex items-center justify-between rounded-xl border p-4 transition-colors hover:bg-muted/50"
                     >
                         <Link
                             href={`/dashboard/collections/${collection.id}`}
@@ -69,13 +69,9 @@ export default async function CollectionsPage() {
                                 value={collection.id}
                             />
 
-                            <Button
-                                type="submit"
-                                variant="destructive"
-                                size="sm"
-                            >
-                                Delete
-                            </Button>
+                            <ConfirmDeleteButton
+                                itemName={collection.name}
+                            />
                         </form>
                     </div>
                 ))}

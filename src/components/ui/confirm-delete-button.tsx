@@ -5,22 +5,22 @@ import { Trash2 } from "lucide-react";
 
 type ConfirmDeleteButtonProps = {
     label?: string;
-    termName: string;
+    itemName: string;
     iconOnly?: boolean;
 };
 
 export function ConfirmDeleteButton({
     label = "Delete",
-    termName,
+    itemName,
     iconOnly = false,
 }: ConfirmDeleteButtonProps) {
     return (
         <DeleteButton
             iconOnly={iconOnly}
-            aria-label={`Delete ${termName}`}
+            aria-label={`Delete ${itemName}`}
             onClick={(event) => {
                 const confirmed = window.confirm(
-                    `Are you sure you want to delete "${termName}"?`
+                    `Are you sure you want to delete "${itemName}"?`
                 );
 
                 if (!confirmed) {

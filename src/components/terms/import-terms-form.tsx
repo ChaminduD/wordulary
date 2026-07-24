@@ -163,7 +163,7 @@ export function ImportTermsForm({ collections }: ImportTermsFormProps) {
                         {collections.map((collection) => (
                             <label
                                 key={collection.id}
-                                className="flex items-center gap-2"
+                                className="flex cursor-pointer items-center gap-2"
                             >
                                 <input
                                     type="checkbox"
@@ -176,6 +176,7 @@ export function ImportTermsForm({ collections }: ImportTermsFormProps) {
                                             event.target.checked
                                         )
                                     }
+                                    className="cursor-pointer disabled:cursor-not-allowed"
                                 />
 
                                 {collection.name}

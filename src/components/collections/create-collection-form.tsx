@@ -60,15 +60,15 @@ export function CreateCollectionForm() {
                 className="space-y-4"
             >
                 {message && (
-                    <p className="text-sm text-muted-foreground">
+                    <div className="rounded-md border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-800">
                         {message}
-                    </p>
+                    </div>
                 )}
 
                 {error && (
-                    <p className="text-sm text-destructive">
+                    <div className="rounded-md border border-destructive/20 bg-destructive/10 px-4 py-3 text-sm text-destructive">
                         {error}
-                    </p>
+                    </div>
                 )}
 
                 <div className="flex flex-col gap-3 sm:flex-row">

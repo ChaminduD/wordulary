@@ -4,7 +4,7 @@ import { GenerateAiContentButton } from "@/components/terms/generate-ai-content-
 import { StatusSelector } from "@/components/terms/status-selector";
 import { CollectionSelector } from "@/components/collections/collection-selector";
 import { deleteTermAndRedirectAction } from "@/actions/terms";
-import { ConfirmDeleteButton } from "@/components/terms/confirm-delete-button";
+import { ConfirmDeleteButton } from "@/components/ui/confirm-delete-button";
 import type { Metadata } from "next";
 
 type PageProps = {

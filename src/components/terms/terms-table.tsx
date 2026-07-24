@@ -1,7 +1,7 @@
 import type { TermListItem } from "@/types/term-list-item";
 import Link from "next/link";
 import { deleteTermAction } from "@/actions/terms";
-import { ConfirmDeleteButton } from "./confirm-delete-button";
+import { ConfirmDeleteButton } from "@/components/ui/confirm-delete-button";
 import { Badge } from "@/components/ui/badge";
 import { Sparkles } from "lucide-react";
 
@@ -126,7 +126,7 @@ export function TermsTable({ terms, hasSearch, hasActiveFilter }: TermsTableProp
                                         />
 
                                         <ConfirmDeleteButton
-                                            termName={term.term}
+                                            itemName={term.term}
                                         />
                                     </form>
                                 </td>
@@ -183,7 +183,7 @@ export function TermsTable({ terms, hasSearch, hasActiveFilter }: TermsTableProp
                                 />
 
                                 <ConfirmDeleteButton
-                                    termName={term.term}
+                                    itemName={term.term}
                                     iconOnly
                                 />
                             </form>
