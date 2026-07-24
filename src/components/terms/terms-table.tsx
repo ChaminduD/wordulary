@@ -52,7 +52,7 @@ export function TermsTable({ terms, hasSearch, hasActiveFilter }: TermsTableProp
 
     return (
         <>
-            <div className="hidden rounded-xl border md:block">
+            <div className="hidden rounded-xl border lg:block">
                 <table className="w-full">
                     <thead>
                         <tr className="border-b">
@@ -136,7 +136,7 @@ export function TermsTable({ terms, hasSearch, hasActiveFilter }: TermsTableProp
                 </table>
             </div>
 
-            <div className="space-y-3 md:hidden">
+            <div className="grid gap-3 sm:grid-cols-2 lg:hidden">
                 {terms.map((term) => (
                     <div
                         key={term.id}

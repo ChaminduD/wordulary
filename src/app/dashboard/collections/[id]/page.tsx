@@ -1,6 +1,8 @@
 import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import Link from "next/link";
+import { Badge } from "@/components/ui/badge";
+import type { Metadata } from "next";
 
 type CollectionTerm = {
     id: string;
@@ -12,6 +14,31 @@ type CollectionTerm = {
 type PageProps = {
     params: Promise<{ id: string; }>;
 };
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+    const { id } = await params;
+
+    const supabase = await createClient();
+
+    const { data: { user } } = await supabase.auth.getUser();
+
+    if (!user) {
+        return {
+            title: "Collection",
+        };
+    }
+
+    const { data: collection } = await supabase
+        .from("collections")
+        .select("name")
+        .eq("id", id)
+        .eq("user_id", user.id)
+        .single();
+
+    return {
+        title: collection?.name ?? "Collection",
+    };
+}
 
 export default async function CollectionPage({ params }: PageProps) {
     const supabase = await createClient();
@@ -87,7 +114,7 @@ export default async function CollectionPage({ params }: PageProps) {
                 </p>
             </section>
 
-            <section className="space-y-3">
+            <section className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
                 {collectionTerms?.map((collectionTerm) => {
                     const term = collectionTerm.terms as unknown as CollectionTerm;
 
@@ -98,24 +125,26 @@ export default async function CollectionPage({ params }: PageProps) {
                     return (
                         <div
                             key={collectionTerm.term_id}
-                            className="rounded-xl border p-4"
+                            className="rounded-xl border p-4 transition-colors hover:bg-muted/30"
                         >
                             <Link
                                 href={`/dashboard/terms/${term.id}`}
-                                className="font-medium hover:underline"
+                                className="block"
                             >
-                                {term.term}
+                                <h3 className="text-lg font-semibold hover:underline">
+                                    {term.term}
+                                </h3>
+
+                                <div className="mt-3 flex flex-wrap gap-2">
+                                    <Badge variant="outline" className="capitalize">
+                                        {term.term_type.replaceAll("_", " ")}
+                                    </Badge>
+
+                                    <Badge variant="secondary" className="capitalize">
+                                        {term.status}
+                                    </Badge>
+                                </div>
                             </Link>
-
-                            <div className="mt-2 space-y-1">
-                                <p className="text-sm text-muted-foreground capitalize">
-                                    {term.term_type.replaceAll("_", " ")}
-                                </p>
-
-                                <p className="text-sm capitalize">
-                                    {term.status}
-                                </p>
-                            </div>
                         </div>
                     );
                 })}
