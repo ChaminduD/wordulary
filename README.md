@@ -1,36 +1,171 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Wordulary
 
-## Getting Started
+> AI-powered vocabulary learning built for focused study.
 
-First, run the development server:
+Wordulary is an AI-powered vocabulary learning application that helps learners build a personal vocabulary library, organize words into collections, and generate detailed learning content, including definitions, examples, synonyms, antonyms, and difficulty levels.
+
+Built with Next.js, Supabase, and Google's Gemini API, Wordulary focuses on a clean, distraction-free experience that makes learning new words enjoyable.
+
+[![Next.js](https://img.shields.io/badge/Next.js-16-black?logo=next.js&logoColor=white)](https://nextjs.org/)
+[![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=white)](https://react.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-v4-06B6D4?logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
+[![Supabase](https://img.shields.io/badge/Supabase-2-3ECF8E?logo=supabase&logoColor=white)](https://supabase.com/)
+[![Gemini](https://img.shields.io/badge/Google_Gemini-AI-4285F4?logo=google-gemini&logoColor=white)](https://ai.google.dev/)
+[![Vercel](https://img.shields.io/badge/Vercel-Deployed-black?logo=vercel&logoColor=white)](https://vercel.com/)
+
+## 📑 Table of Contents
+
+- [Features](#-features)
+- [Screenshots](#-screenshots)
+- [Tech Stack](#-tech-stack)
+- [Getting Started](#-getting-started)
+- [Project Structure](#-project-structure)
+- [Roadmap](#-roadmap)
+
+## ✨ Features
+
+### 📚 Vocabulary Management
+
+- Add and manage your personal vocabulary library.
+- Organize terms into custom collections.
+- Track each term with customizable learning statuses.
+
+### 🤖 AI-Powered Learning
+
+- Generate rich vocabulary content using Google Gemini.
+- Generate AI-powered definitions, example sentences, synonyms, and antonyms.
+- Receive AI-generated difficulty levels for each term.
+
+### 🎨 User Experience
+
+- Clean, distraction-free interface.
+- Fully responsive across mobile, tablet, and desktop.
+- Light and dark mode support.
+- Dynamic page titles and loading skeletons.
+
+### 🔐 Authentication
+
+- Secure Google sign-in with Supabase Auth.
+- User-specific data protected with Row Level Security (RLS).
+
+## 📸 Screenshots
+
+### Landing Page
+
+![Landing Page](./screenshots/landing-page.png)
+
+### Dashboard
+
+<table>
+<tr>
+<td align="center">
+<b>Light Mode</b><br><br>
+<img src="./screenshots/dashboard-light.png" alt="Dashboard Light" width="450">
+</td>
+
+<td align="center">
+<b>Dark Mode</b><br><br>
+<img src="./screenshots/dashboard-dark.png" alt="Dashboard Dark" width="450">
+</td>
+</tr>
+</table>
+
+### AI Term Details
+
+![AI Term Details](./screenshots/term-details.png)
+
+### Collections
+
+![Collections](./screenshots/collections.png)
+
+## 🛠 Tech Stack
+
+### Frontend
+
+- Next.js 16
+- React 19
+- TypeScript
+- Tailwind CSS v4
+- shadcn/ui
+
+### Backend & Database
+
+- Supabase
+- PostgreSQL
+- Supabase Authentication
+
+### AI
+
+- Google Gemini
+
+### Deployment
+
+- Vercel
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- Node.js 22+
+- npm
+
+### Installation
 
 ```bash
+git clone https://github.com/ChaminduD/wordulary.git
+
+cd wordulary
+
+npm install
+
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Environment Variables
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Create a `.env.local` file:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```env
+NEXT_PUBLIC_SUPABASE_URL=
 
-## Learn More
+NEXT_PUBLIC_SUPABASE_ANON_KEY=
 
-To learn more about Next.js, take a look at the following resources:
+NEXT_PUBLIC_SITE_URL=
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+GEMINI_API_KEY=
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 📁 Project Structure
 
-## Deploy on Vercel
+```text
+src/
+├── app/
+├── actions/
+├── components/
+├── lib/
+├── types/
+└── ...
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🗺 Roadmap
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Completed
+
+- [x] AI-generated vocabulary content
+- [x] Collections
+- [x] Responsive dashboard
+- [x] Light & Dark mode
+
+### Planned
+
+- [ ] Vocabulary import improvements
+- [ ] Dictionary API integration
+- [ ] Reading mode with one-click word collection
+- [ ] Spaced repetition
+- [ ] Flashcards
+- [ ] User profile settings
+
+---
+
+Built as a portfolio project showcasing modern full-stack web development with AI.
