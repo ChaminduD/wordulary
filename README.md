@@ -1,5 +1,9 @@
 # Wordulary
 
+<p align="center">
+  <img src="./screenshots/social-preview.png" alt="Wordulary" />
+</p>
+
 > AI-powered vocabulary learning built for focused study.
 
 Wordulary is an AI-powered vocabulary learning application that helps learners build a personal vocabulary library, organize words into collections, and generate detailed learning content, including definitions, examples, synonyms, antonyms, and difficulty levels.
@@ -14,6 +18,8 @@ Built with Next.js, Supabase, and Google's Gemini API, Wordulary focuses on a cl
 [![Gemini](https://img.shields.io/badge/Google_Gemini-AI-4285F4?logo=google-gemini&logoColor=white)](https://ai.google.dev/)
 [![Vercel](https://img.shields.io/badge/Vercel-Deployed-black?logo=vercel&logoColor=white)](https://vercel.com/)
 
+---
+
 ## 📑 Table of Contents
 
 - [Features](#-features)
@@ -22,6 +28,8 @@ Built with Next.js, Supabase, and Google's Gemini API, Wordulary focuses on a cl
 - [Getting Started](#-getting-started)
 - [Project Structure](#-project-structure)
 - [Roadmap](#-roadmap)
+
+---
 
 ## ✨ Features
 
@@ -48,6 +56,8 @@ Built with Next.js, Supabase, and Google's Gemini API, Wordulary focuses on a cl
 
 - Secure Google sign-in with Supabase Auth.
 - User-specific data protected with Row Level Security (RLS).
+
+---
 
 ## 📸 Screenshots
 
@@ -79,6 +89,8 @@ Built with Next.js, Supabase, and Google's Gemini API, Wordulary focuses on a cl
 
 ![Collections](./screenshots/collections.png)
 
+---
+
 ## 🛠 Tech Stack
 
 ### Frontend
@@ -102,6 +114,8 @@ Built with Next.js, Supabase, and Google's Gemini API, Wordulary focuses on a cl
 ### Deployment
 
 - Vercel
+
+---
 
 ## 🚀 Getting Started
 
@@ -136,6 +150,8 @@ NEXT_PUBLIC_SITE_URL=
 GEMINI_API_KEY=
 ```
 
+---
+
 ## 📁 Project Structure
 
 ```text
@@ -147,6 +163,8 @@ src/
 ├── types/
 └── ...
 ```
+
+---
 
 ## 🗺 Roadmap
 
