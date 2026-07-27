@@ -103,7 +103,7 @@ export default async function TermPage({ params }: PageProps) {
                 </div>
 
                 <h2 className="text-lg font-semibold">
-                    AI Content
+                    Details
                 </h2>
 
                 {!term.ai_generated ? (

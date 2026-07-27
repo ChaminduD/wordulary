@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { LoadingSpinner } from "../ui/loading-spinner";
+import { Checkbox } from "@/components/ui/checkbox";
 
 type CollectionSelectorProps = {
     termId: string;
@@ -73,30 +74,27 @@ export function CollectionSelector({
 
     return (
         <div className="space-y-2">
-            <h3 className="font-medium">
+            <h2 className="text-lg font-semibold">
                 Collections
-            </h3>
+            </h2>
 
             {collections.map(
                 (collection) => (
                     <label
                         key={collection.id}
-                        className="flex cursor-pointer items-center gap-2"
+                        htmlFor={collection.id}
+                        className="flex w-full cursor-pointer items-center gap-3 rounded-md px-2 py-2 hover:bg-muted/50"
                     >
-                        <input
-                            type="checkbox"
+                        <Checkbox
+                            id={collection.id}
                             checked={selectedIds.includes(collection.id)}
                             disabled={saving}
-                            onChange={(event) =>
-                                handleChange(
-                                    collection.id,
-                                    event.target.checked
-                                )
+                            onCheckedChange={(checked) =>
+                                handleChange(collection.id, checked === true)
                             }
-                            className="cursor-pointer disabled:cursor-not-allowed"
                         />
 
-                        {collection.name}
+                        <span>{collection.name}</span>
                     </label>
                 )
             )}

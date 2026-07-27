@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
+import { Checkbox } from "@/components/ui/checkbox";
 
 type ImportTermsFormProps = {
     collections: {
@@ -110,7 +111,7 @@ export function ImportTermsForm({ collections }: ImportTermsFormProps) {
                     </p>
                 </div>
 
-                <div className="space-y-2">
+                <div className="space-y-3">
                     <Textarea
                         value={termsText}
                         onChange={(event) =>
@@ -148,7 +149,7 @@ export function ImportTermsForm({ collections }: ImportTermsFormProps) {
             )}
 
             {collections.length > 0 && (
-                <div className="space-y-4">
+                <div className="mt-6 space-y-4 border-t pt-6">
                     <div>
                         <h2 className="text-lg font-semibold">
                             Collections (optional)
@@ -163,23 +164,19 @@ export function ImportTermsForm({ collections }: ImportTermsFormProps) {
                         {collections.map((collection) => (
                             <label
                                 key={collection.id}
-                                className="flex cursor-pointer items-center gap-2"
+                                htmlFor={collection.id}
+                                className="flex w-full cursor-pointer items-center gap-3 rounded-md px-2 py-2 hover:bg-muted/50"
                             >
-                                <input
-                                    type="checkbox"
-                                    checked={selectedCollectionIds.includes(
-                                        collection.id
-                                    )}
-                                    onChange={(event) =>
-                                        handleCollectionChange(
-                                            collection.id,
-                                            event.target.checked
-                                        )
+                                <Checkbox
+                                    id={collection.id}
+                                    checked={selectedCollectionIds.includes(collection.id)}
+                                    disabled={loading}
+                                    onCheckedChange={(checked) =>
+                                        handleCollectionChange(collection.id, checked === true)
                                     }
-                                    className="cursor-pointer disabled:cursor-not-allowed"
                                 />
 
-                                {collection.name}
+                                <span>{collection.name}</span>
                             </label>
                         ))}
                     </div>
