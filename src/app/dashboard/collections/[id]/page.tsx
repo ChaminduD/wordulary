@@ -129,9 +129,9 @@ export default async function CollectionPage({ params }: PageProps) {
                         >
                             <Link
                                 href={`/dashboard/terms/${term.id}`}
-                                className="block"
+                                className="block group"
                             >
-                                <h3 className="text-lg font-semibold hover:underline">
+                                <h3 className="text-lg font-semibold group-hover:underline">
                                     {term.term}
                                 </h3>
 

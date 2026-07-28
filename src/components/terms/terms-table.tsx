@@ -140,13 +140,13 @@ export function TermsTable({ terms, hasSearch, hasActiveFilter }: TermsTableProp
                 {terms.map((term) => (
                     <div
                         key={term.id}
-                        className="rounded-xl border p-4 transition-colors hover:bg-muted/30"
+                        className="relative rounded-xl border p-4 transition-colors hover:bg-muted/30"
                     >
                         <Link
                             href={`/dashboard/terms/${term.id}`}
-                            className="block"
+                            className="block group"
                         >
-                            <h3 className="text-lg font-semibold hover:underline">
+                            <h3 className="text-lg font-semibold group-hover:underline">
                                 {term.term}
                             </h3>
 
@@ -161,10 +161,8 @@ export function TermsTable({ terms, hasSearch, hasActiveFilter }: TermsTableProp
                                     {new Date(term.createdAt).toLocaleDateString()}
                                 </span>
                             </div>
-                        </Link>
 
-                        <div className="mt-3 flex items-center justify-between">
-                            <div className="flex flex-wrap gap-2">
+                            <div className="mt-3 flex flex-wrap gap-2">
                                 <Badge variant="secondary" className="capitalize">
                                     {term.status}
                                 </Badge>
@@ -174,7 +172,9 @@ export function TermsTable({ terms, hasSearch, hasActiveFilter }: TermsTableProp
                                     {term.aiGenerated ? "AI Generated" : "Missing AI"}
                                 </Badge>
                             </div>
+                        </Link>
 
+                        <div className="absolute bottom-3 right-3">
                             <form action={deleteTermAction}>
                                 <input
                                     type="hidden"

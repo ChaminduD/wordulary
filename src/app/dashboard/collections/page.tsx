@@ -57,7 +57,7 @@ export default async function CollectionsPage() {
                     >
                         <Link
                             href={`/dashboard/collections/${collection.id}`}
-                            className="font-medium hover:underline"
+                            className="flex-1 font-medium hover:underline"
                         >
                             {collection.name}
                         </Link>
