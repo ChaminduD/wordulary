@@ -13,16 +13,13 @@ export async function signInAction(formData: FormData) {
 
     const supabase = await createClient();
 
-    const { error } =
-        await supabase.auth.signInWithPassword({
-            email,
-            password,
-        });
+    const { error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+    });
 
     if (error) {
-        if (
-            error.message.includes("Email not confirmed")
-        ) {
+        if (error.message.includes("Email not confirmed")) {
             redirect("/login?error=email_not_confirmed");
         }
 
@@ -48,22 +45,30 @@ export async function signUpAction(formData: FormData) {
 
     const supabase = await createClient();
 
-    const { error } =
-        await supabase.auth.signUp({
-            email,
-            password,
-            options: {
-                data: {
-                    full_name: name.trim(),
-                },
-                emailRedirectTo:
-                    `${process.env.NEXT_PUBLIC_SITE_URL}/auth/callback`,
+    const { error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+            data: {
+                full_name: name.trim(),
             },
-        });
+            emailRedirectTo: `${process.env.NEXT_PUBLIC_SITE_URL}/auth/callback`,
+        },
+    });
 
     if (error) {
         console.error(error);
-        return;
+
+        switch (error.code) {
+            case "over_email_send_rate_limit":
+                redirect("/sign-up?error=email_rate_limit");
+
+            case "user_already_exists":
+                redirect("/sign-up?error=user_exists");
+
+            default:
+                redirect("/sign-up?error=unknown");
+        }
     }
 
     redirect("/sign-up/success");

@@ -13,7 +13,14 @@ export const metadata: Metadata = {
     title: "Create Account",
 };
 
-export default async function SignUpPage() {
+type PageProps = {
+    searchParams: Promise<{
+        error?: string;
+    }>;
+};
+
+export default async function SignUpPage({ searchParams }: PageProps) {
+    const { error } = await searchParams;
     const supabase = await createClient();
 
     const {
@@ -49,6 +56,24 @@ export default async function SignUpPage() {
                         or
                     </span>
                 </div>
+
+                {error === "email_rate_limit" && (
+                    <p className="text-center text-sm text-destructive">
+                        You&apos;ve requested too many verification emails. Please wait a few minutes before trying again.
+                    </p>
+                )}
+
+                {error === "user_exists" && (
+                    <p className="text-center text-sm text-destructive">
+                        An account with this email already exists.
+                    </p>
+                )}
+
+                {error === "unknown" && (
+                    <p className="text-center text-sm text-destructive">
+                        Something went wrong. Please try again.
+                    </p>
+                )}
 
                 <form
                     action={signUpAction}
