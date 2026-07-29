@@ -127,7 +127,7 @@ Built with Next.js, Supabase, and Google's Gemini API, Wordulary focuses on a cl
 ### Installation
 
 ```bash
-git clone https://github.com/ChaminduD/wordulary.git
+git clone https://github.com/chmndu/wordulary.git
 
 cd wordulary
 

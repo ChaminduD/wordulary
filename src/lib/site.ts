@@ -6,7 +6,7 @@ export const siteConfig = {
 
     url: process.env.NEXT_PUBLIC_SITE_URL!,
 
-    github: "https://github.com/ChaminduD/wordulary",
+    github: "https://github.com/chmndu/wordulary",
 
     ogImage: "/opengraph-image.png",
 
