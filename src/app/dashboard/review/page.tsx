@@ -128,7 +128,10 @@ export default async function ReviewPage({ searchParams }: PageProps) {
 
             <section className="space-y-3">
                 <div>
-                    <h2 className="text-lg font-semibold">
+                    <h2
+                        id="collection-heading"
+                        className="text-lg font-semibold"
+                    >
                         Collection
                     </h2>
 

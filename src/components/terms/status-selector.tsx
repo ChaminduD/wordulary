@@ -60,7 +60,10 @@ export function StatusSelector({ termId, status, aiGenerated }: StatusSelectorPr
     return (
         <div className="space-y-2">
             <div>
-                <h2 className="text-lg font-semibold">
+                <h2
+                    id="status-heading"
+                    className="text-lg font-semibold"
+                >
                     Status
                 </h2>
 
@@ -76,7 +79,10 @@ export function StatusSelector({ termId, status, aiGenerated }: StatusSelectorPr
                 onValueChange={handleChange}
                 disabled={saving}
             >
-                <SelectTrigger className="w-full sm:w-64">
+                <SelectTrigger
+                    aria-labelledby="status-heading"
+                    className="w-full sm:w-64"
+                >
                     <SelectValue />
                 </SelectTrigger>
 

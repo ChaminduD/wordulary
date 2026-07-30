@@ -146,9 +146,9 @@ export function TermsTable({ terms, hasSearch, hasActiveFilter }: TermsTableProp
                             href={`/dashboard/terms/${term.id}`}
                             className="block group"
                         >
-                            <h3 className="text-lg font-semibold group-hover:underline">
+                            <p className="text-lg font-semibold group-hover:underline">
                                 {term.term}
-                            </h3>
+                            </p>
 
                             <div className="mt-1 flex items-center gap-2 text-sm text-muted-foreground">
                                 <span className="capitalize">

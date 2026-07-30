@@ -131,9 +131,9 @@ export default async function CollectionPage({ params }: PageProps) {
                                 href={`/dashboard/terms/${term.id}`}
                                 className="block group"
                             >
-                                <h3 className="text-lg font-semibold group-hover:underline">
+                                <p className="text-lg font-semibold group-hover:underline">
                                     {term.term}
-                                </h3>
+                                </p>
 
                                 <div className="mt-3 flex flex-wrap gap-2">
                                     <Badge variant="outline" className="capitalize">

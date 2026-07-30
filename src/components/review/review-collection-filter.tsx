@@ -42,7 +42,10 @@ export function ReviewCollectionFilter({
                 });
             }}
         >
-            <SelectTrigger className="w-full sm:w-64">
+            <SelectTrigger
+                aria-labelledby="collection-heading"
+                className="w-full sm:w-64"
+            >
                 <div className="flex w-full items-center justify-between">
                     <SelectValue placeholder="All Learning Terms" />
 
