@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
+import { Checkbox } from "@/components/ui/checkbox";
 
 type TermGeneratorProps = {
     collections: {
@@ -41,16 +42,17 @@ export function TermGenerator({ collections }: TermGeneratorProps) {
 
             setLoading(true);
 
-            const response = await fetch(
-                "/api/generate-term",
-                {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({ term }),
-                }
-            );
+            const normalizedTerm = term.trim().toLowerCase();
+
+            const response = await fetch("/api/generate-term", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    term: normalizedTerm,
+                }),
+            });
 
             if (!response.ok) {
                 const errorData = await response.json();
@@ -61,6 +63,7 @@ export function TermGenerator({ collections }: TermGeneratorProps) {
             const generatedTerm = await response.json();
 
             setGeneratedTerm(generatedTerm);
+            setTerm(normalizedTerm);
 
             setGenerateError(null);
             setSaveError(null);
@@ -91,6 +94,7 @@ export function TermGenerator({ collections }: TermGeneratorProps) {
                         },
                         body: JSON.stringify({
                             ...generatedTerm,
+                            term: term.trim().toLowerCase(),
                             collectionIds: selectedCollectionIds,
                         }),
                     }
@@ -187,20 +191,22 @@ export function TermGenerator({ collections }: TermGeneratorProps) {
                                 {collections.map((collection) => (
                                     <label
                                         key={collection.id}
-                                        className="flex items-center gap-2"
+                                        htmlFor={collection.id}
+                                        className="flex w-full cursor-pointer items-center gap-3 rounded-md px-2 py-2 hover:bg-muted/50"
                                     >
-                                        <input
-                                            type="checkbox"
+                                        <Checkbox
+                                            id={collection.id}
                                             checked={selectedCollectionIds.includes(collection.id)}
-                                            onChange={(event) =>
+                                            disabled={loading || saving}
+                                            onCheckedChange={(checked) =>
                                                 handleCollectionChange(
                                                     collection.id,
-                                                    event.target.checked
+                                                    checked === true
                                                 )
                                             }
                                         />
 
-                                        {collection.name}
+                                        <span>{collection.name}</span>
                                     </label>
                                 ))}
                             </div>

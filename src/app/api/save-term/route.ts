@@ -5,6 +5,8 @@ export async function POST(request: Request) {
     try {
         const body = await request.json();
 
+        const normalizedTerm = body.term.trim().toLowerCase();
+
         const supabase = await createClient();
 
         const { data: { user } } = await supabase.auth.getUser();
@@ -22,7 +24,7 @@ export async function POST(request: Request) {
                 .insert({
                     user_id: user.id,
 
-                    term: body.term,
+                    term: normalizedTerm,
 
                     term_type: body.termType,
 
