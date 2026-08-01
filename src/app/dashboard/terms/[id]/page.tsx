@@ -102,14 +102,10 @@ export default async function TermPage({ params }: PageProps) {
                     />
                 </div>
 
-                <h2 className="text-lg font-semibold">
-                    Details
-                </h2>
-
                 {!term.ai_generated ? (
                     <div className="space-y-4">
                         <p>
-                            Not generated yet.
+                            Generate details for this term.
                         </p>
 
                         <GenerateAiContentButton termId={term.id} />

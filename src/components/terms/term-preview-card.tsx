@@ -8,31 +8,31 @@ export function TermPreviewCard({
     generatedTerm,
 }: TermPreviewCardProps) {
     return (
-        <div className="space-y-4 rounded-lg border p-6">
+        <div className="rounded-xl border p-6 space-y-8">
             <div>
-                <h3 className="text-2xl font-bold">
+                <h3 className="text-3xl font-semibold tracking-tight">
                     {generatedTerm.term}
                 </h3>
 
-                <p className="text-sm text-muted-foreground">
+                <p className="mt-1 text-sm text-muted-foreground capitalize">
                     {generatedTerm.termType}
                 </p>
             </div>
 
-            <div>
-                <h4 className="font-semibold">
-                    Definition
-                </h4>
+            <h3 className="text-sm font-semibold text-muted-foreground">
+                Definition
+            </h3>
 
-                <p>{generatedTerm.definition}</p>
-            </div>
+            <p className="mt-2 leading-7">
+                {generatedTerm.definition}
+            </p>
 
             <div>
-                <h4 className="font-semibold">
+                <h3 className="text-sm font-semibold text-muted-foreground">
                     Example Sentences
-                </h4>
+                </h3>
 
-                <ul className="list-disc pl-5">
+                <ul className="mt-2 list-disc space-y-2 pl-5">
                     {generatedTerm.exampleSentences.map(
                         (sentence) => (
                             <li key={sentence}>
@@ -44,31 +44,33 @@ export function TermPreviewCard({
             </div>
 
             <div>
-                <h4 className="font-semibold">
+                <h3 className="text-sm font-semibold text-muted-foreground">
                     Synonyms
-                </h4>
+                </h3>
 
-                <p>
+                <p className="mt-2 leading-7">
                     {generatedTerm.synonyms.join(", ")}
                 </p>
             </div>
 
             <div>
-                <h4 className="font-semibold">
+                <h3 className="text-sm font-semibold text-muted-foreground">
                     Antonyms
-                </h4>
+                </h3>
 
-                <p>
+                <p className="mt-2 leading-7">
                     {generatedTerm.antonyms.join(", ")}
                 </p>
             </div>
 
             <div>
-                <h4 className="font-semibold">
+                <h3 className="text-sm font-semibold text-muted-foreground">
                     Difficulty
-                </h4>
+                </h3>
 
-                <p>{generatedTerm.difficulty}</p>
+                <p className="mt-2 leading-7 capitalize">
+                    {generatedTerm.difficulty}
+                </p>
             </div>
         </div>
     );

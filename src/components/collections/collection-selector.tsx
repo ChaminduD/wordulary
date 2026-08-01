@@ -24,6 +24,10 @@ export function CollectionSelector({
 
     const [saving, setSaving] = useState(false);
 
+    if (collections.length === 0) {
+        return null;
+    }
+
     async function handleChange(
         collectionId: string,
         checked: boolean
