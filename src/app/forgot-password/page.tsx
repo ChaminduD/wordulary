@@ -52,7 +52,7 @@ export default async function ForgotPasswordPage({ searchParams }: PageProps) {
                 </div>
 
                 {success === "sent" && (
-                    <p className="text-center text-sm text-green-600">
+                    <p className="text-center text-sm text-success">
                         Password reset link sent. Check your email.
                     </p>
                 )}

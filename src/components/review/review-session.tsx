@@ -177,7 +177,7 @@ export function ReviewSession({ terms, collectionId }: ReviewSessionProps) {
                         </Button>
 
                         {isMastered ? (
-                            <p className="self-center flex items-center gap-1 px-2 py-1 text-sm font-medium text-green-600 dark:text-green-400">
+                            <p className="self-center flex items-center gap-1.5 px-2 py-1 text-sm font-medium text-success">
                                 <CheckCircle2 className="size-4" />
                                 Mastered
                             </p>

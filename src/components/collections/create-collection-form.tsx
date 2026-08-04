@@ -60,7 +60,7 @@ export function CreateCollectionForm() {
                 className="space-y-4"
             >
                 {message && (
-                    <div className="rounded-md border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-800">
+                    <div className="rounded-md border border-success/20 bg-success/10 px-4 py-3 text-sm text-success">
                         {message}
                     </div>
                 )}

@@ -71,7 +71,7 @@ export default async function LoginPage({ searchParams }: PageProps) {
         )}
 
         {success === "password_updated" && (
-          <p className="text-center text-sm text-green-600">
+          <p className="text-center text-sm text-success">
             Your password has been updated successfully. You can now sign in.
           </p>
         )}
