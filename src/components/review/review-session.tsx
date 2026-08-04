@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
+import { CheckCircle2 } from "lucide-react";
 
 type ReviewTerm = {
     id: string;
@@ -20,8 +21,11 @@ export function ReviewSession({ terms, collectionId }: ReviewSessionProps) {
     const [showAnswer, setShowAnswer] = useState(false);
     const [currentIndex, setCurrentIndex] = useState(0);
     const [updating, setUpdating] = useState(false);
+    const [masteredIds, setMasteredIds] = useState<string[]>([]);
 
     const currentTerm = terms[currentIndex];
+
+    const isLastTerm = currentIndex === terms.length - 1;
 
     function handleNext() {
         setCurrentIndex((current) =>
@@ -32,10 +36,14 @@ export function ReviewSession({ terms, collectionId }: ReviewSessionProps) {
     }
 
     async function handleMarkMastered() {
+        if (isMastered) {
+            return;
+        }
+
         try {
             setUpdating(true);
 
-            await fetch(
+            const response = await fetch(
                 `/api/terms/${currentTerm.id}/status`,
                 {
                     method: "PATCH",
@@ -45,6 +53,15 @@ export function ReviewSession({ terms, collectionId }: ReviewSessionProps) {
                     body: JSON.stringify({ status: "mastered" }),
                 }
             );
+
+            if (!response.ok) {
+                throw new Error("Failed to update status");
+            }
+
+            setMasteredIds((current) => [
+                ...current,
+                currentTerm.id,
+            ]);
 
             handleNext();
         } catch (error) {
@@ -91,10 +108,12 @@ export function ReviewSession({ terms, collectionId }: ReviewSessionProps) {
         );
     }
 
+    const isMastered = masteredIds.includes(currentTerm.id);
+
     return (
         <section className="space-y-6">
             <p className="text-sm text-muted-foreground">
-                {currentIndex + 1} / {terms.length}
+                {currentIndex + 1} of {terms.length} • {masteredIds.length} mastered
             </p>
 
             <h2 className="text-3xl font-bold">
@@ -154,20 +173,32 @@ export function ReviewSession({ terms, collectionId }: ReviewSessionProps) {
                             variant="outline"
                             onClick={handleNext}
                         >
-                            Next Term
+                            {isLastTerm ? "Finish Review" : "Next Term"}
                         </Button>
 
-                        <Button
-                            type="button"
-                            onClick={handleMarkMastered}
-                            disabled={updating}
-                        >
-                            {updating && <LoadingSpinner />}
-
-                            {updating
-                                ? "Marking..."
-                                : "Mark Mastered"}
-                        </Button>
+                        {isMastered ? (
+                            <p className="self-center flex items-center gap-1 px-2 py-1 text-sm font-medium text-green-600 dark:text-green-400">
+                                <CheckCircle2 className="size-4" />
+                                Mastered
+                            </p>
+                        ) : (
+                            <Button
+                                type="button"
+                                onClick={handleMarkMastered}
+                                disabled={updating}
+                            >
+                                {updating ? (
+                                    <>
+                                        <LoadingSpinner />
+                                        Marking...
+                                    </>
+                                ) : isLastTerm ? (
+                                    "Mark Mastered & Finish"
+                                ) : (
+                                    "Mark Mastered"
+                                )}
+                            </Button>
+                        )}
                     </div>
                 </div>
             )}
