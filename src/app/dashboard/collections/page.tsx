@@ -71,6 +71,9 @@ export default async function CollectionsPage() {
 
                             <ConfirmDeleteButton
                                 itemName={collection.name}
+                                itemType="Collection"
+                                description="The collection will be deleted, but your terms will remain."
+                                iconOnly
                             />
                         </form>
                     </div>

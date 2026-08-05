@@ -193,6 +193,7 @@ export default async function TermPage({ params }: PageProps) {
                     <ConfirmDeleteButton
                         label="Delete Term"
                         itemName={term.term}
+                        itemType="Term"
                         variant="destructive"
                     />
                 </form>

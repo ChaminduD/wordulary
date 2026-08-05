@@ -1,13 +1,18 @@
 "use client";
 
+import { useRef, useState } from "react";
 import { DeleteButton } from "@/components/ui/delete-button";
 import { Trash2 } from "lucide-react";
 import type { VariantProps } from "class-variance-authority";
 import { buttonVariants } from "@/components/ui/button";
+import { ConfirmDeleteDialog } from "@/components/ui/confirm-delete-dialog";
 
 type ConfirmDeleteButtonProps = {
     label?: string;
     itemName: string;
+    itemType?: string;
+    description?: string;
+    confirmLabel?: string;
     iconOnly?: boolean;
     variant?: VariantProps<typeof buttonVariants>["variant"];
 };
@@ -15,29 +20,49 @@ type ConfirmDeleteButtonProps = {
 export function ConfirmDeleteButton({
     label = "Delete",
     itemName,
+    itemType = "Item",
+    description,
+    confirmLabel,
     iconOnly = false,
     variant = "ghost",
 }: ConfirmDeleteButtonProps) {
-    return (
-        <DeleteButton
-            iconOnly={iconOnly}
-            variant={variant}
-            aria-label={`Delete ${itemName}`}
-            onClick={(event) => {
-                const confirmed = window.confirm(
-                    `Are you sure you want to delete "${itemName}"?`
-                );
+    const [open, setOpen] = useState(false);
 
-                if (!confirmed) {
+    const formRef = useRef<HTMLFormElement | null>(null);
+
+    return (
+        <>
+            <DeleteButton
+                iconOnly={iconOnly}
+                variant={variant}
+                aria-label={`Delete ${itemName}`}
+                onClick={(event) => {
                     event.preventDefault();
-                }
-            }}
-        >
-            {iconOnly ? (
-                <Trash2 className="size-4" />
-            ) : (
-                label
-            )}
-        </DeleteButton>
+
+                    formRef.current = event.currentTarget.form;
+
+                    setOpen(true);
+                }}
+            >
+                {iconOnly ? (
+                    <Trash2 className="size-4" />
+                ) : (
+                    label
+                )}
+            </DeleteButton>
+
+            <ConfirmDeleteDialog
+                open={open}
+                onOpenChange={setOpen}
+                itemName={itemName}
+                itemType={itemType}
+                description={description}
+                confirmLabel={confirmLabel}
+                onConfirm={() => {
+                    setOpen(false);
+                    formRef.current?.requestSubmit();
+                }}
+            />
+        </>
     );
 }
