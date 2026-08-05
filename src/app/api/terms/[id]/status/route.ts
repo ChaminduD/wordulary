@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
+import { revalidatePath } from "next/cache";
 
 type RouteContext = {
     params: Promise<{ id: string; }>;
@@ -66,6 +67,10 @@ export async function PATCH(request: Request, { params }: RouteContext) {
         if (error) {
             throw error;
         }
+
+        revalidatePath("/dashboard/terms");
+        revalidatePath(`/dashboard/terms/${id}`);
+        revalidatePath("/dashboard/review");
 
         return NextResponse.json({ success: true });
     } catch (error) {
