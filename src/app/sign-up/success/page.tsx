@@ -32,11 +32,12 @@ export default async function SignUpSuccessPage() {
 
                 <div>
                     <h1 className="text-2xl font-semibold tracking-tight">
-                        Check Your Email
+                        Verify Your Email
                     </h1>
 
                     <p className="mt-2 text-sm text-muted-foreground">
-                        If a verification email was sent, please check your inbox and spam folder before signing in.
+                        We&apos;ve sent a verification email if an account was created successfully.
+                        Check your inbox and spam folder, then follow the link before signing in.
                     </p>
                 </div>
 

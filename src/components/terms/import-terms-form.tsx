@@ -5,6 +5,8 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
 import { Checkbox } from "@/components/ui/checkbox";
+import { ErrorMessage } from "@/components/ui/error-message";
+import { SuccessMessage } from "@/components/ui/success-message";
 
 type ImportTermsFormProps = {
     collections: {
@@ -137,15 +139,15 @@ export function ImportTermsForm({ collections }: ImportTermsFormProps) {
             </div>
 
             {message && (
-                <div className="rounded-md border border-success/20 bg-success/10 px-4 py-3 text-sm text-success">
+                <SuccessMessage>
                     {message}
-                </div>
+                </SuccessMessage>
             )}
 
             {error && (
-                <div className="rounded-md border border-destructive/20 bg-destructive/10 px-4 py-3 text-sm text-destructive">
+                <ErrorMessage>
                     {error}
-                </div>
+                </ErrorMessage>
             )}
 
             {collections.length > 0 && (
@@ -165,7 +167,7 @@ export function ImportTermsForm({ collections }: ImportTermsFormProps) {
                             <label
                                 key={collection.id}
                                 htmlFor={collection.id}
-                                className="flex w-full cursor-pointer items-center gap-3 rounded-md px-2 py-2 hover:bg-muted/50"
+                                className="flex w-full cursor-pointer items-center gap-3 rounded-md px-2 py-2 hover:bg-muted/50 active:bg-muted"
                             >
                                 <Checkbox
                                     id={collection.id}

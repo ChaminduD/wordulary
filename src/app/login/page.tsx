@@ -8,6 +8,8 @@ import { Separator } from "@/components/ui/separator";
 import { Logo } from "@/components/branding/logo";
 import type { Metadata } from "next";
 import { SubmitButton } from "@/components/ui/submit-button";
+import { ErrorMessage } from "@/components/ui/error-message";
+import { SuccessMessage } from "@/components/ui/success-message";
 
 export const metadata: Metadata = {
   title: "Sign In",
@@ -58,28 +60,28 @@ export default async function LoginPage({ searchParams }: PageProps) {
           </span>
         </div>
 
-        {error === "invalid_credentials" && (
-          <p className="text-center text-sm text-destructive">
-            Invalid email or password.
-          </p>
-        )}
-
-        {error === "email_not_confirmed" && (
-          <p className="text-center text-sm text-destructive">
-            Please verify your email before signing in.
-          </p>
-        )}
-
-        {success === "password_updated" && (
-          <p className="text-center text-sm text-success">
-            Your password has been updated successfully. You can now sign in.
-          </p>
-        )}
-
         <form
           action={signInAction}
           className="space-y-4"
         >
+          {error === "invalid_credentials" && (
+            <ErrorMessage className="text-center">
+              Invalid email or password.
+            </ErrorMessage>
+          )}
+
+          {error === "email_not_confirmed" && (
+            <ErrorMessage className="text-center">
+              Please verify your email before signing in.
+            </ErrorMessage>
+          )}
+
+          {success === "password_updated" && (
+            <SuccessMessage className="text-center">
+              Your password has been updated successfully. You can now sign in.
+            </SuccessMessage>
+          )}
+
           <Input
             type="email"
             name="email"

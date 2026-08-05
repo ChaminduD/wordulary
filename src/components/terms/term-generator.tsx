@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
 import { Checkbox } from "@/components/ui/checkbox";
+import { ErrorMessage } from "@/components/ui/error-message";
 
 type TermGeneratorProps = {
     collections: {
@@ -135,38 +136,45 @@ export function TermGenerator({ collections }: TermGeneratorProps) {
 
     return (
         <section>
-            <div className="flex flex-col gap-3 sm:flex-row">
-                <Input
-                    type="text"
-                    value={term}
-                    onChange={(event) => {
-                        setTerm(event.target.value);
+            <form
+                onSubmit={(event) => {
+                    event.preventDefault();
+                    handleGenerate();
+                }}
+            >
+                <div className="flex flex-col gap-3 sm:flex-row">
+                    <Input
+                        type="text"
+                        value={term}
+                        onChange={(event) => {
+                            setTerm(event.target.value);
 
-                        setGenerateError(null);
-                        setSaveError(null);
-                    }}
-                    placeholder="Enter a word, phrase, or idiom"
-                />
+                            setGenerateError(null);
+                            setSaveError(null);
+                        }}
+                        placeholder="Enter a word, phrase, or idiom"
+                    />
 
-                <Button
-                    className="w-full sm:w-auto"
-                    onClick={handleGenerate}
-                    disabled={loading || saving}
-                >
-                    {loading && <LoadingSpinner />}
+                    <Button
+                        type="submit"
+                        className="w-full sm:w-auto"
+                        disabled={loading || saving}
+                    >
+                        {loading && <LoadingSpinner />}
 
-                    {loading
-                        ? "Generating..."
-                        : isRegenerate
-                            ? "Regenerate"
-                            : "Generate"}
-                </Button>
-            </div>
+                        {loading
+                            ? "Generating..."
+                            : isRegenerate
+                                ? "Regenerate"
+                                : "Generate"}
+                    </Button>
+                </div>
+            </form>
 
             {generateError && (
-                <p className="mt-3 text-sm text-destructive">
+                <ErrorMessage className="mt-3">
                     {generateError}
-                </p>
+                </ErrorMessage>
             )}
 
             {generatedTerm && (
@@ -192,7 +200,7 @@ export function TermGenerator({ collections }: TermGeneratorProps) {
                                     <label
                                         key={collection.id}
                                         htmlFor={collection.id}
-                                        className="flex w-full cursor-pointer items-center gap-3 rounded-md px-2 py-2 hover:bg-muted/50"
+                                        className="flex w-full cursor-pointer items-center gap-3 rounded-md px-2 py-2 hover:bg-muted/50 active:bg-muted"
                                     >
                                         <Checkbox
                                             id={collection.id}
@@ -213,21 +221,28 @@ export function TermGenerator({ collections }: TermGeneratorProps) {
                         </div>
                     )}
 
-                    {saveError && (
-                        <p className="mt-3 text-sm text-destructive">
-                            {saveError}
-                        </p>
-                    )}
-                    <Button
-                        type="button"
-                        className="mt-2"
-                        onClick={handleSave}
-                        disabled={saving || loading}
+                    <form
+                        onSubmit={(event) => {
+                            event.preventDefault();
+                            handleSave();
+                        }}
+                        className="space-y-3"
                     >
-                        {saving && <LoadingSpinner />}
+                        {saveError && (
+                            <ErrorMessage>
+                                {saveError}
+                            </ErrorMessage>
+                        )}
 
-                        {saving ? "Saving..." : "Save Term"}
-                    </Button>
+                        <Button
+                            type="submit"
+                            disabled={saving || loading}
+                        >
+                            {saving && <LoadingSpinner />}
+
+                            {saving ? "Saving..." : "Save Term"}
+                        </Button>
+                    </form>
                 </div>
 
             )}

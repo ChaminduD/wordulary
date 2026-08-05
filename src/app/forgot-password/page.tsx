@@ -6,6 +6,8 @@ import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { SubmitButton } from "@/components/ui/submit-button";
+import { ErrorMessage } from "@/components/ui/error-message";
+import { SuccessMessage } from "@/components/ui/success-message";
 
 export const metadata: Metadata = {
     title: "Forgot Password",
@@ -51,28 +53,28 @@ export default async function ForgotPasswordPage({ searchParams }: PageProps) {
                     </div>
                 </div>
 
-                {success === "sent" && (
-                    <p className="text-center text-sm text-success">
-                        Password reset link sent. Check your email.
-                    </p>
-                )}
-
-                {error === "reset_failed" && (
-                    <p className="text-center text-sm text-destructive">
-                        Something went wrong. Please try again.
-                    </p>
-                )}
-
-                {error === "rate_limit" && (
-                    <p className="text-center text-sm text-destructive">
-                        Please wait a moment before requesting another reset email.
-                    </p>
-                )}
-
                 <form
                     action={forgotPasswordAction}
                     className="space-y-4"
                 >
+                    {success === "sent" && (
+                        <SuccessMessage className="text-center">
+                            Password reset link sent. Check your email.
+                        </SuccessMessage>
+                    )}
+
+                    {error === "reset_failed" && (
+                        <ErrorMessage className="text-center">
+                            Something went wrong. Please try again.
+                        </ErrorMessage>
+                    )}
+
+                    {error === "rate_limit" && (
+                        <ErrorMessage className="text-center">
+                            Please wait a moment before requesting another reset email.
+                        </ErrorMessage>
+                    )}
+
                     <Input
                         type="email"
                         name="email"

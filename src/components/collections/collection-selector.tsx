@@ -87,7 +87,7 @@ export function CollectionSelector({
                     <label
                         key={collection.id}
                         htmlFor={collection.id}
-                        className="flex w-full cursor-pointer items-center gap-3 rounded-md px-2 py-2 hover:bg-muted/50"
+                        className="flex w-full cursor-pointer items-center gap-3 rounded-md px-2 py-2 hover:bg-muted/50 active:bg-muted"
                     >
                         <Checkbox
                             id={collection.id}

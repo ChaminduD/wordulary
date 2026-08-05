@@ -3,6 +3,7 @@ import { Input } from "@/components/ui/input";
 import { resetPasswordAction } from "@/actions/reset-password";
 import type { Metadata } from "next";
 import { SubmitButton } from "@/components/ui/submit-button";
+import { ErrorMessage } from "@/components/ui/error-message";
 
 export const metadata: Metadata = {
     title: "Reset Password",
@@ -37,28 +38,28 @@ export default async function ResetPasswordPage({ searchParams }: PageProps) {
                     </div>
                 </div>
 
-                {error === "password_mismatch" && (
-                    <p className="text-center text-sm text-destructive">
-                        Passwords do not match.
-                    </p>
-                )}
-
-                {error === "update_failed" && (
-                    <p className="text-center text-sm text-destructive">
-                        Unable to update your password. Please try again.
-                    </p>
-                )}
-
-                {error === "same_password" && (
-                    <p className="text-center text-sm text-destructive">
-                        Your new password must be different from your current password.
-                    </p>
-                )}
-
                 <form
                     action={resetPasswordAction}
                     className="space-y-4"
                 >
+                    {error === "password_mismatch" && (
+                        <ErrorMessage className="text-center">
+                            Passwords do not match.
+                        </ErrorMessage>
+                    )}
+
+                    {error === "update_failed" && (
+                        <ErrorMessage className="text-center">
+                            Unable to update your password. Please try again.
+                        </ErrorMessage>
+                    )}
+
+                    {error === "same_password" && (
+                        <ErrorMessage className="text-center">
+                            Your new password must be different from your current password.
+                        </ErrorMessage>
+                    )}
+
                     <Input
                         type="password"
                         name="password"

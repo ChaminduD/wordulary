@@ -5,6 +5,8 @@ import { createCollection } from "@/actions/collections";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
+import { ErrorMessage } from "@/components/ui/error-message";
+import { SuccessMessage } from "@/components/ui/success-message";
 
 export function CreateCollectionForm() {
     const [name, setName] = useState("");
@@ -60,15 +62,15 @@ export function CreateCollectionForm() {
                 className="space-y-4"
             >
                 {message && (
-                    <div className="rounded-md border border-success/20 bg-success/10 px-4 py-3 text-sm text-success">
+                    <SuccessMessage>
                         {message}
-                    </div>
+                    </SuccessMessage>
                 )}
 
                 {error && (
-                    <div className="rounded-md border border-destructive/20 bg-destructive/10 px-4 py-3 text-sm text-destructive">
+                    <ErrorMessage>
                         {error}
-                    </div>
+                    </ErrorMessage>
                 )}
 
                 <div className="flex flex-col gap-3 sm:flex-row">

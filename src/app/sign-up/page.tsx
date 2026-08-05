@@ -8,6 +8,7 @@ import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { SubmitButton } from "@/components/ui/submit-button";
+import { ErrorMessage } from "@/components/ui/error-message";
 
 export const metadata: Metadata = {
     title: "Create Account",
@@ -57,28 +58,28 @@ export default async function SignUpPage({ searchParams }: PageProps) {
                     </span>
                 </div>
 
-                {error === "email_rate_limit" && (
-                    <p className="text-center text-sm text-destructive">
-                        You&apos;ve requested too many verification emails. Please wait a few minutes before trying again.
-                    </p>
-                )}
-
-                {error === "user_exists" && (
-                    <p className="text-center text-sm text-destructive">
-                        An account with this email already exists.
-                    </p>
-                )}
-
-                {error === "unknown" && (
-                    <p className="text-center text-sm text-destructive">
-                        Something went wrong. Please try again.
-                    </p>
-                )}
-
                 <form
                     action={signUpAction}
                     className="space-y-4"
                 >
+                    {error === "email_rate_limit" && (
+                        <ErrorMessage className="text-center">
+                            You&apos;ve requested too many verification emails. Please wait a few minutes before trying again.
+                        </ErrorMessage>
+                    )}
+
+                    {error === "user_exists" && (
+                        <ErrorMessage className="text-center">
+                            An account with this email already exists.
+                        </ErrorMessage>
+                    )}
+
+                    {error === "unknown" && (
+                        <ErrorMessage className="text-center">
+                            Something went wrong. Please try again.
+                        </ErrorMessage>
+                    )}
+
                     <Input
                         type="text"
                         name="name"
