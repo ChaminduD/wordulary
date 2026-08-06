@@ -33,7 +33,7 @@ export function RecentTerms({ terms }: RecentTermsProps) {
                     <Link
                         key={term.id}
                         href={`/dashboard/terms/${term.id}`}
-                        className="flex items-center justify-between border-b p-4 transition-colors last:border-b-0 hover:bg-muted/50"
+                        className="flex items-center justify-between border-b p-4 transition-colors last:border-b-0 hover:text-primary hover:bg-muted/50"
                     >
                         <span className="font-medium">
                             {term.term}

@@ -125,13 +125,13 @@ export default async function CollectionPage({ params }: PageProps) {
                     return (
                         <div
                             key={collectionTerm.term_id}
-                            className="rounded-xl border p-4 transition-colors hover:bg-muted/30"
+                            className="rounded-xl border p-4 transition-colors hover:bg-muted/50"
                         >
                             <Link
                                 href={`/dashboard/terms/${term.id}`}
                                 className="block group"
                             >
-                                <p className="text-lg font-semibold group-hover:underline">
+                                <p className="text-lg font-semibold transition-colors group-hover:text-primary group-hover:underline">
                                     {term.term}
                                 </p>
 

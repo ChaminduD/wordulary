@@ -4,6 +4,7 @@ import { deleteTermAction } from "@/actions/terms";
 import { ConfirmDeleteButton } from "@/components/ui/confirm-delete-button";
 import { Badge } from "@/components/ui/badge";
 import { Sparkles } from "lucide-react";
+import { formatDate } from "@/lib/date";
 
 type TermsTableProps = {
     terms: TermListItem[];
@@ -56,27 +57,27 @@ export function TermsTable({ terms, hasSearch, hasActiveFilter }: TermsTableProp
                 <table className="w-full">
                     <thead>
                         <tr className="border-b">
-                            <th className="p-4 text-left text-sm font-semibold text-muted-foreground">
+                            <th className="px-6 py-3 text-left text-sm font-semibold text-muted-foreground">
                                 Term
                             </th>
 
-                            <th className="p-4 text-left text-sm font-semibold text-muted-foreground">
+                            <th className="px-4 py-3 text-left text-sm font-semibold text-muted-foreground">
                                 Type
                             </th>
 
-                            <th className="p-4 text-left text-sm font-semibold text-muted-foreground">
+                            <th className="w-40 px-4 py-3 text-center text-sm font-semibold text-muted-foreground">
                                 Status
                             </th>
 
-                            <th className="p-4 text-left text-sm font-semibold text-muted-foreground">
+                            <th className="w-40 px-4 py-3 text-center text-sm font-semibold text-muted-foreground">
                                 AI Status
                             </th>
 
-                            <th className="p-4 text-left text-sm font-semibold text-muted-foreground">
+                            <th className="w-40 px-4 py-3 text-right text-sm font-semibold text-muted-foreground">
                                 Created
                             </th>
 
-                            <th className="p-4 text-left text-sm font-semibold text-muted-foreground">
+                            <th className="w-40 px-6 py-3 text-right  text-sm font-semibold text-muted-foreground">
                                 Actions
                             </th>
                         </tr>
@@ -88,49 +89,52 @@ export function TermsTable({ terms, hasSearch, hasActiveFilter }: TermsTableProp
                                 key={term.id}
                                 className="border-b transition-colors hover:bg-muted/50"
                             >
-                                <td className="p-4">
+                                <td className="px-6 py-3">
                                     <Link
                                         href={`/dashboard/terms/${term.id}`}
-                                        className="hover:underline"
+                                        className="font-medium transition-colors hover:text-primary hover:underline"
                                     >
                                         {term.term}
                                     </Link>
                                 </td>
 
-                                <td className="p-4">
+                                <td className="px-4 py-3 text-muted-foreground capitalize">
                                     {term.termType}
                                 </td>
 
-                                <td className="p-4 capitalize">
-                                    {term.status}
+                                <td className="px-4 py-3 text-center">
+                                    <Badge variant="secondary" className="capitalize">
+                                        {term.status}
+                                    </Badge>
                                 </td>
 
-                                <td className="p-4">
-                                    {term.aiGenerated
-                                        ? "Generated"
-                                        : "Missing AI"}
+                                <td className="px-4 py-3 text-center">
+                                    <Badge variant="outline" className="gap-1">
+                                        {term.aiGenerated && <Sparkles className="size-3" />}
+                                        {term.aiGenerated ? "AI Generated" : "Missing AI"}
+                                    </Badge>
                                 </td>
 
-                                <td className="p-4">
-                                    {new Date(
-                                        term.createdAt
-                                    ).toLocaleDateString()}
+                                <td className="px-4 py-3 text-right text-muted-foreground">
+                                    {formatDate(term.createdAt)}
                                 </td>
 
-                                <td className="p-4">
-                                    <form action={deleteTermAction}>
-                                        <input
-                                            type="hidden"
-                                            name="id"
-                                            value={term.id}
-                                        />
+                                <td className="px-6 py-3">
+                                    <div className="flex justify-end">
+                                        <form action={deleteTermAction}>
+                                            <input
+                                                type="hidden"
+                                                name="id"
+                                                value={term.id}
+                                            />
 
-                                        <ConfirmDeleteButton
-                                            itemName={term.term}
-                                            itemType="Term"
-                                            iconOnly
-                                        />
-                                    </form>
+                                            <ConfirmDeleteButton
+                                                itemName={term.term}
+                                                itemType="Term"
+                                                iconOnly
+                                            />
+                                        </form>
+                                    </div>
                                 </td>
                             </tr>
                         ))}
@@ -142,13 +146,13 @@ export function TermsTable({ terms, hasSearch, hasActiveFilter }: TermsTableProp
                 {terms.map((term) => (
                     <div
                         key={term.id}
-                        className="relative rounded-xl border p-4 transition-colors hover:bg-muted/30"
+                        className="relative rounded-xl border p-4 transition-colors hover:bg-muted/50"
                     >
                         <Link
                             href={`/dashboard/terms/${term.id}`}
                             className="block group"
                         >
-                            <p className="text-lg font-semibold group-hover:underline">
+                            <p className="text-lg font-semibold transition-colors group-hover:text-primary group-hover:underline">
                                 {term.term}
                             </p>
 
@@ -160,7 +164,7 @@ export function TermsTable({ terms, hasSearch, hasActiveFilter }: TermsTableProp
                                 <span>•</span>
 
                                 <span>
-                                    {new Date(term.createdAt).toLocaleDateString()}
+                                    {formatDate(term.createdAt)}
                                 </span>
                             </div>
 

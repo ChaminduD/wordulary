@@ -53,11 +53,11 @@ export default async function CollectionsPage() {
                 {collectionList.map((collection) => (
                     <div
                         key={collection.id}
-                        className="flex items-center justify-between rounded-xl border p-4 transition-colors hover:bg-muted/50"
+                        className=" group flex items-center justify-between rounded-xl border p-4 transition-colors hover:bg-muted/50"
                     >
                         <Link
                             href={`/dashboard/collections/${collection.id}`}
-                            className="flex-1 font-medium hover:underline"
+                            className="flex-1 font-medium transition-colors group-hover:text-primary group-hover:underline"
                         >
                             {collection.name}
                         </Link>

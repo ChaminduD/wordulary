@@ -38,12 +38,12 @@ export function ConfirmDeleteDialog({
             onOpenChange={onOpenChange}
         >
             <AlertDialogContent>
-                <AlertDialogHeader className="flex flex-row items-start gap-4">
+                <AlertDialogHeader className="flex flex-col sm:flex-row items-center gap-1 sm:items-start sm:gap-4">
                     <AlertDialogMedia className="size-9 shrink-0 text-destructive">
                         <Trash2 className="size-6" />
                     </AlertDialogMedia>
 
-                    <div className="flex-1 space-y-1.5">
+                    <div className="flex-1 space-y-2">
                         <AlertDialogTitle>
                             Delete {itemType}
                         </AlertDialogTitle>
